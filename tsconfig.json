@@ -1,18 +1,27 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "esModuleInterop": true,
-    "module": "commonjs",
-    "jsx": "react",
-    "lib": ["es2017", "dom", "esnext"],
-    "sourceMap": true,
     "target": "es6",
-    "noUnusedLocals": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "declaration": true,
+    "pretty": true,
+    "rootDir": "src",
+    "sourceMap": true,
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "outDir": "dist",
+    "lib": ["es2017", "dom", "esnext"],
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

@@ -5,7 +5,6 @@ export interface NostoInterface {
 }
 
 /* tslint:disable:no-empty */
-export const NostoContext = createContext<NostoInterface>({
-  account: undefined,
-});
+// @ts-ignore
+export const NostoContext = createContext<NostoInterface>({ account: undefined });
 /* tslint:enable:no-empty */

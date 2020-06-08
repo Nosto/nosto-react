@@ -1,5 +1,5 @@
 import stringinate from "../../utils/stringinate";
-import React, { useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import snakeize from "snakeize";
 
 interface Product {
@@ -25,16 +25,18 @@ interface Product {
   customFields?: Array<{ [key: string]: string }>
 }
 
-const Product: React.FC<{ product: string, tagging: Product }> = ({ product, tagging }) => {
+const Product: FunctionComponent<{ product: string, tagging: Product }> = ({ product, tagging }) => {
 
   useEffect(() => {
+    // @ts-ignore
     window.nostojs(api => {
       api.defaultSession()
         .setResponseMode("HTML")
         .viewProduct(snakeize(stringinate(tagging)))
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then(data => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });

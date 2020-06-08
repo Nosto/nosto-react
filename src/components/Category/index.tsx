@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 
-const Category: React.FC<{ category: string }> = ({ category }) => {
+const Category: FunctionComponent<{ category: string }> = ({ category }) => {
 
   useEffect(() => {
+    // @ts-ignore
     window.nostojs(api => {
       api.defaultSession()
         .setResponseMode('HTML')
         .viewCategory(category)
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then(data => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });

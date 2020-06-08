@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 
-const Home: React.FC = () => {
+const Home: FunctionComponent = () => {
 
   useEffect(() => {
+    // @ts-ignore
     window.nostojs(api => {
       api.defaultSession()
         .setResponseMode('HTML')
         .viewFrontPage()
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then(data => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });

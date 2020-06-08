@@ -1,21 +1,23 @@
 import { Purchase } from "../../types";
-import React, { useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import snakeize from "snakeize";
 
 export interface OrderProps {
   purchase: Purchase
 }
 
-const Order: React.FC<{ order: OrderProps }> = ({ order }) => {
+const Order: FunctionComponent<{ order: OrderProps }> = ({ order }) => {
 
   useEffect(() => {
+    // @ts-ignore
     window.nostojs(api => {
       api.defaultSession()
         .setResponseMode('HTML')
         .addOrder(snakeize(order))
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then(data => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });

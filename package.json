@@ -2,18 +2,25 @@
   "name": "@nosto/nosto-react",
   "version": "0.0.1",
   "description": "Component library to simply implementing Nosto on React.",
-  "main": "index.js",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nosto/nosto-react.git"
   },
-  "keywords": ["nosto", "personalisation"],
+  "keywords": [
+    "nosto",
+    "personalisation"
+  ],
   "author": "Mridang Agarwalla",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Nosto/nosto-react/issues"
   },
   "homepage": "https://github.com/Nosto/nosto-react#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
@@ -36,6 +43,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.1.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
@@ -49,9 +57,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=develop webpack-dev-server --history-api-fallback --watch --port 3000 --mode development --hotOnly",
     "start:worker": "npm run start -- --service-worker",
-    "build": "webpack -p",
+    "build": "npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc --module es2015 --target es2015 --outDir dist/esm",
+    "build:cjs": "tsc --module commonjs --target es5 --outDir dist/cjs",
     "watch": "webpack -d --watch",
     "tslint": "tslint 'src/**/*.ts?(x)'",
-    "tsc": "npx tsc --noEmit"
+    "prepare": "npm run build"
   }
 }

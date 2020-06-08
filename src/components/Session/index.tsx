@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import snakeize from "snakeize";
 
 import useDeepCompareEffect from "use-deep-compare-effect";
@@ -9,7 +9,7 @@ interface NostoSessionProps {
   customer: Customer
 }
 
-const Session: React.FC<NostoSessionProps> = ({ cart, customer }) => {
+const Session: FunctionComponent<NostoSessionProps> = ({ cart, customer }) => {
 
   useDeepCompareEffect(() => {
     const currentUser = customer ? customer : undefined;
@@ -17,6 +17,7 @@ const Session: React.FC<NostoSessionProps> = ({ cart, customer }) => {
     const currentCart = cart ? cart : undefined;
     console.debug(currentCart);
 
+    // @ts-ignore
     window.nostojs(api => {
       api.defaultSession()
         .setResponseMode('HTML')

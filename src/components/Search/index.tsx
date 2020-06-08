@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 
-const Search: React.FC<{ query: string }> = ({ query }) => {
+const Search: FunctionComponent<{ query: string }> = ({ query }) => {
 
   useEffect(() => {
+    // @ts-ignore
     window.nostojs(api => {
       api.defaultSession()
         .setResponseMode('HTML')
         .viewSearch(query)
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then(data => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });

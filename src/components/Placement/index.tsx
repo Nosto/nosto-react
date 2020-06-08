@@ -1,34 +1,31 @@
-import * as React from "react";
+import React, { MouseEvent } from 'react';
 
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { FunctionComponent } from "react";
 
-export interface PlacementProps extends RouteComponentProps<any> {
+export interface PlacementProps {
   id: string;
 }
 
-class Placement extends React.Component<PlacementProps> {
+const Placement: FunctionComponent<PlacementProps> = ({ id }) => {
 
-  handleClick = (e) => {
+  let history = useHistory();
+
+  const handleClick = (e: MouseEvent) => {
+    // noinspection TypeScriptUnresolvedFunction
+    // @ts-ignore
     const targetLink = e.target.closest("a");
     if (!targetLink) {
       return;
     } else {
       e.preventDefault();
-      this.props.history.push(targetLink.href.toString().replace(new URL(targetLink.href).origin, ""));
+      history.push(targetLink.href.toString().replace(new URL(targetLink.href).origin, ""));
     }
   };
 
-  render() {
-    return (
-      <div
-        className="nosto_element"
-        id={this.props.id}
-        onClick={this.handleClick}
-      >
-        {this.props.children}
-      </div>
-    );
-  };
+  return (
+    <div className="nosto_element" id={id} onClick={handleClick} />
+  );
 }
 
-export default withRouter(Placement);
+export default Placement;

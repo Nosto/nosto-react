@@ -5,7 +5,8 @@ declare global {
   }
 }
 
-window.nostojs = cb => (window.nostojs.q = window.nostojs.q || []).push(cb);
+window.nostojs = (cb: Function) => (window.nostojs.q = window.nostojs.q || []).push(cb);
+// @ts-ignore
 window.nostojs(api => api.setAutoLoad(false));
 
 export { default as NostoProduct } from "./components/Product";

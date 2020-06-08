@@ -2,8 +2,8 @@
   "name": "@nosto/nosto-react",
   "version": "0.0.4",
   "description": "Component library to simply implementing Nosto on React.",
-  "main": "./lib/cjs/index.js",
-  "module": "./lib/esm/index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nosto/nosto-react.git"
@@ -59,6 +59,10 @@
   "engines": {
     "node": ">=10.0.0 <11"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=develop webpack-dev-server --history-api-fallback --watch --port 3000 --mode development --hotOnly",

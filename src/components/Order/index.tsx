@@ -3,16 +3,16 @@ import React, { FunctionComponent, useEffect } from "react";
 import snakeize from "snakeize";
 
 export interface OrderProps {
-  purchase: Purchase
+  purchase: Purchase;
 }
 
 const Order: FunctionComponent<{ order: OrderProps }> = ({ order }) => {
-
   useEffect(() => {
     // @ts-ignore
-    window.nostojs(api => {
-      api.defaultSession()
-        .setResponseMode('HTML')
+    window.nostojs((api) => {
+      api
+        .defaultSession()
+        .setResponseMode("HTML")
         .addOrder(snakeize(order))
         .setPlacements(api.placements.getPlacements())
         .load()
@@ -24,7 +24,9 @@ const Order: FunctionComponent<{ order: OrderProps }> = ({ order }) => {
   }, []);
 
   return (
-    <div className="nosto_order" style={{ display: "none" }}>{order.purchase.number}</div>
+    <div className="nosto_order" style={{ display: "none" }}>
+      {order.purchase.number}
+    </div>
   );
 };
 

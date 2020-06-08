@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect } from "react";
 
 const Search: FunctionComponent<{ query: string }> = ({ query }) => {
-
   useEffect(() => {
     // @ts-ignore
-    window.nostojs(api => {
-      api.defaultSession()
-        .setResponseMode('HTML')
+    window.nostojs((api) => {
+      api
+        .defaultSession()
+        .setResponseMode("HTML")
         .viewSearch(query)
         .setPlacements(api.placements.getPlacements())
         .load()
@@ -18,7 +18,9 @@ const Search: FunctionComponent<{ query: string }> = ({ query }) => {
   }, []);
 
   return (
-    <div className="nosto_search" style={{ display: "none" }}>{query}</div>
+    <div className="nosto_search" style={{ display: "none" }}>
+      {query}
+    </div>
   );
 };
 

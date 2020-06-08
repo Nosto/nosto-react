@@ -4,11 +4,14 @@ import { NostoContext } from "./context";
 interface NostoProviderProps {
   account: string;
   host: string;
-  children: React.ReactElement
+  children: React.ReactElement;
 }
 
-const Provider: React.FC<NostoProviderProps> = ({ account, host, children }) => {
-
+const Provider: React.FC<NostoProviderProps> = ({
+  account,
+  host,
+  children,
+}) => {
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";

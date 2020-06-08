@@ -1,1 +1,1 @@
-declare module 'snakeize'
+declare module "snakeize";

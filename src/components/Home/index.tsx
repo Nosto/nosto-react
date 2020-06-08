@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect } from "react";
 
 const Home: FunctionComponent = () => {
-
   useEffect(() => {
     // @ts-ignore
-    window.nostojs(api => {
-      api.defaultSession()
-        .setResponseMode('HTML')
+    window.nostojs((api) => {
+      api
+        .defaultSession()
+        .setResponseMode("HTML")
         .viewFrontPage()
         .setPlacements(api.placements.getPlacements())
         .load()
@@ -17,9 +17,7 @@ const Home: FunctionComponent = () => {
     });
   }, []);
 
-  return (
-    <div className="nosto_index" style={{ display: "none" }}/>
-  );
+  return <div className="nosto_index" style={{ display: "none" }} />;
 };
 
 export default Home;

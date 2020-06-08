@@ -30,13 +30,15 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
-    "source-map-loader": "^1.0.0",
-    "terser-webpack-plugin": "^3.0.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
     "babel-plugin-require-context-hook": "^1.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "source-map-loader": "^1.0.0",
+    "terser-webpack-plugin": "^3.0.3",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5",
     "webpack": "^4.43.0",
@@ -50,6 +52,10 @@
     "snakeize": "^0.1.0",
     "use-deep-compare-effect": "^1.3.1"
   },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
   "engines": {
     "node": ">=10.0.0 <11"
   },
@@ -62,6 +68,10 @@
     "build:cjs": "tsc --module commonjs --target es5 --outDir dist/cjs",
     "watch": "webpack -d --watch",
     "tslint": "tslint 'src/**/*.ts?(x)'",
-    "prepare": "npm run build"
+    "clean": "rimraf dist",
+    "typecheck": "tsc",
+    "prettier": "prettier '*/**/*.{ts,tsx,js,jsx,html,css,less}' --list-different",
+    "prettier:fix": "prettier '*/**/*.{ts,tsx,js,jsx,html,css,less}' --write",
+    "prepare": "pm run build"
   }
 }

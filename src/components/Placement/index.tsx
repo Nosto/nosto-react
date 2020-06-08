@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent } from "react";
 
 import { useHistory } from "react-router-dom";
 import { FunctionComponent } from "react";
@@ -8,7 +8,6 @@ export interface PlacementProps {
 }
 
 const Placement: FunctionComponent<PlacementProps> = ({ id }) => {
-
   let history = useHistory();
 
   const handleClick = (e: MouseEvent) => {
@@ -19,13 +18,13 @@ const Placement: FunctionComponent<PlacementProps> = ({ id }) => {
       return;
     } else {
       e.preventDefault();
-      history.push(targetLink.href.toString().replace(new URL(targetLink.href).origin, ""));
+      history.push(
+        targetLink.href.toString().replace(new URL(targetLink.href).origin, "")
+      );
     }
   };
 
-  return (
-    <div className="nosto_element" id={id} onClick={handleClick} />
-  );
-}
+  return <div className="nosto_element" id={id} onClick={handleClick} />;
+};
 
 export default Placement;

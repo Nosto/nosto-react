@@ -6,11 +6,10 @@ import { Cart, Customer } from "../../types";
 
 interface NostoSessionProps {
   cart: Cart;
-  customer: Customer
+  customer: Customer;
 }
 
 const Session: FunctionComponent<NostoSessionProps> = ({ cart, customer }) => {
-
   useDeepCompareEffect(() => {
     const currentUser = customer ? customer : undefined;
     console.debug(currentUser);
@@ -18,18 +17,17 @@ const Session: FunctionComponent<NostoSessionProps> = ({ cart, customer }) => {
     console.debug(currentCart);
 
     // @ts-ignore
-    window.nostojs(api => {
-      api.defaultSession()
-        .setResponseMode('HTML')
+    window.nostojs((api) => {
+      api
+        .defaultSession()
+        .setResponseMode("HTML")
         .setCart(snakeize(currentCart))
         .viewOther()
         .load();
     });
   }, [cart || [], customer || {}]);
 
-  return (
-    <div/>
-  );
+  return <div />;
 };
 
 export default Session;

@@ -10,6 +10,7 @@ window.nostojs = (cb: Function) =>
 // @ts-ignore
 window.nostojs((api) => api.setAutoLoad(false));
 
+export * from "./types"
 export { default as NostoProduct } from "./components/Product";
 export { default as NostoCategory } from "./components/Category";
 export { default as NostoSearch } from "./components/Search";

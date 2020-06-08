@@ -1,6 +1,6 @@
 {
   "name": "@nosto/nosto-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Component library to simply implementing Nosto on React.",
   "main": "./lib/cjs/index.js",
   "module": "./lib/esm/index.js",
@@ -72,6 +72,6 @@
     "typecheck": "tsc",
     "prettier": "prettier '*/**/*.{ts,tsx,js,jsx,html,css,less}' --list-different",
     "prettier:fix": "prettier '*/**/*.{ts,tsx,js,jsx,html,css,less}' --write",
-    "prepare": "pm run build"
+    "prepare": "npm run build"
   }
 }

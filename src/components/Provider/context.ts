@@ -5,8 +5,8 @@ export interface NostoInterface {
 }
 
 /* tslint:disable:no-empty */
-// @ts-ignore
 export const NostoContext = createContext<NostoInterface>({
-  account: undefined,
+  // @ts-ignore
+  account: undefined
 });
 /* tslint:enable:no-empty */

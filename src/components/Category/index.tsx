@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 
-const Category: FunctionComponent<{ category: string }> = ({ category }) => {
+const Category: React.FC<{ category: string }> = ({ category }) => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 
-const Search: FunctionComponent<{ query: string }> = ({ query }) => {
+const Search: React.FC<{ query: string }> = ({ query }) => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {

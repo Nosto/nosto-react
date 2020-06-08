@@ -9,7 +9,7 @@ interface NostoSessionProps {
   customer: Customer;
 }
 
-const Session: FunctionComponent<NostoSessionProps> = ({ cart, customer }) => {
+const Session: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   useDeepCompareEffect(() => {
     const currentUser = customer ? customer : undefined;
     console.debug(currentUser);

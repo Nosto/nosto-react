@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 
-const Home: FunctionComponent = () => {
+const Home: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {

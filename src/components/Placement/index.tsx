@@ -7,7 +7,7 @@ export interface PlacementProps {
   id: string;
 }
 
-const Placement: FunctionComponent<PlacementProps> = ({ id }) => {
+const Placement: React.FC<PlacementProps> = ({ id }) => {
   let history = useHistory();
 
   const handleClick = (e: MouseEvent) => {

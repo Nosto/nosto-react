@@ -25,7 +25,7 @@ interface Product {
   customFields?: Array<{ [key: string]: string }>;
 }
 
-const Product: FunctionComponent<{ product: string; tagging: Product }> = ({
+const Product: React.FC<{ product: string; tagging: Product }> = ({
   product,
   tagging,
 }) => {

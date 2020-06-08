@@ -6,7 +6,7 @@ export interface OrderProps {
   purchase: Purchase;
 }
 
-const Order: FunctionComponent<{ order: OrderProps }> = ({ order }) => {
+const Order: React.FC<{ order: OrderProps }> = ({ order }) => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {

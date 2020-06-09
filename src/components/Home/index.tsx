@@ -17,7 +17,13 @@ const Home: React.FC = () => {
     });
   }, []);
 
-  return <div className="nosto_index" style={{ display: "none" }} />;
+  return (
+    <>
+      <div className="nosto_page_type" style={{ display: "none" }}>
+        front
+      </div>
+    </>
+  );
 };
 
 export default Home;

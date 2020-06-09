@@ -33,13 +33,30 @@ export interface Purchase {
   items: Item[];
 }
 
+export interface SKU {
+  id: string;
+  name: string;
+  price: number;
+  listPrice?: number;
+  url: URL;
+  imageUrl: URL;
+  gtin?: string;
+  availability: 'InStock' | 'OutOfStock';
+  customFields?: { [key: string]: string };
+}
+
 export interface Product {
   alternateImageUrls?: URL[];
-  availability: string;
+  availability: 'InStock' | 'OutOfStock';
   brand?: string;
-  categories: string[];
+  category: string[];
+  categoryIds: string[];
   description: string;
   googleCategory?: string;
+  condition?: string;
+  gender?: string;
+  ageGroup?: string;
+  gtin?: string;
   imageUrl: URL;
   listPrice?: number;
   name: string;
@@ -48,10 +65,12 @@ export interface Product {
   reviewCount?: number;
   priceCurrencyCode: string;
   productId: string;
-  tag1?: string[];
-  tag2?: string[];
-  tag3?: string[];
+  tags1?: string[];
+  tags2?: string[];
+  tags3?: string[];
   thumbUrl?: URL;
   url: URL;
-  customFields?: Array<{ [key: string]: string }>;
+  customFields?: { [key: string]: string };
+  variationId?: string;
+  skus?: SKU[];
 }

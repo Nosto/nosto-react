@@ -29,18 +29,27 @@ const Product: React.FC<{ product: string; tagging: Product }> = ({
         product
       </div>
       <div className="nosto_product" style={{ display: "none" }}>
+        {tagging.variationId && (
+          <span className="variation_id">{tagging.variationId}</span>
+        )}
         {tagging.productId && (
           <span className="product_id">{tagging.productId}</span>
         )}
-        {tagging.name && <span className="name">{tagging.name}</span>}
-        {tagging.url && <span className="url">{tagging.url.toString()}</span>}
+        {tagging.name && (
+          <span className="name">{tagging.name}</span>
+        )}
+        {tagging.url && (
+          <span className="url">{tagging.url.toString()}</span>
+        )}
         {tagging.imageUrl && (
           <span className="image_url">{tagging.imageUrl.toString()}</span>
         )}
         {tagging.availability && (
           <span className="availability">{tagging.availability}</span>
         )}
-        {tagging.price && <span className="price">{tagging.price}</span>}
+        {tagging.price && (
+          <span className="price">{tagging.price}</span>
+        )}
         {tagging.listPrice && (
           <span className="list_price">{tagging.listPrice}</span>
         )}
@@ -49,37 +58,55 @@ const Product: React.FC<{ product: string; tagging: Product }> = ({
             {tagging.priceCurrencyCode}
           </span>
         )}
-        {tagging.brand && <span className="brand">{tagging.brand}</span>}
+        {tagging.brand && (
+          <span className="brand">{tagging.brand}</span>
+        )}
         {tagging.description && (
           <span className="description">{tagging.description}</span>
         )}
         {tagging.googleCategory && (
           <span className="description">{tagging.googleCategory}</span>
         )}
-        {tagging.categories &&
-          tagging.categories.map((category, index) => (
+        {tagging.condition && (
+          <span className="condition">{tagging.condition}</span>
+        )}
+        {tagging.gender && (
+          <span className="gender">{tagging.gender}</span>
+        )}
+        {tagging.ageGroup && (
+          <span className="age_group">{tagging.ageGroup}</span>
+        )}
+        {tagging.gtin && (
+          <span className="gtin">{tagging.gtin}</span>
+        )}
+        {tagging.category &&
+          tagging.category.map((category, index) => (
             <span className="category" key={index}>
               {category}
             </span>
-          ))}
-        {tagging.tag1 &&
-          tagging.tag1.map((tag, index) => (
+          ))
+        }
+        {tagging.tags1 &&
+          tagging.tags1.map((tag, index) => (
             <span className="tag1" key={index}>
               {tag}
             </span>
-          ))}
-        {tagging.tag2 &&
-          tagging.tag2.map((tag, index) => (
+          ))
+        }
+        {tagging.tags2 &&
+          tagging.tags2.map((tag, index) => (
             <span className="tag2" key={index}>
               {tag}
             </span>
-          ))}
-        {tagging.tag3 &&
-          tagging.tag3.map((tag, index) => (
+          ))
+        }
+        {tagging.tags3 &&
+          tagging.tags3.map((tag, index) => (
             <span className="tag3" key={index}>
               {tag}
             </span>
-          ))}
+          ))
+        }
         {tagging.ratingValue && (
           <span className="rating_value">{tagging.ratingValue}</span>
         )}
@@ -91,18 +118,54 @@ const Product: React.FC<{ product: string; tagging: Product }> = ({
             <span className="alternate_image_url" key={index}>
               {url.toString()}
             </span>
-          ))}
-
+          ))
+        }
         {tagging.customFields &&
-          tagging.customFields.map((field, index) => (
-            <span className={field.key} key={index}>
-              {field.key}
+          Object.keys(tagging.customFields).map((field, index) => (
+            tagging.customFields && tagging.customFields[field] && (
+              <span className={field} key={index}>
+                {tagging.customFields[field]}
+              </span>
+            )))
+        }
+        {tagging.skus &&
+        tagging.skus.map((sku, index) => (
+            <span className="nosto_sku" key={index}>
+              {sku.id && (
+                <span className="product_id">{sku.id}</span>
+              )}
+              {sku.name && (
+                <span className="name">{sku.name}</span>
+              )}
+              {sku.price && (
+                <span className="price">{sku.price}</span>
+              )}
+              {sku.listPrice && (
+                <span className="list_price">{sku.listPrice}</span>
+              )}
+              {sku.url && (
+                <span className="url">{sku.url.toString()}</span>
+              )}
+              {sku.imageUrl && (
+                <span className="image_url">{sku.imageUrl.toString()}</span>
+              )}
+              {sku.gtin && (
+                <span className="gtin">{sku.gtin}</span>
+              )}
+              {sku.availability && (
+                <span className="availability">{sku.availability}</span>
+              )}
+              {sku.customFields &&
+              Object.keys(sku.customFields).map((field, index) => (
+                sku.customFields && sku.customFields[field] && (
+                  <span className={field} key={index}>
+                {sku.customFields[field]}
+              </span>
+                )))
+              }
             </span>
-          ))}
-        <span className="custom_fields">
-          <span className="material">Cotton</span>
-          <span className="weather">Summer</span>
-        </span>
+          ))
+        }
       </div>
     </>
   );

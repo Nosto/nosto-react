@@ -18,9 +18,14 @@ const Search: React.FC<{ query: string }> = ({ query }) => {
   }, []);
 
   return (
-    <div className="nosto_search" style={{ display: "none" }}>
-      {query}
-    </div>
+    <>
+      <div className="nosto_page_type" style={{ display: "none" }}>
+        search
+      </div>
+      <div className="nosto_search" style={{ display: "none" }}>
+        {query}
+      </div>
+    </>
   );
 };
 

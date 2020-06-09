@@ -18,7 +18,11 @@ const Other: React.FC = () => {
   }, []);
 
   return (
-    <div className="nosto_other" style={{ display: "none" }} />
+    <>
+      <div className="nosto_page_type" style={{ display: "none" }}>
+        other
+      </div>
+    </>
   );
 };
 

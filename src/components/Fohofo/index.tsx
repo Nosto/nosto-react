@@ -18,7 +18,11 @@ const Fohofo: React.FC = () => {
   }, []);
 
   return (
-    <div className="nosto_notfound" style={{ display: "none" }} />
+    <>
+      <div className="nosto_page_type" style={{ display: "none" }}>
+        notfound
+      </div>
+    </>
   );
 };
 

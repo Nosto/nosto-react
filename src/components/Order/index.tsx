@@ -24,9 +24,14 @@ const Order: React.FC<{ order: OrderProps }> = ({ order }) => {
   }, []);
 
   return (
-    <div className="nosto_order" style={{ display: "none" }}>
-      {order.purchase.number}
-    </div>
+    <>
+      <div className="nosto_page_type" style={{ display: "none" }}>
+        order
+      </div>
+      <div className="nosto_order" style={{ display: "none" }}>
+        {order.purchase.number}
+      </div>
+    </>
   );
 };
 

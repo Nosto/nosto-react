@@ -18,7 +18,11 @@ const Checkout: React.FC = () => {
   }, []);
 
   return (
-    <div className="nosto_checkout" style={{ display: "none" }} />
+    <>
+      <div className="nosto_page_type" style={{ display: "none" }}>
+        cart
+      </div>
+    </>
   );
 };
 

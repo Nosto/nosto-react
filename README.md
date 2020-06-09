@@ -113,11 +113,11 @@ import { NostoHome, NostoPlacement } from "@nosto/nosto-react";
   ...
   ...
   ...
-	<NostoPlacement id="frontpage-nosto-1" />
-	<NostoPlacement id="frontpage-nosto-2" />
-	<NostoPlacement id="frontpage-nosto-3" />
-	<NostoPlacement id="frontpage-nosto-4" />
-	<NostoHome />
+  <NostoPlacement id="frontpage-nosto-1" />
+  <NostoPlacement id="frontpage-nosto-2" />
+  <NostoPlacement id="frontpage-nosto-3" />
+  <NostoPlacement id="frontpage-nosto-4" />
+  <NostoHome />
 </div>
 ```
 
@@ -136,10 +136,10 @@ import { NostoPlacement, NostoProduct } from "@nosto/nosto-react";
   ...
   ...
   ...
-	<NostoPlacement id="productpage-nosto-1" />
-	<NostoPlacement id="productpage-nosto-2" />
-	<NostoPlacement id="productpage-nosto-3" />
-	<NostoProduct product={product.id} />
+  <NostoPlacement id="productpage-nosto-1" />
+  <NostoPlacement id="productpage-nosto-2" />
+  <NostoPlacement id="productpage-nosto-3" />
+  <NostoProduct product={product.id} />
 </div>
 ```
 
@@ -181,8 +181,8 @@ import { NostoCategory, NostoPlacement } from "@nosto/nosto-react";
   ...
   ...
   ...
-	<NostoPlacement id="categorypage-nosto-1" />
-	<NostoPlacement id="categorypage-nosto-2" />
+  <NostoPlacement id="categorypage-nosto-1" />
+  <NostoPlacement id="categorypage-nosto-2" />
   <NostoCategory category={category.name} />
 </div>
 ```
@@ -204,8 +204,8 @@ import { NostoCheckout, NostoPlacement } from "@nosto/nosto-react";
   ...
   ...
   ...
-	<NostoPlacement id="categorypage-nosto-1" />
-	<NostoPlacement id="categorypage-nosto-2" />
+  <NostoPlacement id="categorypage-nosto-1" />
+  <NostoPlacement id="categorypage-nosto-2" />
   <NostoCheckout />
 </div>
 ```
@@ -225,9 +225,9 @@ import { Nosto404, NostoPlacement } from "@nosto/nosto-react";
   ...
   ...
   ...
-	<NostoPlacement id="notfound-nosto-1" />
-	<NostoPlacement id="notfound-nosto-2" />
-	<NostoPlacement id="notfound-nosto-3" />
+  <NostoPlacement id="notfound-nosto-1" />
+  <NostoPlacement id="notfound-nosto-2" />
+  <NostoPlacement id="notfound-nosto-3" />
   <Nosto404 />
 </div>
 ```
@@ -247,9 +247,9 @@ import { NostoOther, NostoPlacement } from "@nosto/nosto-react";
   ...
   ...
   ...
-	<NostoPlacement id="other-nosto-1" />
-	<NostoPlacement id="other-nosto-2" />
-  <Nosto404 />
+  <NostoPlacement id="other-nosto-1" />
+  <NostoPlacement id="other-nosto-2" />
+  <NostoOther />
 </div>
 ```
 
@@ -270,8 +270,8 @@ import { Buyer, Item, NostoOrder, NostoPlacement, Purchase } from "@nosto/nosto-
   ...
   ...
   ...
-	<NostoPlacement id="thankyou-nosto-1" />
-	<NostoOrder order={{ purchase: toOrder(order) }} />
+  <NostoPlacement id="thankyou-nosto-1" />
+  <NostoOrder order={{ purchase: toOrder(order) }} />
 </div>
 ```
 

@@ -1,29 +1,7 @@
+import { Product } from "../../types";
 import stringinate from "../../utils/stringinate";
-import React, { FunctionComponent, useEffect } from "react";
+import React, { useEffect } from "react";
 import snakeize from "snakeize";
-
-interface Product {
-  alternateImageUrls?: URL[];
-  availability: string;
-  brand?: string;
-  categories: string[];
-  description: string;
-  googleCategory?: string;
-  imageUrl: URL;
-  listPrice?: number;
-  name: string;
-  price: number;
-  ratingValue?: number;
-  reviewCount?: number;
-  priceCurrencyCode: string;
-  productId: string;
-  tag1?: string[];
-  tag2?: string[];
-  tag3?: string[];
-  thumbUrl?: URL;
-  url: URL;
-  customFields?: Array<{ [key: string]: string }>;
-}
 
 const Product: React.FC<{ product: string; tagging: Product }> = ({
   product,

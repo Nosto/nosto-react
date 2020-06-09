@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 import snakeize from "snakeize";
 
 import useDeepCompareEffect from "use-deep-compare-effect";

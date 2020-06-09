@@ -1,5 +1,5 @@
 import { Purchase } from "../../types";
-import React, { FunctionComponent, useEffect } from "react";
+import React, { useEffect } from "react";
 import snakeize from "snakeize";
 
 export interface OrderProps {

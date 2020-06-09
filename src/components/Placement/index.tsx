@@ -1,7 +1,6 @@
 import React, { MouseEvent } from "react";
 
 import { useHistory } from "react-router-dom";
-import { FunctionComponent } from "react";
 
 export interface PlacementProps {
   id: string;

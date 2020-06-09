@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const Search: React.FC<{ query: string }> = ({ query }) => {
   useEffect(() => {

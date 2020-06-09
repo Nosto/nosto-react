@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 
-const Category: React.FC<{ category: string }> = ({ category }) => {
+const Fohofo: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
         .setResponseMode("HTML")
-        .viewCategory(category)
+        .viewNotFound()
         .setPlacements(api.placements.getPlacements())
         .load()
         .then((data: object) => {
@@ -18,10 +18,8 @@ const Category: React.FC<{ category: string }> = ({ category }) => {
   }, []);
 
   return (
-    <div className="nosto_category" style={{ display: "none" }}>
-      {category}
-    </div>
+    <div className="nosto_notfound" style={{ display: "none" }} />
   );
 };
 
-export default Category;
+export default Fohofo;

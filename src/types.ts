@@ -50,7 +50,7 @@ export interface Product {
   availability: 'InStock' | 'OutOfStock';
   brand?: string;
   category: string[];
-  categoryIds: string[];
+  categoryIds?: string[];
   description: string;
   googleCategory?: string;
   condition?: string;

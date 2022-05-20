@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
 
-const Fohofo: React.FC = () => {
+function Checkout() {
   useEffect(() => {
-    // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
         .setResponseMode("HTML")
-        .viewNotFound()
+        .viewCart()
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then((data: object) => {
-          // @ts-ignore
+        .then((data) => {
           api.placements.injectCampaigns(data.recommendations);
         });
     });
@@ -20,10 +18,10 @@ const Fohofo: React.FC = () => {
   return (
     <>
       <div className="nosto_page_type" style={{ display: "none" }}>
-        notfound
+        cart
       </div>
     </>
   );
-};
+}
 
-export default Fohofo;
+export default Checkout;

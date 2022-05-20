@@ -1,17 +1,10 @@
-import React, { MouseEvent } from "react";
-
+import React from "react";
 import { useHistory } from "react-router-dom";
 
-export interface PlacementProps {
-  id: string;
-}
-
-const Placement: React.FC<PlacementProps> = ({ id }) => {
+function Placement({ id }) {
   let history = useHistory();
 
-  const handleClick = (e: MouseEvent) => {
-    // noinspection TypeScriptUnresolvedFunction
-    // @ts-ignore
+  const handleClick = (e) => {
     const targetLink = e.target.closest("a");
     if (!targetLink) {
       return;
@@ -24,6 +17,6 @@ const Placement: React.FC<PlacementProps> = ({ id }) => {
   };
 
   return <div className="nosto_element" id={id} onClick={handleClick} />;
-};
+}
 
 export default Placement;

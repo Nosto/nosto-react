@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
 
-const Other: React.FC = () => {
+function Search({ query }) {
   useEffect(() => {
-    // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
         .setResponseMode("HTML")
-        .viewOther()
+        .viewSearch(query)
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then((data: object) => {
-          // @ts-ignore
+        .then((data) => {
           api.placements.injectCampaigns(data.recommendations);
         });
     });
@@ -20,10 +18,13 @@ const Other: React.FC = () => {
   return (
     <>
       <div className="nosto_page_type" style={{ display: "none" }}>
-        other
+        search
+      </div>
+      <div className="nosto_search" style={{ display: "none" }}>
+        {query}
       </div>
     </>
   );
-};
+}
 
-export default Other;
+export default Search;

@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 
-function Search({ query }) {
+const Other: React.FC = () => {
   useEffect(() => {
+    // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
         .setResponseMode("HTML")
-        .viewSearch(query)
+        .viewOther()
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then((data) => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });
@@ -18,13 +20,10 @@ function Search({ query }) {
   return (
     <>
       <div className="nosto_page_type" style={{ display: "none" }}>
-        search
-      </div>
-      <div className="nosto_search" style={{ display: "none" }}>
-        {query}
+        other
       </div>
     </>
   );
-}
+};
 
-export default Search;
+export default Other;

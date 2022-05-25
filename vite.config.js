@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.client.js"),
+      entry: path.resolve(__dirname, "src/index.client.ts"),
       name: "@nosto/nosto-react",
       formats: ["es", "umd"],
       fileName: (format) => `index.${format}.client.js`,

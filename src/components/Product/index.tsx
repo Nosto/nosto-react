@@ -1,9 +1,14 @@
+import { Product } from "../../types";
 import stringinate from "../../utils/stringinate";
 import React, { useEffect } from "react";
 import snakeize from "snakeize";
 
-function Product({ product, tagging }) {
+const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
+  product,
+  tagging,
+}) => {
   useEffect(() => {
+    // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
@@ -11,7 +16,8 @@ function Product({ product, tagging }) {
         .viewProduct(snakeize(stringinate(tagging)))
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then((data) => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });
@@ -139,6 +145,6 @@ function Product({ product, tagging }) {
       </div>
     </>
   );
-}
+};
 
-export default Product;
+export default NostoProduct;

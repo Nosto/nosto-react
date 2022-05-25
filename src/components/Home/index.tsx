@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 
-function Fohofo() {
+const Home: React.FC = () => {
   useEffect(() => {
+    // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
         .setResponseMode("HTML")
-        .viewNotFound()
+        .viewFrontPage()
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then((data) => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });
@@ -18,10 +20,10 @@ function Fohofo() {
   return (
     <>
       <div className="nosto_page_type" style={{ display: "none" }}>
-        notfound
+        front
       </div>
     </>
   );
-}
+};
 
-export default Fohofo;
+export default Home;

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 
-function Category({ category }) {
+const Category: React.FC<{ category: string }> = ({ category }) => {
   useEffect(() => {
+    // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
@@ -9,7 +10,8 @@ function Category({ category }) {
         .viewCategory(category)
         .setPlacements(api.placements.getPlacements())
         .load()
-        .then((data) => {
+        .then((data: object) => {
+          // @ts-ignore
           api.placements.injectCampaigns(data.recommendations);
         });
     });
@@ -25,6 +27,6 @@ function Category({ category }) {
       </div>
     </>
   );
-}
+};
 
 export default Category;

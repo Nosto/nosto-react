@@ -9,7 +9,7 @@ interface NostoSessionProps {
   customer: Customer;
 }
 
-const Session: React.FC<NostoSessionProps> = ({ cart, customer }) => {
+const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   useDeepCompareEffect(() => {
     const currentUser = customer ? customer : undefined;
     console.debug(currentUser);
@@ -30,4 +30,4 @@ const Session: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   return <div />;
 };
 
-export default Session;
+export default NostoSession;

@@ -7,7 +7,7 @@ interface NostoProviderProps {
   children: React.ReactElement;
 }
 
-const Provider: React.FC<NostoProviderProps> = ({
+const NostoProvider: React.FC<NostoProviderProps> = ({
   account,
   host,
   children,
@@ -18,6 +18,11 @@ const Provider: React.FC<NostoProviderProps> = ({
     script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
     script.async = true;
     document.head.appendChild(script);
+
+    window.nostojs = (cb: Function) =>
+      (window.nostojs.q = window.nostojs.q || []).push(cb);
+    // @ts-ignore
+    window.nostojs((api) => api.setAutoLoad(false));
   }, []);
 
   return (
@@ -27,4 +32,4 @@ const Provider: React.FC<NostoProviderProps> = ({
   );
 };
 
-export default Provider;
+export default NostoProvider;

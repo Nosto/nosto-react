@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Checkout: React.FC = () => {
+const NostoCheckout: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
@@ -26,4 +26,4 @@ const Checkout: React.FC = () => {
   );
 };
 
-export default Checkout;
+export default NostoCheckout;

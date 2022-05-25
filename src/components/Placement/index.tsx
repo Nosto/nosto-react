@@ -6,7 +6,7 @@ export interface PlacementProps {
   id: string;
 }
 
-const Placement: React.FC<PlacementProps> = ({ id }) => {
+const NostoPlacement: React.FC<PlacementProps> = ({ id }) => {
   let history = useHistory();
 
   const handleClick = (e: MouseEvent) => {
@@ -26,4 +26,4 @@ const Placement: React.FC<PlacementProps> = ({ id }) => {
   return <div className="nosto_element" id={id} onClick={handleClick} />;
 };
 
-export default Placement;
+export default NostoPlacement;

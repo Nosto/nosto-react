@@ -10,12 +10,10 @@ function Provider({ account, host = null, children }) {
     script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
     script.async = true;
     document.head.appendChild(script);
-    console.log("NostoProvider rendered");
 
     window.nostojs = (cb) =>
       (window.nostojs.q = window.nostojs.q || []).push(cb);
     window.nostojs((api) => api.setAutoLoad(false));
-    console.log("nostojs api added");
   }, []);
 
   return (

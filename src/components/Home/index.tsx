@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 
-const NostoHome: React.FC = () => {
+interface NostoTaggingProps {
+  currentVariation: string;
+}
+
+const NostoHome: React.FC<NostoTaggingProps> = ({
+  currentVariation
+}) => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
@@ -22,6 +28,7 @@ const NostoHome: React.FC = () => {
       <div className="nosto_page_type" style={{ display: "none" }}>
         front
       </div>
+      <div class="nosto_variation" style="display: none;">{currentVariation}</div>
     </>
   );
 };

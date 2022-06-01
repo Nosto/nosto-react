@@ -28,7 +28,7 @@ const NostoHome: React.FC<NostoTaggingProps> = ({
       <div className="nosto_page_type" style={{ display: "none" }}>
         front
       </div>
-      <div class="nosto_variation" style="display: none;">{currentVariation}</div>
+      { currentVariation && <div className="nosto_variation" style={{ display: "none" }}>{currentVariation}</div> }
     </>
   );
 };

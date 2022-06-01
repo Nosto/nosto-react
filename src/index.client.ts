@@ -29,5 +29,3 @@ export { default as NostoPlacement } from "./components/Placement";
 export { default as NostoProvider } from "./components/Provider";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoSession } from "./components/Session";
-// noinspection JSUnusedGlobalSymbols
-export { default as NostoTagging } from "./components/Tagging";

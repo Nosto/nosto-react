@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Home: React.FC = () => {
+const NostoHome: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
@@ -26,4 +26,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default NostoHome;

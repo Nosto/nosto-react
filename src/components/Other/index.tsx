@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Other: React.FC = () => {
+const NostoOther: React.FC = () => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
@@ -26,4 +26,4 @@ const Other: React.FC = () => {
   );
 };
 
-export default Other;
+export default NostoOther;

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Category: React.FC<{ category: string }> = ({ category }) => {
+const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
@@ -29,4 +29,4 @@ const Category: React.FC<{ category: string }> = ({ category }) => {
   );
 };
 
-export default Category;
+export default NostoCategory;

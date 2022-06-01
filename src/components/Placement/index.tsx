@@ -1,14 +1,10 @@
 import React, { MouseEvent } from "react";
 
-import { useHistory } from "react-router-dom";
-
 export interface PlacementProps {
   id: string;
 }
 
-const Placement: React.FC<PlacementProps> = ({ id }) => {
-  let history = useHistory();
-
+const NostoPlacement: React.FC<PlacementProps> = ({ id }) => {
   const handleClick = (e: MouseEvent) => {
     // noinspection TypeScriptUnresolvedFunction
     // @ts-ignore
@@ -17,13 +13,13 @@ const Placement: React.FC<PlacementProps> = ({ id }) => {
       return;
     } else {
       e.preventDefault();
-      history.push(
-        targetLink.href.toString().replace(new URL(targetLink.href).origin, "")
-      );
+      location.href = targetLink.href
+        .toString()
+        .replace(new URL(targetLink.href).origin, "");
     }
   };
 
-  return <div className="nosto_element" id={id} onClick={handleClick} />;
+  return <div className="nosto_element" onClick={handleClick} id={id} />;
 };
 
-export default Placement;
+export default NostoPlacement;

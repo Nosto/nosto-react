@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Search: React.FC<{ query: string }> = ({ query }) => {
+const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
@@ -29,4 +29,4 @@ const Search: React.FC<{ query: string }> = ({ query }) => {
   );
 };
 
-export default Search;
+export default NostoSearch;

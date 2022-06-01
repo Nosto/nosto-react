@@ -6,7 +6,7 @@ export interface OrderProps {
   purchase: Purchase;
 }
 
-const Order: React.FC<{ order: OrderProps }> = ({ order }) => {
+const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
@@ -35,4 +35,4 @@ const Order: React.FC<{ order: OrderProps }> = ({ order }) => {
   );
 };
 
-export default Order;
+export default NostoOrder;

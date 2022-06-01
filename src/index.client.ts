@@ -6,12 +6,7 @@ declare global {
   }
 }
 
-window.nostojs = (cb: Function) =>
-  (window.nostojs.q = window.nostojs.q || []).push(cb);
-// @ts-ignore
-window.nostojs((api) => api.setAutoLoad(false));
-
-export * from "./types"
+export * from "./types";
 // noinspection JSUnusedGlobalSymbols
 export { default as Nosto404 } from "./components/Fohofo";
 // noinspection JSUnusedGlobalSymbols

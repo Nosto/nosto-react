@@ -10,7 +10,7 @@ const NostoHome: React.FC = () => {
     window.nostojs((api) => {
       api
         .defaultSession()
-        .setVariation(contextValue.currentVariation)
+        .setVariation(contextValue.currentVariation.data.shop.paymentSettings.currencyCode)
         .setResponseMode("HTML")
         .viewFrontPage()
         .setPlacements(api.placements.getPlacements())

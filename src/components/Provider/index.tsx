@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { NostoContext } from "./context";
 
 interface NostoProviderProps {
@@ -14,6 +14,9 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   host,
   children,
 }) => {
+
+  const [ contextValue, setContextValue ] = useState({ account, currentVariation });
+
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
@@ -28,7 +31,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider value={{ account }}>
+    <NostoContext.Provider value={ contextValue }>
       {children}
     </NostoContext.Provider>
   );

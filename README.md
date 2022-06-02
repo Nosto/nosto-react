@@ -26,7 +26,11 @@ You should be using React Nosto if you want to:
 - ✘ No support for Nosto's Debug Toolbar.
 - ✘ No support for server-side rendering (SSR).
 
+### Building
 
+#### Required versions
+- npm: 8.5.5
+- node: v16.15.0
 
 ### Installation
 

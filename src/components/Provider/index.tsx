@@ -3,12 +3,14 @@ import { NostoContext } from "./context";
 
 interface NostoProviderProps {
   account: string;
+  currentVariation: string;
   host: string;
   children: React.ReactElement;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
   account,
+  currentVariation,
   host,
   children,
 }) => {

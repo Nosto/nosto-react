@@ -17,6 +17,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
 
   const [ account, setAccount ] = useState(accountProp);
   const [ currentVariation, setCurrentVariation ] = useState(currentVariationProp);
+  const providerValue = { account, setAccount, currentVariation, setCurrentVariation };
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -32,7 +33,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider value={{ account, setAccount, currentVariation, setCurrentVariation }}>
+    <NostoContext.Provider value={ providerValue }>
       {childrenProp}
     </NostoContext.Provider>
   );

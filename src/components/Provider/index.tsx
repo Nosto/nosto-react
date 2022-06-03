@@ -4,6 +4,7 @@ import {NostoContext} from "./context";
 interface NostoProviderProps {
   accountProp: string;
   currentVariationProp: string;
+  countryProp: string;
   host: string;
   children: React.ReactElement;
 }
@@ -11,13 +12,15 @@ interface NostoProviderProps {
 const NostoProvider: React.FC<NostoProviderProps> = ({
   accountProp,
   currentVariationProp,
+  countryProp,
   host,
   children,
 }) => {
 
   const [ account, setAccount ] = useState(accountProp);
   const [ currentVariation, setCurrentVariation ] = useState(currentVariationProp ? currentVariationProp : "EUR");
-  const providerValue = { account, setAccount, currentVariation, setCurrentVariation };
+  const [ country, setCountry ] = useState(countryProp);
+  const providerValue = { account, setAccount, currentVariation, setCurrentVariation, country, setCountry };
 
   useEffect(() => {
     const script = document.createElement("script");

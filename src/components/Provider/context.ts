@@ -5,6 +5,8 @@ interface NostoInterface {
   setAccount: (account: string) => void;
   currentVariation: string;
   setCurrentVariation: (variation: string) => void;
+  country: string;
+  setCountry: (country: string) => void;
 }
 
 /* tslint:disable:no-empty */
@@ -16,6 +18,8 @@ export const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
   currentVariation: "",
   // @ts-ignore
-  setCurrentVariation: (variation) => {}
+  setCurrentVariation: (variation) => {},
+  country: "",
+  setCountry: (country) => {}
 });
 /* tslint:enable:no-empty */

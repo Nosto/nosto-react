@@ -1,15 +1,14 @@
 import { createContext } from "react";
 
-export interface NostoInterface {
-  account: string;
-  currentVariation: string;
-}
-
 /* tslint:disable:no-empty */
-export const NostoContext = createContext<NostoInterface>({
+export const NostoContext = createContext({
   // @ts-ignore
-  account: undefined,
+  account,
   // @ts-ignore
-  currentVariation: undefined
+  setAccount: (account) => {},
+  // @ts-ignore
+  currentVariation,
+  // @ts-ignore
+  setCurrentVariation: (variation) => {}
 });
 /* tslint:enable:no-empty */

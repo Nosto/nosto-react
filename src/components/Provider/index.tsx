@@ -2,25 +2,26 @@ import React, { useEffect, useState } from "react";
 import { NostoContext } from "./context";
 
 interface NostoProviderProps {
-  account: string;
-  currentVariation: string;
-  host: string;
-  children: React.ReactElement;
+  accountProp: string;
+  currentVariationProp: string;
+  hostProp: string;
+  childrenProp: React.ReactElement;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
-  account,
-  currentVariation,
-  host,
-  children,
+  accountProp,
+  currentVariationProp,
+  hostProp,
+  childrenProp,
 }) => {
 
-  const [ contextValue, setContextValue ] = useState({ account, currentVariation });
+  const [ account, setAccount ] = useState(accountProp);
+  const [ currentVariation, setCurrentVariation ] = useState(currentVariationProp);
 
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
+    script.src = "//" + (hostProp || "connect.nosto.com") + "/include/" + accountProp;
     script.async = true;
     document.head.appendChild(script);
 
@@ -31,8 +32,8 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider value={ contextValue }>
-      {children}
+    <NostoContext.Provider value={{ account, setAccount, currentVariation, setCurrentVariation }}>
+      {childrenProp}
     </NostoContext.Provider>
   );
 };

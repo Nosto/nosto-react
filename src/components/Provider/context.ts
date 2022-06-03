@@ -1,7 +1,14 @@
 import { createContext } from "react";
 
+interface NostoInterface {
+  account: string;
+  setAccount: (account: string) => void;
+  currentVariation: string;
+  setCurrentVariation: (variation: string) => void;
+}
+
 /* tslint:disable:no-empty */
-const NostoContext = createContext({
+const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
   account: "",
   // @ts-ignore

@@ -16,7 +16,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
 }) => {
 
   const [ account, setAccount ] = useState(accountProp);
-  const [ currentVariation, setCurrentVariation ] = useState(currentVariationProp);
+  const [ currentVariation, setCurrentVariation ] = useState(currentVariationProp ? currentVariationProp : "EUR");
   const providerValue = { account, setAccount, currentVariation, setCurrentVariation };
 
   useEffect(() => {

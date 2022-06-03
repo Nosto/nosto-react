@@ -4,15 +4,15 @@ import {NostoContext} from "./context";
 interface NostoProviderProps {
   accountProp: string;
   currentVariationProp: string;
-  hostProp: string;
-  childrenProp: React.ReactElement;
+  host: string;
+  children: React.ReactElement;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
   accountProp,
   currentVariationProp,
-  hostProp,
-  childrenProp,
+  host,
+  children,
 }) => {
 
   const [ account, setAccount ] = useState(accountProp);
@@ -22,7 +22,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    script.src = "//" + (hostProp || "connect.nosto.com") + "/include/" + accountProp;
+    script.src = "//" + (host || "connect.nosto.com") + "/include/" + accountProp;
     script.async = true;
     document.head.appendChild(script);
 
@@ -34,7 +34,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
 
   return (
     <NostoContext.Provider value={ providerValue }>
-      {childrenProp}
+      {children}
     </NostoContext.Provider>
   );
 };

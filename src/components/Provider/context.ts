@@ -8,7 +8,7 @@ interface NostoInterface {
 }
 
 /* tslint:disable:no-empty */
-const NostoContext = createContext<NostoInterface>({
+export const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
   account: "",
   // @ts-ignore
@@ -19,4 +19,3 @@ const NostoContext = createContext<NostoInterface>({
   setCurrentVariation: (variation) => {}
 });
 /* tslint:enable:no-empty */
-export default NostoContext;

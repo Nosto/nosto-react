@@ -30,4 +30,4 @@ export { default as NostoProvider } from "./components/Provider";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoSession } from "./components/Session";
 // noinspection JSUnusedGlobalSymbols
-export { default as NostoContext } from "./components/Provider/context";
+export { NostoContext } from "./components/Provider/context";

@@ -3,11 +3,11 @@ import { createContext } from "react";
 /* tslint:disable:no-empty */
 export const NostoContext = createContext({
   // @ts-ignore
-  account,
+  account: "",
   // @ts-ignore
   setAccount: (account) => {},
   // @ts-ignore
-  currentVariation,
+  currentVariation: "",
   // @ts-ignore
   setCurrentVariation: (variation) => {}
 });

@@ -20,7 +20,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
+    script.src = "https://" + (host || "connect.nosto.com") + "/include/" + account;
     script.async = true;
     document.head.appendChild(script);
 

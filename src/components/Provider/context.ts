@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 /* tslint:disable:no-empty */
-export const NostoContext = createContext({
+const NostoContext = createContext({
   // @ts-ignore
   account: "",
   // @ts-ignore
@@ -12,3 +12,4 @@ export const NostoContext = createContext({
   setCurrentVariation: (variation) => {}
 });
 /* tslint:enable:no-empty */
+export default NostoContext;

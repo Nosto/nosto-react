@@ -12,11 +12,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16.15.0
+      - run: npm init --scope=nosto
       - run: npm install
       - run: npm run build
       - uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.NPMJS_TOKEN }}
+          # token: ${{ secrets.NPMJS_TOKEN }}
+          token: "wrong-value"
           access: "public"
-          dry-run: false
+          dry-run: true
           check-version: true

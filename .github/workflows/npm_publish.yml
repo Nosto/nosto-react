@@ -12,6 +12,7 @@ jobs:
 
       - name: Install packages
         run: |
+          nvm install v16.15.0
           npm init --scope=nosto
           npm install
 

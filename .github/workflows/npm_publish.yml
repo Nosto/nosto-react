@@ -22,4 +22,3 @@ jobs:
           access: "public"
           dry-run: true
           check-version: true
-          greater-version-only: true

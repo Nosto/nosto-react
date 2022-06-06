@@ -20,5 +20,5 @@ jobs:
           # token: ${{ secrets.NPMJS_TOKEN }}
           token: "wrong-value"
           access: "public"
-          dry-run: true
+          dry-run: false
           check-version: true

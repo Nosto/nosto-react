@@ -19,4 +19,7 @@ jobs:
         with:
           # token: ${{ secrets.NPMJS_TOKEN }}
           token: "wrong-value"
-          - run: npm publish --access public
+          access: "public"
+          dry-run: true
+          check-version: true
+          greater-version-only: true

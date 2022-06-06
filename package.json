@@ -52,5 +52,9 @@
       "import": "./dist/index.es.client.js",
       "require": "./dist/index.umd.client.js"
     }
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/Nosto/nosto-react/issues"
+  },
+  "homepage": "https://github.com/Nosto/nosto-react#readme"
 }

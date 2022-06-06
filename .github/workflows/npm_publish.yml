@@ -1,5 +1,5 @@
 name: npm_publish
-# on: [push]
+
 on:
   release:
     types: [published]

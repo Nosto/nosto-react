@@ -29,7 +29,7 @@ const NostoProvider = (props: NostoProviderProps) => {
   }, []);
 
   return (
-    <NostoContext.Provider value={{ account, setAccount, currentVariation, setCurrentVariation, country, setCountry }}>
+    <NostoContext.Provider value="Sample test">
       {props.children}
     </NostoContext.Provider>
   );

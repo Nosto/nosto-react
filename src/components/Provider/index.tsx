@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {NostoContext} from "./context";
 
 interface NostoProviderProps {
@@ -36,10 +36,12 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider value={ providerValue }>
+    <NostoContext.Provider value={providerValue}>
       {children}
     </NostoContext.Provider>
   );
 };
+
+export const useNostoContext = () => useContext(NostoContext);
 
 export default NostoProvider;

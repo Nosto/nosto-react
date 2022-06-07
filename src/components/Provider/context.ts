@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 interface NostoInterface {
   account: string;
@@ -10,7 +10,7 @@ interface NostoInterface {
 }
 
 /* tslint:disable:no-empty */
-export const NostoContext = createContext<NostoInterface>({
+const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
   account: "",
   // @ts-ignore
@@ -23,3 +23,15 @@ export const NostoContext = createContext<NostoInterface>({
   setCountry: (country) => {}
 });
 /* tslint:enable:no-empty */
+
+export default NostoContext;
+
+export function useNostoContext() {
+  const context = useContext(NostoContext);
+
+  if (!context) {
+    throw new Error('No cart context found');
+  }
+
+  return context;
+}

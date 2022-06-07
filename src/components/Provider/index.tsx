@@ -35,6 +35,4 @@ const NostoProvider = (props: NostoProviderProps) => {
   );
 };
 
-export const useNostoContext = () => useContext(NostoContext);
-
 export default NostoProvider;

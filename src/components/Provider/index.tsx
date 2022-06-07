@@ -9,23 +9,16 @@ interface NostoProviderProps {
   children: React.ReactElement;
 }
 
-const NostoProvider: React.FC<NostoProviderProps> = ({
-  accountProp,
-  currentVariationProp,
-  countryProp,
-  host,
-  children,
-}) => {
+const NostoProvider = (props: NostoProviderProps) => {
 
-  const [ account, setAccount ] = useState(accountProp);
-  const [ currentVariation, setCurrentVariation ] = useState(currentVariationProp ? currentVariationProp : "EUR");
-  const [ country, setCountry ] = useState(countryProp);
-  const providerValue = { account, setAccount, currentVariation, setCurrentVariation, country, setCountry };
+  const [ account, setAccount ] = useState(props.accountProp);
+  const [ currentVariation, setCurrentVariation ] = useState(props.currentVariationProp ? props.currentVariationProp : "EUR");
+  const [ country, setCountry ] = useState(props.countryProp);
 
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
-    script.src = "//" + (host || "connect.nosto.com") + "/include/" + accountProp;
+    script.src = "//" + (props.host || "connect.nosto.com") + "/include/" + props.accountProp;
     script.async = true;
     document.head.appendChild(script);
 
@@ -36,8 +29,8 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider value={providerValue}>
-      {children}
+    <NostoContext.Provider value={{ account, setAccount, currentVariation, setCurrentVariation, country, setCountry }}>
+      {props.children}
     </NostoContext.Provider>
   );
 };

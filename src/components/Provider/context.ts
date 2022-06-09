@@ -30,7 +30,7 @@ export function useNostoContext() {
   const context = useContext(NostoContext);
 
   if (!context) {
-    throw new Error('No cart context found');
+    throw new Error('No nosto context found');
   }
 
   return context;

@@ -1,15 +1,16 @@
 import React, { useContext, useEffect } from "react";
-import NostoContext from "../Provider/context";
+import { useNostoContext } from "../Provider/context";
 
 const NostoHome: React.FC = () => {
 
-
+  const { currentVariation } = useNostoContext();
+  
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
-        .setVariation("EUR")
+        .setVariation(currentVariation)
         .setResponseMode("HTML")
         .viewFrontPage()
         .setPlacements(api.placements.getPlacements())

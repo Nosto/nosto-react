@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import NostoContext from "../Provider/context";
+import { useNostoContext } from "../Provider/context";
 
 const NostoHome: React.FC = () => {
 
-  const { currentVariation } = useContext(NostoContext);
+  const { currentVariation } = useNostoContext();
   
   useEffect(() => {
     // @ts-ignore

@@ -1,10 +1,13 @@
 import React, { MouseEvent } from "react";
+import { useNavigate  } from 'react-router-dom';
 
 export interface PlacementProps {
   id: string;
 }
 
-const NostoPlacement: React.FC<PlacementProps> = ({ id }) => {
+const Placement: React.FC<PlacementProps> = ({ id }) => {
+  let navigate = useNavigate();
+
   const handleClick = (e: MouseEvent) => {
     // noinspection TypeScriptUnresolvedFunction
     // @ts-ignore
@@ -13,13 +16,13 @@ const NostoPlacement: React.FC<PlacementProps> = ({ id }) => {
       return;
     } else {
       e.preventDefault();
-      location.href = targetLink.href
-        .toString()
-        .replace(new URL(targetLink.href).origin, "");
+      navigate(
+        targetLink.href.toString().replace(new URL(targetLink.href).origin, "")
+      );
     }
   };
 
-  return (<div className="nosto_element" onClick={handleClick} id={id} />);
+  return (<div className="nosto_element" id={id} onClick={handleClick} />);
 };
 
-export default NostoPlacement;
+export default Placement;

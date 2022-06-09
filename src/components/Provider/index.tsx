@@ -9,8 +9,8 @@ interface NostoProviderProps {
   children: React.ReactElement;
 }
 
-const NostoProvider = (props: NostoProviderProps) => {
-
+const NostoProvider: React.FC<NostoProviderProps> = (props) => {
+  
   const [ account, setAccount ] = useState(props.accountProp);
   const [ currentVariation, setCurrentVariation ] = useState(props.currentVariationProp ? props.currentVariationProp : "EUR");
   const [ country, setCountry ] = useState(props.countryProp);

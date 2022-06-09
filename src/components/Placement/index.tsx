@@ -19,7 +19,7 @@ const NostoPlacement: React.FC<PlacementProps> = ({ id }) => {
     }
   };
 
-  return <div className="nosto_element" onClick={handleClick} id={id} />;
+  return (<div className="nosto_element" onClick={handleClick} id={id} />);
 };
 
 export default NostoPlacement;

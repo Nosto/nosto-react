@@ -3,7 +3,7 @@ import { useNostoContext } from "../Provider/context";
 
 const NostoHome: React.FC = () => {
 
-  const { currentVariationData } = useNostoContext();
+  const { currentVariationData, readyFlag } = useNostoContext();
   
   useEffect(() => {
     // @ts-ignore
@@ -20,7 +20,7 @@ const NostoHome: React.FC = () => {
           api.placements.injectCampaigns(data.recommendations);
         });
     });
-  }, [currentVariationData.currentVariation]);
+  }, [currentVariationData.currentVariation, readyFlag.ready === true]);
 
   return (
     <>

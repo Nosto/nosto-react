@@ -1,26 +1,48 @@
 import { createContext, useContext } from "react";
 
 interface NostoInterface {
-  account: string;
-  setAccount: (account: string) => void;
-  currentVariation: string;
-  setCurrentVariation: (variation: string) => void;
-  country: string;
-  setCountry: (country: string) => void;
+  accountData: {
+  account: string,
+  setAccount: React.Dispatch<React.SetStateAction<string>>
+  },
+  currentVariationData: {  
+    currentVariation: string,
+    setCurrentVariation: React.Dispatch<React.SetStateAction<string>>
+  },
+  countryData: {
+    country: string,
+    setCountry: React.Dispatch<React.SetStateAction<string>>
+  },
+  readyFlag: {
+    ready: boolean,
+    setReady: React.Dispatch<React.SetStateAction<boolean>>
+  }
 }
 
 /* tslint:disable:no-empty */
 const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
-  account: "",
-  // @ts-ignore
-  setAccount: (account) => {},
-  // @ts-ignore
-  currentVariation: "",
-  // @ts-ignore
-  setCurrentVariation: (variation) => {},
-  country: "",
-  setCountry: (country) => {}
+  accountData: {
+    account: "",
+    // @ts-ignore
+    setAccount: (account) => {},
+  },
+  currentVariationData: {
+    // @ts-ignore
+    currentVariation: "",
+    // @ts-ignore
+    setCurrentVariation: (variation) => {},
+  },
+  countryData: {
+    country: "",
+    // @ts-ignore
+    setCountry: (country) => {}
+  },
+  readyFlag: {
+    ready: false,
+    // @ts-ignore
+    setReady: (flag) => {}
+  }
 });
 /* tslint:enable:no-empty */
 

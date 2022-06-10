@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context";
 
 const NostoHome: React.FC = () => {
 
-  const { currentVariation } = useNostoContext();
+  const { currentVariationData } = useNostoContext();
   
   useEffect(() => {
     // @ts-ignore
     window.nostojs((api) => {
       api
         .defaultSession()
-        .setVariation(currentVariation)
+        .setVariation(currentVariationData.currentVariation)
         .setResponseMode("HTML")
         .viewFrontPage()
         .setPlacements(api.placements.getPlacements())
@@ -20,7 +20,7 @@ const NostoHome: React.FC = () => {
           api.placements.injectCampaigns(data.recommendations);
         });
     });
-  }, [currentVariation]);
+  }, [currentVariationData.currentVariation]);
 
   return (
     <>

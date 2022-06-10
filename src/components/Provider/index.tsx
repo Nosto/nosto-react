@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import NostoContext from "./context";
 
 interface NostoProviderProps {
@@ -7,13 +7,22 @@ interface NostoProviderProps {
   countryProp: string;
   host: string;
   children: React.ReactElement;
+  ready: boolean;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = (props) => {
   
   const [ account, setAccount ] = useState(props.accountProp);
-  const [ currentVariation, setCurrentVariation ] = useState(props.currentVariationProp ? props.currentVariationProp : "EUR");
+  const accountData = useMemo(() => ({ account, setAccount }), [account]);
+
+  const [ currentVariation, setCurrentVariation ] = useState(props.currentVariationProp);
+  const currentVariationData = useMemo(() => ({ currentVariation, setCurrentVariation }), [currentVariation]);
+
   const [ country, setCountry ] = useState(props.countryProp);
+  const countryData = useMemo(() => ({ country, setCountry }), [country]);
+
+  const [ ready, setReady ] = useState(props.ready);
+  const readyFlag = useMemo(() => ({ ready, setReady }), [ready]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -29,7 +38,7 @@ const NostoProvider: React.FC<NostoProviderProps> = (props) => {
   }, []);
 
   return (
-    <NostoContext.Provider value={{ account, setAccount, currentVariation, setCurrentVariation, country, setCountry }}>
+    <NostoContext.Provider value={{ accountData, currentVariationData, countryData, readyFlag }}>
       {props.children}
     </NostoContext.Provider>
   );

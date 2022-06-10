@@ -36,11 +36,11 @@ You should be using React Nosto if you want to:
 
 ##### Yarn:
 
-    yarn add react-nosto
+    yarn add @nosto/nosto-react
 
 ##### NPM:
 
-    npm install --save react-nosto
+    npm install --save @nosto/nosto-react
 
 
 

@@ -20,7 +20,7 @@ const NostoHome: React.FC = () => {
           api.placements.injectCampaigns(data.recommendations);
         });
     });
-  }, []);
+  }, [currentVariation]);
 
   return (
     <>

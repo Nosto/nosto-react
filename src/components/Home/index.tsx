@@ -7,20 +7,22 @@ const NostoHome: React.FC = () => {
   
   useEffect(() => {
     // @ts-ignore
-    window.nostojs((api) => {
-      api
-        .defaultSession()
-        .setVariation(currentVariationData.currentVariation)
-        .setResponseMode("HTML")
-        .viewFrontPage()
-        .setPlacements(api.placements.getPlacements())
-        .load()
-        .then((data: object) => {
-          // @ts-ignore
-          api.placements.injectCampaigns(data.recommendations);
-        });
-    });
-  }, [currentVariationData.currentVariation, readyFlag.ready === true]);
+    if (currentVariationData.currentVariation && readyFlag.ready) {
+      window.nostojs((api) => {
+        api
+          .defaultSession()
+          .setVariation(currentVariationData.currentVariation)
+          .setResponseMode("HTML")
+          .viewFrontPage()
+          .setPlacements(api.placements.getPlacements())
+          .load()
+          .then((data: object) => {
+            // @ts-ignore
+            api.placements.injectCampaigns(data.recommendations);
+          });
+      });
+    }
+  }, [currentVariationData.currentVariation]);
 
   return (
     <>

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { useNostoContext } from "../Provider/context";
+import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
 
   const { currentVariationData, readyFlag } = useNostoContext();
   
   useEffect(() => {
-    // @ts-ignore
     if (currentVariationData.currentVariation && readyFlag.ready) {
+      // @ts-ignore
       window.nostojs((api) => {
         api
           .defaultSession()

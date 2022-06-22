@@ -7,13 +7,10 @@ interface NostoProviderProps {
   countryProp: string;
   host: string;
   children: React.ReactElement;
-  ready: boolean;
+  countryLoadCompleteProp: boolean;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = (props) => {
-  
-  const [ account, setAccount ] = useState(props.accountProp);
-  const accountData = useMemo(() => ({ account, setAccount }), [account]);
 
   const [ currentVariation, setCurrentVariation ] = useState(props.currentVariationProp);
   const currentVariationData = useMemo(() => ({ currentVariation, setCurrentVariation }), [currentVariation]);
@@ -21,8 +18,8 @@ const NostoProvider: React.FC<NostoProviderProps> = (props) => {
   const [ country, setCountry ] = useState(props.countryProp);
   const countryData = useMemo(() => ({ country, setCountry }), [country]);
 
-  const [ ready, setReady ] = useState(props.ready);
-  const readyFlag = useMemo(() => ({ ready, setReady }), [ready]);
+  const [ value, setValue ] = useState(props.countryLoadCompleteProp);
+  const countryLoadComplete = useMemo(() => ({ value, setValue }), [value]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -38,7 +35,7 @@ const NostoProvider: React.FC<NostoProviderProps> = (props) => {
   }, []);
 
   return (
-    <NostoContext.Provider value={{ accountData, currentVariationData, countryData, readyFlag }}>
+    <NostoContext.Provider value={{ account: props.accountProp, currentVariationData, countryData, countryLoadComplete }}>
       {props.children}
     </NostoContext.Provider>
   );

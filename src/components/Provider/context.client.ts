@@ -1,10 +1,7 @@
 import { createContext, useContext } from "react";
 
 interface NostoInterface {
-  accountData: {
   account: string,
-  setAccount: React.Dispatch<React.SetStateAction<string>>
-  },
   currentVariationData: {  
     currentVariation: string,
     setCurrentVariation: React.Dispatch<React.SetStateAction<string>>
@@ -13,20 +10,16 @@ interface NostoInterface {
     country: string,
     setCountry: React.Dispatch<React.SetStateAction<string>>
   },
-  readyFlag: {
-    ready: boolean,
-    setReady: React.Dispatch<React.SetStateAction<boolean>>
+  countryLoadComplete: {
+    value: boolean,
+    setValue: React.Dispatch<React.SetStateAction<boolean>>
   }
 }
 
 /* tslint:disable:no-empty */
 const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
-  accountData: {
     account: "",
-    // @ts-ignore
-    setAccount: (account) => {},
-  },
   currentVariationData: {
     // @ts-ignore
     currentVariation: "",
@@ -38,10 +31,10 @@ const NostoContext = createContext<NostoInterface>({
     // @ts-ignore
     setCountry: (country) => {}
   },
-  readyFlag: {
-    ready: false,
+  countryLoadComplete: {
+    value: false,
     // @ts-ignore
-    setReady: (flag) => {}
+    setValue: (flag) => {}
   }
 });
 /* tslint:enable:no-empty */

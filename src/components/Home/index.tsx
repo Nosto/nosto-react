@@ -3,10 +3,10 @@ import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
 
-  const { currentVariationData, readyFlag } = useNostoContext();
+  const { currentVariationData, countryLoadComplete } = useNostoContext();
   
   useEffect(() => {
-    if (currentVariationData.currentVariation && readyFlag.ready) {
+    if (currentVariationData.currentVariation && countryLoadComplete.value) {
       // @ts-ignore
       window.nostojs((api) => {
         api

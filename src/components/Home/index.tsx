@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
-  console.log("HOME RENDERED 2");
   const { clientScriptLoaded } = useNostoContext();
-  console.log(clientScriptLoaded);
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {

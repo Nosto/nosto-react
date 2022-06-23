@@ -17,15 +17,17 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   const [clientScriptLoaded, setClientScriptLoaded] = React.useState(false);
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
-    script.async = true;
-    script.onload = () => {
-      console.log("Nosto client script loaded");
-      setClientScriptLoaded(true);
-    };
-    document.head.appendChild(script);
+    if (!document.querySelectorAll("[nosto-client-script]").length) {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
+      script.async = true;
+      script.setAttribute("nosto-client-script", "");
+      script.onload = () => {
+        setClientScriptLoaded(true);
+      };
+      document.head.appendChild(script);
+    }
 
     window.nostojs = (cb: Function) =>
       (window.nostojs.q = window.nostojs.q || []).push(cb);

@@ -26,6 +26,8 @@ export { default as NostoHome } from "./components/Home";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoPlacement } from "./components/Placement";
 // noinspection JSUnusedGlobalSymbols
-export { default as NostoProvider } from "./components/Provider";
+export { default as NostoProvider } from "./components/Provider/index.client";
+// noinspection JSUnusedGlobalSymbols
+export { NostoContext, useNostoContext } from "./components/Provider/context.client";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoSession } from "./components/Session";

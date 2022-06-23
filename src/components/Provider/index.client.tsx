@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NostoContext } from "./context";
+import { NostoContext } from "./context.client";
 
 interface NostoProviderProps {
   account: string;

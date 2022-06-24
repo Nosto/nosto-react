@@ -22,7 +22,7 @@ export { default as NostoSearch } from "./components/Search";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoOrder } from "./components/Order";
 // noinspection JSUnusedGlobalSymbols
-export { default as NostoHome } from "./components/Home";
+export { default as NostoHome } from "./components/Home/index.client";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoPlacement } from "./components/Placement";
 // noinspection JSUnusedGlobalSymbols

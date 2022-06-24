@@ -14,7 +14,12 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   host,
   children,
 }) => {
-  const [clientScriptLoaded, setClientScriptLoaded] = React.useState(false);
+  const [clientScriptLoadedState, setClientScriptLoadedState] =
+    React.useState(false);
+  const clientScriptLoaded = React.useMemo(
+    () => clientScriptLoadedState,
+    [clientScriptLoadedState]
+  );
 
   useEffect(() => {
     if (!document.querySelectorAll("[nosto-client-script]").length) {
@@ -24,7 +29,8 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       script.async = true;
       script.setAttribute("nosto-client-script", "");
       script.onload = () => {
-        setClientScriptLoaded(true);
+        console.log("client script loaded");
+        setClientScriptLoadedState(true);
       };
       document.head.appendChild(script);
     }

@@ -29,7 +29,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       script.async = true;
       script.setAttribute("nosto-client-script", "");
       script.onload = () => {
-        console.log("client script loaded");
+        console.log("Nosto client script loaded");
         setClientScriptLoadedState(true);
       };
       document.head.appendChild(script);

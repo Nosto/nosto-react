@@ -3,8 +3,10 @@ import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
   const { clientScriptLoaded } = useNostoContext();
+  console.log("Render Home", clientScriptLoaded);
   useEffect(() => {
     // @ts-ignore
+    console.log("useEffect Home");
     if (clientScriptLoaded) {
       window.nostojs((api: any) => {
         api

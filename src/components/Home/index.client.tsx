@@ -19,7 +19,7 @@ const NostoHome: React.FC = () => {
           });
       });
     }
-  }, []);
+  }, [clientScriptLoaded]);
 
   return (
     <>

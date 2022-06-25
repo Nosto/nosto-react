@@ -6,7 +6,7 @@ const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {
-      window.nostojs((api) => {
+      window.nostojs((api: any) => {
         api
           .defaultSession()
           .setResponseMode("HTML")

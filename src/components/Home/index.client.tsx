@@ -3,7 +3,6 @@ import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
   const { clientScriptLoaded, currentVariation } = useNostoContext();
-  console.log("render NostoHome");
   useEffect(() => {
     console.log("currentVariation: ", currentVariation);
     // @ts-ignore

@@ -4,7 +4,10 @@ import { useNostoContext } from "../Provider/context.client";
 const NostoHome: React.FC = () => {
   const { clientScriptLoaded, currentVariation } = useNostoContext();
   useEffect(() => {
-    console.log("currentVariation: ", currentVariation || undefined);
+    if (currentVariation) {
+      console.log("currentVariation: ", currentVariation);
+    }
+
     // @ts-ignore
     if (clientScriptLoaded) {
       window.nostojs((api: any) => {

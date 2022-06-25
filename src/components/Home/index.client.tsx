@@ -5,7 +5,7 @@ const NostoHome: React.FC = () => {
   const { clientScriptLoaded, currentVariation } = useNostoContext();
   console.log("render NostoHome");
   useEffect(() => {
-    console.log("useEffect NostoHome: ", currentVariation);
+    console.log("currentVariation: ", currentVariation);
     // @ts-ignore
     if (clientScriptLoaded) {
       window.nostojs((api: any) => {

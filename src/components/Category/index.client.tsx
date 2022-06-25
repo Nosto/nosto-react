@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
-  const { clientScriptLoaded } = useNostoContext();
+  const { clientScriptLoaded, currentVariation } = useNostoContext();
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {
       window.nostojs((api: any) => {
         api
           .defaultSession()
+          .setVariation(currentVariation)
           .setResponseMode("HTML")
           .viewCategory(category)
           .setPlacements(api.placements.getPlacements())
@@ -19,7 +20,7 @@ const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
           });
       });
     }
-  }, [clientScriptLoaded, category]);
+  }, [clientScriptLoaded, category, currentVariation]);
 
   return (
     <>

@@ -42,7 +42,9 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider value={{ account, clientScriptLoaded }}>
+    <NostoContext.Provider
+      value={{ account, clientScriptLoaded, currentVariation }}
+    >
       {children}
     </NostoContext.Provider>
   );

@@ -2,13 +2,16 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
-  const { clientScriptLoaded } = useNostoContext();
+  const { clientScriptLoaded, currentVariation } = useNostoContext();
+  console.log("render NostoHome");
   useEffect(() => {
+    console.log("useEffect NostoHome: ", currentVariation);
     // @ts-ignore
     if (clientScriptLoaded) {
       window.nostojs((api: any) => {
         api
           .defaultSession()
+          .setVariation(currentVariation)
           .setResponseMode("HTML")
           .viewFrontPage()
           .setPlacements(api.placements.getPlacements())
@@ -19,7 +22,7 @@ const NostoHome: React.FC = () => {
           });
       });
     }
-  }, [clientScriptLoaded]);
+  }, [clientScriptLoaded, currentVariation]);
 
   return (
     <>

@@ -6,11 +6,13 @@ interface NostoProviderProps {
   currentVariation: string;
   host: string;
   children: React.ReactElement;
+  multiCurrency: boolean;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
   account,
-  currentVariation,
+  currentVariation = "",
+  multiCurrency = false,
   host,
   children,
 }) => {
@@ -20,6 +22,9 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     () => clientScriptLoadedState,
     [clientScriptLoadedState]
   );
+
+  //Pass currentVariation as empty string if multiCurrency is disabled
+  currentVariation = multiCurrency ? currentVariation : "";
 
   useEffect(() => {
     if (!document.querySelectorAll("[nosto-client-script]").length) {

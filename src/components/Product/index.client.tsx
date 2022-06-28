@@ -37,9 +37,7 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
         {tagging?.variationId && (
           <span className="variation_id">{tagging.variationId}</span>
         )}
-        {tagging?.productId && (
-          <span className="product_id">{tagging.productId}</span>
-        )}
+        {product && <span className="product_id">{product}</span>}
         {tagging?.name && <span className="name">{tagging.name}</span>}
         {tagging?.url && <span className="url">{tagging.url.toString()}</span>}
         {tagging?.imageUrl && (

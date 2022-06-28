@@ -2,26 +2,30 @@ import { Product } from "../../types";
 import stringinate from "../../utils/stringinate";
 import React, { useEffect } from "react";
 import snakeize from "snakeize";
+import { useNostoContext } from "../Provider/context.client";
 
 const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
   product,
   tagging,
 }) => {
+  const { clientScriptLoaded, currentVariation } = useNostoContext();
   useEffect(() => {
     // @ts-ignore
-    window.nostojs((api) => {
-      api
-        .defaultSession()
-        .setResponseMode("HTML")
-        .viewProduct(snakeize(stringinate(tagging)))
-        .setPlacements(api.placements.getPlacements())
-        .load()
-        .then((data: object) => {
-          // @ts-ignore
-          api.placements.injectCampaigns(data.recommendations);
-        });
-    });
-  }, []);
+    if (clientScriptLoaded) {
+      window.nostojs((api) => {
+        api
+          .defaultSession()
+          .setResponseMode("HTML")
+          .viewProduct(product)
+          .setPlacements(api.placements.getPlacements())
+          .load()
+          .then((data: object) => {
+            // @ts-ignore
+            api.placements.injectCampaigns(data.recommendations);
+          });
+      });
+    }
+  }, [clientScriptLoaded, currentVariation]);
 
   return (
     <>

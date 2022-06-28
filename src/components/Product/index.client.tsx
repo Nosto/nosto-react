@@ -1,7 +1,5 @@
 import { Product } from "../../types";
-import stringinate from "../../utils/stringinate";
 import React, { useEffect } from "react";
-import snakeize from "snakeize";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({

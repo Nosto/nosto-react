@@ -20,7 +20,7 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation]);
+  }, [clientScriptLoaded, currentVariation, query]);
 
   return (
     <>

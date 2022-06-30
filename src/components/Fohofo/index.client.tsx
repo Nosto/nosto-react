@@ -9,6 +9,7 @@ const NostoFohofo: React.FC = () => {
       window.nostojs((api: any) => {
         api
           .defaultSession()
+          .setVariation(currentVariation)
           .setResponseMode("HTML")
           .viewNotFound()
           .setPlacements(api.placements.getPlacements())

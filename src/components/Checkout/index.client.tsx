@@ -9,6 +9,7 @@ const NostoCheckout: React.FC = () => {
       window.nostojs((api: any) => {
         api
           .defaultSession()
+          .setVariation(currentVariation)
           .setResponseMode("HTML")
           .viewCart()
           .setPlacements(api.placements.getPlacements())

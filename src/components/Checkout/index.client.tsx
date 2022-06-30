@@ -1,21 +1,26 @@
 import React, { useEffect } from "react";
+import { useNostoContext } from "../Provider/context.client";
 
 const NostoCheckout: React.FC = () => {
+  const { clientScriptLoaded, currentVariation } = useNostoContext();
   useEffect(() => {
     // @ts-ignore
-    window.nostojs((api) => {
-      api
-        .defaultSession()
-        .setResponseMode("HTML")
-        .viewCart()
-        .setPlacements(api.placements.getPlacements())
-        .load()
-        .then((data: object) => {
-          // @ts-ignore
-          api.placements.injectCampaigns(data.recommendations);
-        });
-    });
-  }, []);
+    if (clientScriptLoaded) {
+      window.nostojs((api: any) => {
+        api
+          .defaultSession()
+          .setVariation(currentVariation)
+          .setResponseMode("HTML")
+          .viewCart()
+          .setPlacements(api.placements.getPlacements())
+          .load()
+          .then((data: object) => {
+            // @ts-ignore
+            api.placements.injectCampaigns(data.recommendations);
+          });
+      });
+    }
+  }, [clientScriptLoaded, currentVariation]);
 
   return (
     <>

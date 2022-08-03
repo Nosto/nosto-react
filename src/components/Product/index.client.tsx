@@ -10,21 +10,24 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {
-      window.nostojs((api: any) => {
-        api
-          .defaultSession()
-          .setVariation(currentVariation)
-          .setResponseMode("HTML")
-          .viewProduct(product)
-          .setPlacements(api.placements.getPlacements())
-          .load()
-          .then((data: object) => {
-            // @ts-ignore
-            api.placements.injectCampaigns(data.recommendations);
-          });
-      });
+      window.nostojs(
+        (api: any) => {
+          api
+            .defaultSession()
+            .setVariation(currentVariation)
+            .setResponseMode("HTML")
+            .viewProduct(product)
+            .setPlacements(api.placements.getPlacements())
+            .load()
+            .then((data: object) => {
+              // @ts-ignore
+              api.placements.injectCampaigns(data.recommendations);
+            });
+        },
+        [clientScriptLoaded, currentVariation, product]
+      );
     }
-  }, [clientScriptLoaded, currentVariation]);
+  });
 
   return (
     <>

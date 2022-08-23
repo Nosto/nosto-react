@@ -13,9 +13,8 @@ interface NostoSessionProps {
 const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   const { clientScriptLoaded } = useNostoContext();
   useDeepCompareEffect(() => {
-    const currentCart = cart || undefined;
-    
-    const currentCustomer = customer || undefined;
+    const currentCart = cart ? snakeize(cart) : undefined;    
+    const currentCustomer = customer ? snakeize(customer) : undefined;
     console.debug(currentCart,currentCustomer);
 
     // @ts-ignore
@@ -24,8 +23,8 @@ const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
         api
           .defaultSession()
           .setResponseMode("HTML")
-          .setCart(snakeize(currentCart))
-          .setCustomer(snakeize(currentCustomer))
+          .setCart(currentCart)
+          .setCustomer(currentCustomer)
           .viewOther()
           .load();
       });

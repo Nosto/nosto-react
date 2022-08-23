@@ -15,7 +15,6 @@ const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   useDeepCompareEffect(() => {
     const currentCart = cart ? snakeize(cart) : undefined;    
     const currentCustomer = customer ? snakeize(customer) : undefined;
-    console.debug(currentCart,currentCustomer);
 
     // @ts-ignore
     if (clientScriptLoaded) {

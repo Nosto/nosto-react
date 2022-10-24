@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { useNostoContext } from "../Provider/context.client";
+import { useNostoSearchContext } from "../Provider/context.client";
 
 const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
-  const { clientScriptLoaded, currentVariation } = useNostoContext();
+  const { clientScriptLoaded, currentVariation } = useNostoSearchContext();
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {

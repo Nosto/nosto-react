@@ -1,10 +1,54 @@
+import { createContext } from "react";
+import { SearchConfig } from "./types";
+
 declare global {
   // noinspection JSUnusedGlobalSymbols
   interface Window {
     nostojs: any;
     nosto: any;
+    nostoTemplatesFileResolver?: (path: string) => string;
+    ga: any;
+    _gaq: {
+        push: (
+            event:
+                | [
+                      string,
+                      string,
+                      string,
+                      string,
+                      string | undefined,
+                      boolean | undefined
+                  ]
+                | [string, string, string, string, string]
+                | [string, string, string, string]
+                | [string, string, string]
+                | [string, string]
+        ) => void
+    };
   }
 }
+
+export const defaultConfig: SearchConfig = {
+  contentCssSelector: '',
+  inputCssSelector: '',
+  formCssSelector: '',
+  merchant: '',
+  apiKey: '',
+  searchApiUrl: '',
+  autocompleteMinLength: 2,
+  serpUrlMapping:  {
+      name: 'name',
+      query: 'query',
+      segments: 'segments',
+      customRules: 'customRules',
+      explain: 'explain',
+      time: 'time',
+      products: 'products',
+      keywords: 'keywords'
+  }
+}
+
+export const ConfigContext = createContext(defaultConfig)
 
 export * from "./types";
 // noinspection JSUnusedGlobalSymbols

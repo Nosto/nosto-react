@@ -1,12 +1,8 @@
-import { createContext, useContext } from "react";
-
+import { createContext, useContext, useEffect, useState } from "react";
+import { SearchState } from "../../types";
+import { isEqual, merge } from "../../utils/search";
+import { defaultSearchState, SearchStore } from "../Store/index.client";
 export interface NostoInterface {
-  account: string;
-  clientScriptLoaded: boolean;
-  currentVariation: string;
-}
-export interface NostoSearchInterface {
-  id: string;
   account: string;
   clientScriptLoaded: boolean;
   currentVariation: string;
@@ -16,13 +12,6 @@ export const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
   account: undefined,
   currentVariation: "",
-});
-
-export const NostoSearchContext = createContext<NostoSearchInterface>({
-  // @ts-ignore
-  account: undefined,
-  currentVariation: "",
-  id: "",
 });
 
 /* tslint:enable:no-empty */
@@ -36,8 +25,14 @@ export function useNostoContext() {
   return context;
 }
 
+export const NostoSearchContext = createContext<SearchState>(defaultSearchState);
+
 /* tslint:enable:no-empty */
-export function useNostoSearchContext() {
+export function useNostoSearchContext({
+  store,
+}: {
+  store: SearchStore
+}) {
   const context = useContext(NostoSearchContext);
 
   if (!context) {

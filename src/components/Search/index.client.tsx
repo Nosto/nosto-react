@@ -1,15 +1,22 @@
-import React, { useEffect } from "react";
+import React, { ComponentType, useEffect, useState } from "react";
 import { useNostoSearchContext } from "../Provider/context.client";
+import { SearchStore } from "../Store/index.client";
 
-const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
-  const { clientScriptLoaded, currentVariation } = useNostoSearchContext();
+const NostoSearch: React.FC<{ query: string, store: SearchStore, Component: ComponentType }> = ({ query, store, Component }) => {
+  const { loading } = useNostoSearchContext({store});
+
+  const [state, setState] = useState(store.getState())
+
+  useEffect(() => {
+      store.onChange((v) => v, setState)
+  }, [store])
+  
   useEffect(() => {
     // @ts-ignore
-    if (clientScriptLoaded) {
+    if (!loading) {
       window.nostojs((api: any) => {
         api
           .defaultSession()
-          .setVariation(currentVariation)
           .setResponseMode("HTML")
           .viewSearch(query)
           .setPlacements(api.placements.getPlacements())
@@ -20,7 +27,7 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, query]);
+  }, [loading, query]);
 
   return (
     <>
@@ -29,6 +36,9 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
       </div>
       <div className="nosto_search" style={{ display: "none" }}>
         {query}
+      </div>
+      <div className="">
+        <Component />
       </div>
     </>
   );

@@ -12,6 +12,7 @@
     "nosto",
     "personalisation"
   ],
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -41,8 +42,8 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2"
   },
-  "main": "./dist/index.umd.client.js",
-  "module": "./dist/index.es.client.js",
+  "main": "dist/index.umd.client.js",
+  "module": "dist/index.es.client.js",
   "types": "./src/types.ts",
   "exports": {
     ".": {

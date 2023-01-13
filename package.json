@@ -12,6 +12,7 @@
     "nosto",
     "personalisation"
   ],
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -30,25 +31,18 @@
   "dependencies": {
     "snakeize": "^0.1.0",
     "use-deep-compare-effect": "^1.3.1",
-    "@vitejs/plugin-react": "^3.0.0",
-    "vite": "^4.0.0"
-  },
-  "peerDependencies": {
-    "vite": "^4.0.0"
+    "@vitejs/plugin-react": "^3.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "vite": "^4.0.0",
     "typescript": "^4.6.3",
     "prettier": "^2.0.5",
-    "rimraf": "^3.0.2",
-    "@shopify/hydrogen": "^1.6.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "rimraf": "^3.0.2"
   },
-  "type": "module",
-  "main": "./dist/index.umd.client.js",
-  "module": "./dist/index.es.client.js",
+  "main": "dist/index.umd.client.js",
+  "module": "dist/index.es.client.js",
   "types": "./src/types.ts",
   "exports": {
     ".": {

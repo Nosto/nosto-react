@@ -42,14 +42,15 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2"
   },
-  "main": "./dist/index.es.client.js",
+  "main": "./dist/index.umd.client.js",
   "module": "./dist/index.es.client.js",
   "types": "./src/types.ts",
   "exports": {
     ".": {
       "import": "./dist/index.es.client.js",
       "require": "./dist/index.umd.client.js"
-    }
+    },
+    "./shopify-hydrogen": "./dist/index.es.client.js"
   },
   "bugs": {
     "url": "https://github.com/Nosto/nosto-react/issues"

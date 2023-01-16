@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview",    
     "prepare": "vite build",
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",
@@ -49,7 +49,8 @@
     ".": {
       "import": "./dist/index.es.client.js",
       "require": "./dist/index.umd.client.js"
-    }
+    },
+    "./shopify-hydrogen": "./dist/index.es.client.js"
   },
   "bugs": {
     "url": "https://github.com/Nosto/nosto-react/issues"

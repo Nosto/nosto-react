@@ -42,7 +42,7 @@ _*Note: dynamic placements are not supported on Shopify Hydrogen due to the Reac
 
 ##### NPM:
 
-    npm install --save @nosto/nosto-react
+    npm install @nosto/nosto-react
 
 
 
@@ -54,7 +54,7 @@ There’s one very specific widget in Nosto React and it is the `NostoProvider` 
 
 This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub. This widget wraps all other React Nosto widgets. Here’s how:
 
-```tsx
+```jsx
 import { NostoProvider } from "@nosto/nosto-react";
 
 <NostoProvider account="your-nosto-account-id">
@@ -82,8 +82,8 @@ The `NostoSession` component makes it very easy to keep the session up to date s
 
 The `cart` prop requires a value that adheres to the type `Cart`, while the `customer` prop requires a value that adheres to the type `Customer`.
 
-```tsx
-import { Cart, Customer, Item, NostoSession } from "@nosto/nosto-react";
+```jsx
+import { NostoSession } from "@nosto/nosto-react";
 
 <>
 <Meta/>
@@ -114,7 +114,7 @@ By default, your account, when created, has <u>four</u> front-page placements na
 
 The `<NostoHome \>` component needs to be added after the placements. Content and recommendations will be rendered through this component.
 
-```tsx
+```jsx
 import { NostoHome, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="front-page">
@@ -139,7 +139,7 @@ By default, your account, when created, has <u>three</u> product-page placements
 
 The `<NostoProduct \>` component needs to be added after the placements. Content and recommendations will be rendered through this component. Pass in the product ID via the `product` prop to pass this information back to Nosto.
 
-```tsx
+```jsx
 import { NostoPlacement, NostoProduct } from "@nosto/nosto-react";
 
 <div className="product-page">
@@ -161,7 +161,7 @@ You can personalise your search pages by using the `NostoSearch` component. The 
 
 By default, your account, when created, has <u>two</u> search-page placements named `searchpage-nosto-1` and `searchpage-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
-```tsx
+```jsx
 import { NostoPlacement, NostoSearch } from "@nosto/nosto-react";
 
 <div className="search-page">
@@ -184,7 +184,7 @@ You can personalise your category and collection pages by using the `NostoCatego
 
 By default, your account, when created, has <u>two</u> category placements named `categorypage-nosto-1` and `categorypage-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
-```tsx
+```jsx
 import { NostoCategory, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="category-page">
@@ -207,7 +207,7 @@ You can personalise your cart and checkout pages by using the `NostoCheckout` co
 
 By default, your account, when created, has <u>two</u> cart-page placements named `categorypage-nosto-1` and `categorypage-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
-```tsx
+```jsx
 import { NostoCheckout, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="checkout-page">
@@ -228,7 +228,7 @@ You can personalise your cart and checkout pages by using the `Nosto404` compone
 
 By default, your account, when created, has three 404-page placements named `notfound-nosto-1`, `notfound-nosto-2` and `notfound-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
-```tsx
+```jsx
 import { Nosto404, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="notfound-page">
@@ -250,7 +250,7 @@ You can personalise your miscellaneous pages by using the `NostoOther` component
 
 By default, your account, when created, has two other-page placements named `other-nosto-1` and `other-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
-```tsx
+```jsx
 import { NostoOther, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="other-page">
@@ -273,7 +273,7 @@ By default, your account, when created, has one other-page placement named `than
 
 The `order` prop requires a value that adheres to the type `Purchase`.
 
-```tsx
+```jsx
 import { Buyer, Item, NostoOrder, NostoPlacement, Purchase } from "@nosto/nosto-react";
 
 <div className="thankyou-page">

@@ -210,12 +210,12 @@ By default, your account, when created, has <u>two</u> cart-page placements name
 ```tsx
 import { NostoCheckout, NostoPlacement } from "@nosto/nosto-react";
 
-<div className="-page">
+<div className="checkout-page">
   ...
   ...
   ...
-  <NostoPlacement id="categorypage-nosto-1" />
-  <NostoPlacement id="categorypage-nosto-2" />
+  <NostoPlacement id="checkout-nosto-1" />
+  <NostoPlacement id="checkout-nosto-2" />
   <NostoCheckout />
 </div>
 ```
@@ -253,7 +253,7 @@ By default, your account, when created, has two other-page placements named `oth
 ```tsx
 import { NostoOther, NostoPlacement } from "@nosto/nosto-react";
 
-<div className="notfound-page">
+<div className="other-page">
   ...
   ...
   ...

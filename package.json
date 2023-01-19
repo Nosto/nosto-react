@@ -1,7 +1,7 @@
 {
   "name": "@nosto/nosto-react",
   "description": "Component library to simply implementing Nosto on React.",
-  "version": "0.1.5",
+  "version": "0.1.10",
   "author": "Mridang Agarwalla, Dominik Gilg",
   "license": "ISC",
   "repository": {
@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
+    "preview": "vite preview",    
     "prepare": "vite build",
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",
@@ -28,31 +28,27 @@
     "src"
   ],
   "dependencies": {
-    "@nosto/nosto-react": "^0.1.4",
-    "@vitejs/plugin-react": "^1.3.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router": "^6.3.0",
-    "react-router-dom": "^6.3.0",
     "snakeize": "^0.1.0",
-    "use-deep-compare-effect": "^1.3.1"
+    "use-deep-compare-effect": "^1.3.1",
+    "@vitejs/plugin-react": "^1.3.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "prettier": "^2.0.5",
-    "rimraf": "^3.0.2",
+    "vite": "^2.9.9",
     "typescript": "^4.6.3",
-    "vite": "^2.9.9"
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2"
   },
-  "main": "./dist/index.es.client.js",
+  "main": "./dist/index.umd.client.js",
   "module": "./dist/index.es.client.js",
   "types": "./src/types.ts",
   "exports": {
     ".": {
       "import": "./dist/index.es.client.js",
       "require": "./dist/index.umd.client.js"
-    }
+    },
+    "./shopify-hydrogen": "./dist/index.es.client.js"
   },
   "bugs": {
     "url": "https://github.com/Nosto/nosto-react/issues"

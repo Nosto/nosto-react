@@ -6,7 +6,14 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
   product,
   tagging,
 }) => {
-  const { clientScriptLoaded, currentVariation } = useNostoContext();
+  const { clientScriptLoaded, currentVariation, renderFunction } =
+    useNostoContext();
+
+  const responseMode =
+    renderFunction && typeof renderFunction == "function"
+      ? "JSON_ORIGINAL"
+      : "HTML";
+
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {
@@ -14,17 +21,21 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
         (api: any) => {
           api
             .defaultSession()
-            .setVariation(currentVariation)
             .setResponseMode("HTML")
             .viewProduct(product)
             .setPlacements(api.placements.getPlacements())
             .load()
             .then((data: object) => {
-              // @ts-ignore
-              api.placements.injectCampaigns(data.recommendations);
+              if (responseMode == "HTML") {
+                // @ts-ignore
+                api.placements.injectCampaigns(data.recommendations);
+              } else {
+                // @ts-ignore
+                renderFunction(data.campaigns);
+              }
             });
         },
-        [clientScriptLoaded, currentVariation, product]
+        [clientScriptLoaded, currentVariation, product, renderFunction]
       );
     }
   });

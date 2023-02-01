@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoOther: React.FC = () => {
-  const { clientScriptLoaded, currentVariation } = useNostoContext();
+  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
+    useNostoContext();
+
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {
@@ -10,17 +12,22 @@ const NostoOther: React.FC = () => {
         api
           .defaultSession()
           .setVariation(currentVariation)
-          .setResponseMode("HTML")
+          .setResponseMode(responseMode)
           .viewOther()
           .setPlacements(api.placements.getPlacements())
           .load()
           .then((data: object) => {
-            // @ts-ignore
-            api.placements.injectCampaigns(data.recommendations);
+            if (responseMode == "HTML") {
+              // @ts-ignore
+              api.placements.injectCampaigns(data.recommendations);
+            } else {
+              // @ts-ignore
+              renderFunction(data.campaigns);
+            }
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation]);
+  }, [clientScriptLoaded, currentVariation, renderFunction]);
 
   return (
     <>

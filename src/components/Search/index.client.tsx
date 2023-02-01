@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
-  const { clientScriptLoaded, currentVariation } = useNostoContext();
+  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
+    useNostoContext();
+
   useEffect(() => {
     // @ts-ignore
     if (clientScriptLoaded) {
@@ -10,17 +12,22 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
-          .setResponseMode("HTML")
+          .setResponseMode(responseMode)
           .viewSearch(query)
           .setPlacements(api.placements.getPlacements())
           .load()
           .then((data: object) => {
-            // @ts-ignore
-            api.placements.injectCampaigns(data.recommendations);
+            if (responseMode == "HTML") {
+              // @ts-ignore
+              api.placements.injectCampaigns(data.recommendations);
+            } else {
+              // @ts-ignore
+              renderFunction(data.campaigns);
+            }
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, query]);
+  }, [clientScriptLoaded, currentVariation, query, renderFunction]);
 
   return (
     <>

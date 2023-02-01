@@ -7,6 +7,7 @@ interface NostoProviderProps {
   host: string;
   children: React.ReactElement;
   multiCurrency: boolean;
+  renderFunction?: Function
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
@@ -15,6 +16,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   multiCurrency = false,
   host,
   children,
+  renderFunction
 }) => {
   const [clientScriptLoadedState, setClientScriptLoadedState] =
     React.useState(false);
@@ -47,9 +49,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider
-      value={{ account, clientScriptLoaded, currentVariation }}
-    >
+    <NostoContext.Provider value={{ account, clientScriptLoaded, currentVariation, renderFunction}}>
       {children}
     </NostoContext.Provider>
   );

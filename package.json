@@ -1,7 +1,7 @@
 {
   "name": "@nosto/nosto-react",
   "description": "Component library to simply implementing Nosto on React.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Mridang Agarwalla, Dominik Gilg",
   "license": "ISC",
   "repository": {
@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",    
+    "preview": "vite preview",
     "prepare": "vite build",
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",

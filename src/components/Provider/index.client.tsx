@@ -7,7 +7,7 @@ interface NostoProviderProps {
   host: string;
   children: React.ReactElement;
   multiCurrency: boolean;
-  renderFunction?: Function
+  renderFunction?: Function;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
@@ -16,7 +16,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   multiCurrency = false,
   host,
   children,
-  renderFunction
+  renderFunction,
 }) => {
   const [clientScriptLoadedState, setClientScriptLoadedState] =
     React.useState(false);
@@ -24,6 +24,10 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     () => clientScriptLoadedState,
     [clientScriptLoadedState]
   );
+
+  //Set responseMode:
+  const responseMode =
+    typeof renderFunction == "function" ? "JSON_ORIGINAL" : "HTML";
 
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";
@@ -49,7 +53,15 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   }, []);
 
   return (
-    <NostoContext.Provider value={{ account, clientScriptLoaded, currentVariation, renderFunction}}>
+    <NostoContext.Provider
+      value={{
+        account,
+        clientScriptLoaded,
+        currentVariation,
+        renderFunction,
+        responseMode,
+      }}
+    >
       {children}
     </NostoContext.Provider>
   );

@@ -5,6 +5,7 @@ export interface NostoInterface {
   clientScriptLoaded: boolean;
   currentVariation: string;
   renderFunction?: Function;
+  responseMode: string;
 }
 
 /* tslint:disable:no-empty */
@@ -12,7 +13,7 @@ export const NostoContext = createContext<NostoInterface>({
   // @ts-ignore
   account: undefined,
   currentVariation: "",
-  renderFunction: undefined
+  renderFunction: undefined,
 });
 
 /* tslint:enable:no-empty */

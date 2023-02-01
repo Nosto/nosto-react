@@ -2,9 +2,13 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
-  const { clientScriptLoaded, currentVariation, renderFunction } = useNostoContext();
+  const { clientScriptLoaded, currentVariation, renderFunction } =
+    useNostoContext();
 
-  const responseMode = renderFunction && typeof renderFunction == "function" ? "JSON_ORIGINAL" : "HTML";
+  const responseMode =
+    renderFunction && typeof renderFunction == "function"
+      ? "JSON_ORIGINAL"
+      : "HTML";
 
   useEffect(() => {
     // @ts-ignore
@@ -17,18 +21,18 @@ const NostoHome: React.FC = () => {
           .viewFrontPage()
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {            
-            if(responseMode == "HTML"){   
-              // @ts-ignore          
-              api.placements.injectCampaigns(data.recommendations);
-            }else{
+          .then((data: object) => {
+            if (responseMode == "HTML") {
               // @ts-ignore
-              renderFunction(data.campaigns)
-            }            
+              api.placements.injectCampaigns(data.recommendations);
+            } else {
+              // @ts-ignore
+              renderFunction(data.campaigns);
+            }
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation]);
+  }, [clientScriptLoaded, currentVariation, renderFunction]);
 
   return (
     <>

@@ -6,13 +6,8 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
   product,
   tagging,
 }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction } =
+  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
     useNostoContext();
-
-  const responseMode =
-    renderFunction && typeof renderFunction == "function"
-      ? "JSON_ORIGINAL"
-      : "HTML";
 
   useEffect(() => {
     // @ts-ignore

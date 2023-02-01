@@ -2,13 +2,8 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction } =
+  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
     useNostoContext();
-
-  const responseMode =
-    renderFunction && typeof renderFunction == "function"
-      ? "JSON_ORIGINAL"
-      : "HTML";
 
   useEffect(() => {
     // @ts-ignore

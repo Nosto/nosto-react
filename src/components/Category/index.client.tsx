@@ -2,13 +2,8 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction } =
+  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
     useNostoContext();
-
-  const responseMode =
-    renderFunction && typeof renderFunction == "function"
-      ? "JSON_ORIGINAL"
-      : "HTML";
 
   useEffect(() => {
     // @ts-ignore

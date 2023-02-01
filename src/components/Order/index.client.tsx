@@ -8,13 +8,8 @@ export interface OrderProps {
 }
 
 const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction } =
+  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
     useNostoContext();
-
-  const responseMode =
-    renderFunction && typeof renderFunction == "function"
-      ? "JSON_ORIGINAL"
-      : "HTML";
 
   useEffect(() => {
     // @ts-ignore

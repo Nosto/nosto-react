@@ -25,7 +25,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     [clientScriptLoadedState]
   );
 
-  //Set responseMode:
+  //Set responseMode for loading campaigns:
   const responseMode =
     typeof renderFunction == "function" ? "JSON_ORIGINAL" : "HTML";
 

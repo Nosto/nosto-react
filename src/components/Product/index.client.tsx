@@ -21,7 +21,7 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
         (api: any) => {
           api
             .defaultSession()
-            .setResponseMode("HTML")
+            .setResponseMode(responseMode)
             .viewProduct(product)
             .setPlacements(api.placements.getPlacements())
             .load()

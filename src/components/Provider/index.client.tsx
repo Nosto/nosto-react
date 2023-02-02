@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, isValidElement } from "react";
 import { NostoContext } from "./context.client";
 
 interface NostoProviderProps {
@@ -7,7 +7,7 @@ interface NostoProviderProps {
   host: string;
   children: React.ReactElement;
   multiCurrency: boolean;
-  renderFunction?: Function;
+  RecommendationComponent?: React.ReactComponentElement<any>;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
@@ -16,7 +16,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   multiCurrency = false,
   host,
   children,
-  renderFunction,
+  RecommendationComponent,
 }) => {
   const [clientScriptLoadedState, setClientScriptLoadedState] =
     React.useState(false);
@@ -26,8 +26,9 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   );
 
   //Set responseMode for loading campaigns:
-  const responseMode =
-    typeof renderFunction == "function" ? "JSON_ORIGINAL" : "HTML";
+  const responseMode = isValidElement(RecommendationComponent)
+    ? "JSON_ORIGINAL"
+    : "HTML";
 
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";
@@ -58,7 +59,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
         account,
         clientScriptLoaded,
         currentVariation,
-        renderFunction,
+        RecommendationComponent,
         responseMode,
       }}
     >

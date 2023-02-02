@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, ReactComponentElement } from "react";
 
 export interface NostoInterface {
   account: string;
@@ -6,6 +6,7 @@ export interface NostoInterface {
   currentVariation: string;
   renderFunction?: Function;
   responseMode: string;
+  RecommendationComponent?: ReactComponentElement<any>;
 }
 
 /* tslint:disable:no-empty */

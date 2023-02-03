@@ -6,7 +6,8 @@ export interface NostoInterface {
   currentVariation: string;
   renderFunction?: Function;
   responseMode: string;
-  RecommendationComponent?: ReactComponentElement<any>;
+  recommendationComponent?: any;
+  renderCampaigns: Function;
 }
 
 /* tslint:disable:no-empty */

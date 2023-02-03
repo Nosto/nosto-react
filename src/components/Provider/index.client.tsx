@@ -1,5 +1,6 @@
-import React, { useEffect, isValidElement } from "react";
+import React, { useEffect, isValidElement, createElement } from "react";
 import { NostoContext } from "./context.client";
+import { createRoot } from "react-dom/client";
 
 interface NostoProviderProps {
   account: string;
@@ -7,7 +8,7 @@ interface NostoProviderProps {
   host: string;
   children: React.ReactElement;
   multiCurrency: boolean;
-  RecommendationComponent?: React.ReactComponentElement<any>;
+  recommendationComponent?: any;
 }
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
@@ -16,7 +17,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   multiCurrency = false,
   host,
   children,
-  RecommendationComponent,
+  recommendationComponent,
 }) => {
   const [clientScriptLoadedState, setClientScriptLoadedState] =
     React.useState(false);
@@ -26,12 +27,45 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   );
 
   //Set responseMode for loading campaigns:
-  const responseMode = isValidElement(RecommendationComponent)
+  const responseMode = isValidElement(recommendationComponent)
     ? "JSON_ORIGINAL"
     : "HTML";
 
+  //RecommendationComponent for client-side rendering:
+  function RecommendationComponentWrapper({
+    nostoRecommendation,
+  }: {
+    nostoRecommendation?: object;
+  }) {
+    return React.cloneElement(recommendationComponent, { nostoRecommendation });
+  }
+
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";
+
+  // CLIENT-SIDE RENDERING FOR RECS:
+  const renderCampaigns = function (api: any, campaigns: any) {
+    console.log("renderCampaigns!");
+
+    //Inject content campaigns as usual
+    api.placements.injectCampaigns(campaigns.content);
+
+    //Render recommendation component into placements:
+    for (const key in campaigns.recommendations) {
+      let recommendation = campaigns.recommendations[key];
+      let placementSelector = "#" + key;
+      let placement = () => document.querySelector(placementSelector);
+      // @ts-ignore
+      placement()?.replaceWith(placement().cloneNode());
+
+      //@ts-ignore
+      createRoot(placement()).render(
+        <RecommendationComponentWrapper
+          nostoRecommendation={recommendation}
+        ></RecommendationComponentWrapper>
+      );
+    }
+  };
 
   useEffect(() => {
     if (!document.querySelectorAll("[nosto-client-script]").length) {
@@ -59,8 +93,9 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
         account,
         clientScriptLoaded,
         currentVariation,
-        RecommendationComponent,
         responseMode,
+        renderCampaigns,
+        recommendationComponent,
       }}
     >
       {children}

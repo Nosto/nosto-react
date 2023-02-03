@@ -13,7 +13,7 @@ interface NostoSessionProps {
 const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   const { clientScriptLoaded } = useNostoContext();
   useDeepCompareEffect(() => {
-    const currentCart = cart ? snakeize(cart) : undefined;    
+    const currentCart = cart ? snakeize(cart) : undefined;
     const currentCustomer = customer ? snakeize(customer) : undefined;
 
     // @ts-ignore

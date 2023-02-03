@@ -8,8 +8,13 @@ export interface OrderProps {
 }
 
 const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
-    useNostoContext();
+  const {
+    clientScriptLoaded,
+    currentVariation,
+    responseMode,
+    renderCampaigns,
+    recommendationComponent,
+  } = useNostoContext();
 
   useEffect(() => {
     // @ts-ignore
@@ -27,13 +32,14 @@ const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
               // @ts-ignore
               api.placements.injectCampaigns(data.recommendations);
             } else {
+              console.log("render CSR");
               // @ts-ignore
-              renderFunction(data.campaigns);
+              renderCampaigns(api, data.campaigns);
             }
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, renderFunction]);
+  }, [clientScriptLoaded, currentVariation, recommendationComponent]);
 
   return (
     <>

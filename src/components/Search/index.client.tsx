@@ -2,8 +2,13 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
-    useNostoContext();
+  const {
+    clientScriptLoaded,
+    currentVariation,
+    responseMode,
+    renderCampaigns,
+    recommendationComponent,
+  } = useNostoContext();
 
   useEffect(() => {
     // @ts-ignore
@@ -21,13 +26,14 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
               // @ts-ignore
               api.placements.injectCampaigns(data.recommendations);
             } else {
+              console.log("render CSR");
               // @ts-ignore
-              renderFunction(data.campaigns);
+              renderCampaigns(api, data.campaigns);
             }
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, query, renderFunction]);
+  }, [clientScriptLoaded, currentVariation, query, recommendationComponent]);
 
   return (
     <>

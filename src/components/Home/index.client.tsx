@@ -2,8 +2,15 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
-  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
-    useNostoContext();
+  const {
+    clientScriptLoaded,
+    currentVariation,
+    responseMode,
+    renderCampaigns,
+    recommendationComponent,
+  } = useNostoContext();
+
+  console.log("home render", responseMode);
 
   useEffect(() => {
     // @ts-ignore
@@ -21,13 +28,14 @@ const NostoHome: React.FC = () => {
               // @ts-ignore
               api.placements.injectCampaigns(data.recommendations);
             } else {
+              console.log("render CSR");
               // @ts-ignore
-              renderFunction(data.campaigns);
+              renderCampaigns(api, data.campaigns);
             }
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, renderFunction]);
+  }, [clientScriptLoaded, currentVariation, recommendationComponent]);
 
   return (
     <>

@@ -6,8 +6,13 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
   product,
   tagging,
 }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
-    useNostoContext();
+  const {
+    clientScriptLoaded,
+    currentVariation,
+    responseMode,
+    renderCampaigns,
+    recommendationComponent,
+  } = useNostoContext();
 
   useEffect(() => {
     // @ts-ignore
@@ -25,12 +30,13 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
                 // @ts-ignore
                 api.placements.injectCampaigns(data.recommendations);
               } else {
+                console.log("render CSR");
                 // @ts-ignore
-                renderFunction(data.campaigns);
+                renderCampaigns(api, data.campaigns);
               }
             });
         },
-        [clientScriptLoaded, currentVariation, product, renderFunction]
+        [clientScriptLoaded, currentVariation, product, recommendationComponent]
       );
     }
   });

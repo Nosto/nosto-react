@@ -26,24 +26,23 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     [clientScriptLoadedState]
   );
 
-  //Set responseMode for loading campaigns:
+  //Pass currentVariation as empty string if multiCurrency is disabled
+  currentVariation = multiCurrency ? currentVariation : "";
+
+  // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent)
     ? "JSON_ORIGINAL"
     : "HTML";
 
-  //RecommendationComponent for client-side rendering:
+  // RecommendationComponent for client-side rendering:
   function RecommendationComponentWrapper(props: any) {
     return React.cloneElement(recommendationComponent, {
       nostoRecommendation: props.nostoRecommendation,
     });
   }
 
-  //Pass currentVariation as empty string if multiCurrency is disabled
-  currentVariation = multiCurrency ? currentVariation : "";
-
-  // CLIENT-SIDE RENDERING FOR RECS:
+  // custom hook to for rendering campaigns (CSR/SSR):
   const [pageType, setPageType] = useState("");
-
   const useRenderCampaigns: any = function (type: string = "") {
     const placementRefs: any = useRef({});
     useEffect(() => {

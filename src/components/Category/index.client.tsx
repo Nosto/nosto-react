@@ -6,13 +6,15 @@ const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
     clientScriptLoaded,
     currentVariation,
     responseMode,
-    renderCampaigns,
     recommendationComponent,
+    useRenderCampaigns,
   } = useNostoContext();
+
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home");
 
   useEffect(() => {
     // @ts-ignore
-    if (clientScriptLoaded) {
+    if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api: any) => {
         api
           .defaultSession()
@@ -22,18 +24,17 @@ const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
           .setPlacements(api.placements.getPlacements())
           .load()
           .then((data: object) => {
-            if (responseMode == "HTML") {
-              // @ts-ignore
-              api.placements.injectCampaigns(data.recommendations);
-            } else {
-              console.log("render CSR");
-              // @ts-ignore
-              renderCampaigns(api, data.campaigns);
-            }
+            renderCampaigns(data, api);
           });
       });
     }
-  }, [clientScriptLoaded, category, currentVariation, recommendationComponent]);
+  }, [
+    clientScriptLoaded,
+    category,
+    currentVariation,
+    recommendationComponent,
+    pageTypeUpdated,
+  ]);
 
   return (
     <>

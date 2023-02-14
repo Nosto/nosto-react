@@ -6,13 +6,15 @@ const NostoFohofo: React.FC = () => {
     clientScriptLoaded,
     currentVariation,
     responseMode,
-    renderCampaigns,
     recommendationComponent,
+    useRenderCampaigns,
   } = useNostoContext();
+
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("404");
 
   useEffect(() => {
     // @ts-ignore
-    if (clientScriptLoaded) {
+    if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api: any) => {
         api
           .defaultSession()
@@ -22,18 +24,16 @@ const NostoFohofo: React.FC = () => {
           .setPlacements(api.placements.getPlacements())
           .load()
           .then((data: object) => {
-            if (responseMode == "HTML") {
-              // @ts-ignore
-              api.placements.injectCampaigns(data.recommendations);
-            } else {
-              console.log("render CSR");
-              // @ts-ignore
-              renderCampaigns(api, data.campaigns);
-            }
+            renderCampaigns(data, api);
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, recommendationComponent]);
+  }, [
+    clientScriptLoaded,
+    currentVariation,
+    recommendationComponent,
+    pageTypeUpdated,
+  ]);
 
   return (
     <>

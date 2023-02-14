@@ -10,13 +10,15 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
     clientScriptLoaded,
     currentVariation,
     responseMode,
-    renderCampaigns,
     recommendationComponent,
+    useRenderCampaigns,
   } = useNostoContext();
+
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product");
 
   useEffect(() => {
     // @ts-ignore
-    if (clientScriptLoaded) {
+    if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs(
         (api: any) => {
           api
@@ -26,17 +28,16 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
             .setPlacements(api.placements.getPlacements())
             .load()
             .then((data: object) => {
-              if (responseMode == "HTML") {
-                // @ts-ignore
-                api.placements.injectCampaigns(data.recommendations);
-              } else {
-                console.log("render CSR");
-                // @ts-ignore
-                renderCampaigns(api, data.campaigns);
-              }
+              renderCampaigns(data, api);
             });
         },
-        [clientScriptLoaded, currentVariation, product, recommendationComponent]
+        [
+          clientScriptLoaded,
+          currentVariation,
+          product,
+          recommendationComponent,
+          pageTypeUpdated,
+        ]
       );
     }
   });

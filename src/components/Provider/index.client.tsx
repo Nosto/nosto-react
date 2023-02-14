@@ -1,4 +1,4 @@
-import React, { useEffect, isValidElement, createElement } from "react";
+import React, { useEffect, isValidElement, useState, useRef } from "react";
 import { NostoContext } from "./context.client";
 import { createRoot } from "react-dom/client";
 
@@ -32,39 +32,54 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     : "HTML";
 
   //RecommendationComponent for client-side rendering:
-  function RecommendationComponentWrapper({
-    nostoRecommendation,
-  }: {
-    nostoRecommendation?: object;
-  }) {
-    return React.cloneElement(recommendationComponent, { nostoRecommendation });
+  function RecommendationComponentWrapper(props: any) {
+    return React.cloneElement(recommendationComponent, {
+      nostoRecommendation: props.nostoRecommendation,
+    });
   }
 
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";
 
   // CLIENT-SIDE RENDERING FOR RECS:
-  const renderCampaigns = function (api: any, campaigns: any) {
-    console.log("renderCampaigns!");
+  const [pageType, setPageType] = useState("");
 
-    //Inject content campaigns as usual
-    api.placements.injectCampaigns(campaigns.content);
+  const useRenderCampaigns: any = function (type: string = "") {
+    const placementRefs: any = useRef({});
+    useEffect(() => {
+      if (pageType != type) {
+        setPageType(type);
+      }
+    }, []);
 
-    //Render recommendation component into placements:
-    for (const key in campaigns.recommendations) {
-      let recommendation = campaigns.recommendations[key];
-      let placementSelector = "#" + key;
-      let placement = () => document.querySelector(placementSelector);
-      // @ts-ignore
-      placement()?.replaceWith(placement().cloneNode());
+    const pageTypeUpdated = type == pageType;
 
-      //@ts-ignore
-      createRoot(placement()).render(
-        <RecommendationComponentWrapper
-          nostoRecommendation={recommendation}
-        ></RecommendationComponentWrapper>
-      );
+    function renderCampaigns(data: any, api: any) {
+      if (responseMode == "HTML") {
+        // inject content campaigns as usual:
+        api.placements.injectCampaigns(data.recommendations);
+      } else {
+        // render recommendation component into placements:
+        const recommendations = data.campaigns.recommendations;
+        for (const key in recommendations) {
+          let recommendation = recommendations[key];
+          let placementSelector = "#" + key;
+          let placement: Function = () =>
+            document.querySelector(placementSelector);
+          if (!!placement()) {
+            if (!placementRefs.current[key])
+              placementRefs.current[key] = createRoot(placement());
+            const root = placementRefs.current[key];
+            root.render(
+              <RecommendationComponentWrapper
+                nostoRecommendation={recommendation}
+              ></RecommendationComponentWrapper>
+            );
+          }
+        }
+      }
     }
+    return { renderCampaigns, pageTypeUpdated };
   };
 
   useEffect(() => {
@@ -94,8 +109,9 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
         clientScriptLoaded,
         currentVariation,
         responseMode,
-        renderCampaigns,
         recommendationComponent,
+        useRenderCampaigns,
+        pageType,
       }}
     >
       {children}

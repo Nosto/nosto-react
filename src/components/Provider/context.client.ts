@@ -7,7 +7,8 @@ export interface NostoInterface {
   renderFunction?: Function;
   responseMode: string;
   recommendationComponent?: any;
-  renderCampaigns: Function;
+  useRenderCampaigns: Function;
+  pageType: string;
 }
 
 /* tslint:disable:no-empty */

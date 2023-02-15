@@ -41,7 +41,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     });
   }
 
-  // custom hook to for rendering campaigns (CSR/SSR):
+  // custom hook for rendering campaigns (CSR/SSR):
   const [pageType, setPageType] = useState("");
   const useRenderCampaigns: any = function (type: string = "") {
     const placementRefs: any = useRef({});

@@ -2,12 +2,19 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoHome: React.FC = () => {
-  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
-    useNostoContext();
+  const {
+    clientScriptLoaded,
+    currentVariation,
+    responseMode,
+    recommendationComponent,
+    useRenderCampaigns,
+  } = useNostoContext();
+
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home");
 
   useEffect(() => {
     // @ts-ignore
-    if (clientScriptLoaded) {
+    if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api: any) => {
         api
           .defaultSession()
@@ -17,17 +24,16 @@ const NostoHome: React.FC = () => {
           .setPlacements(api.placements.getPlacements())
           .load()
           .then((data: object) => {
-            if (responseMode == "HTML") {
-              // @ts-ignore
-              api.placements.injectCampaigns(data.recommendations);
-            } else {
-              // @ts-ignore
-              renderFunction(data.campaigns);
-            }
+            renderCampaigns(data, api);
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, renderFunction]);
+  }, [
+    clientScriptLoaded,
+    currentVariation,
+    recommendationComponent,
+    pageTypeUpdated,
+  ]);
 
   return (
     <>

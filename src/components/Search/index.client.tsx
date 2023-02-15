@@ -2,12 +2,19 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
-  const { clientScriptLoaded, currentVariation, renderFunction, responseMode } =
-    useNostoContext();
+  const {
+    clientScriptLoaded,
+    currentVariation,
+    responseMode,
+    recommendationComponent,
+    useRenderCampaigns,
+  } = useNostoContext();
+
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("search");
 
   useEffect(() => {
     // @ts-ignore
-    if (clientScriptLoaded) {
+    if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api: any) => {
         api
           .defaultSession()
@@ -17,17 +24,17 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
           .setPlacements(api.placements.getPlacements())
           .load()
           .then((data: object) => {
-            if (responseMode == "HTML") {
-              // @ts-ignore
-              api.placements.injectCampaigns(data.recommendations);
-            } else {
-              // @ts-ignore
-              renderFunction(data.campaigns);
-            }
+            renderCampaigns(data, api);
           });
       });
     }
-  }, [clientScriptLoaded, currentVariation, query, renderFunction]);
+  }, [
+    clientScriptLoaded,
+    currentVariation,
+    query,
+    recommendationComponent,
+    pageTypeUpdated,
+  ]);
 
   return (
     <>

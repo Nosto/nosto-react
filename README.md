@@ -24,7 +24,8 @@ You should be using Nosto React if you want to:
 - ✓ Full support for the JS API.
 - ✓ Full support for placements*.
 - ✓ Partial support for Nosto's Debug Toolbar. Supports most use-cases with page tagging and debug workflows. 
-- ✘ No support for client-side rendering (SSR) for recommendations and content, yet.
+- ✓ Client-side rendering for recommendations. 
+- ✘ Client-side rendering for content is not supported.
 
 _*Note: dynamic placements are not supported on Shopify Hydrogen due to the React framework explicitly restricting injecting DOM elements in this way. This can be disabled explicitly via configuration. Static placements continue to be supported fully. Please see `<NostoPlacement>` below for more details._ 
 

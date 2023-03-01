@@ -15,18 +15,33 @@ You should be using Nosto React if you want to:
 - Follow React principles
 
 
+## Feature list
 
-### Features
+Our React component library includes the following features:
+
+* Recommendations, including client-side rendering
+* Onsite content personalisation
+* Dynamic bundles
+* Debug toolbar* (excluding advanced use cases)
+* Pop-ups & personalised emails
+* A/B testing
+* Segmentation and Insights
+* Analytics
+* Search** (when implemented via our code editor)
+
+_*Note: Our React component library currently does not support advanced use cases of the debug toolbar, but we are constantly working to improve our library and provide you with the best possible integration options. We support most use-cases with page tagging and debug workflows._
+
+_**Note: The search feature is available when implemented via our code editor._
+
+
+### Additional features
 
 - ✓ Lightweight. Almost zero bloat.
 - ✓ Full support for the Facebook Pixel and Google Analytics.
 - ✓ Full support for leveraging overlays.
 - ✓ Full support for the JS API.
-- ✓ Full support for placements*.
-- ✓ Partial support for Nosto's Debug Toolbar. Supports most use-cases with page tagging and debug workflows. 
-- ✘ No support for client-side rendering (SSR) for recommendations and content, yet.
+- ✓ Full support for placements.
 
-_*Note: dynamic placements are not supported on Shopify Hydrogen due to the React framework explicitly restricting injecting DOM elements in this way. This can be disabled explicitly via configuration. Static placements continue to be supported fully. Please see `<NostoPlacement>` below for more details._ 
 
 ### Building
 
@@ -57,14 +72,18 @@ This widget is what we call the Nosto root widget, which is responsible for addi
 ```jsx
 import { NostoProvider } from "@nosto/nosto-react";
 
-<NostoProvider account="your-nosto-account-id">
+<NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
   <App />
 </NostoProvider>
 ```
 
 **Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`. In advanced use-cases, the need to configure the host may surface.   
 
+#### Client side rendering for recommendations
 
+In order to implement client-side rendering, the <NostoProvider> requires a designated component to render the recommendations provided by Nosto. This component should be capable of processing the JSON response received from our backend. Notice the `recommendationComponent={<NostoSlot />}` prop passed to `<NostoProvider>` above. 
+
+Learn more [here](https://github.com/Nosto/shopify-hydrogen/blob/main/README.md#client-side-rendering-for-recommendations) and see a [live example](https://github.com/Nosto/shopify-hydrogen-demo) on our demo store.
 
 ##### Understanding Placements
 

@@ -17,7 +17,7 @@ You should be using Nosto React if you want to:
 
 ## Feature list
 
-Our React component library for Shopify Hydrogen includes the following features:
+Our React component library includes the following features:
 
 * Recommendations, including client-side rendering
 * Onsite content personalisation

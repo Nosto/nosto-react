@@ -97,7 +97,6 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
 
     window.nostojs = (cb: Function) =>
       (window.nostojs.q = window.nostojs.q || []).push(cb);
-    // @ts-ignore
     window.nostojs((api) => api.setAutoLoad(false));
   }, []);
 

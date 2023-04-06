@@ -1,11 +1,3 @@
-declare global {
-  // noinspection JSUnusedGlobalSymbols
-  interface Window {
-    nostojs: any;
-    nosto: any;
-  }
-}
-
 export * from "./types";
 // noinspection JSUnusedGlobalSymbols
 export { default as Nosto404 } from "./components/Fohofo/index.client";

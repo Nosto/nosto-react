@@ -1,6 +1,7 @@
 import { Product } from "../../types";
-import React, { useEffect } from "react";
+import React from "react";
 import { useNostoContext } from "../Provider/context.client";
+import {useDeepCompareEffect} from "../../utils/hooks";
 
 const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
   product,
@@ -16,31 +17,29 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product");
 
-  useEffect(() => {
-    // @ts-ignore
+  useDeepCompareEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs(
-        (api: any) => {
+        (api) => {
           api
             .defaultSession()
             .setResponseMode(responseMode)
             .viewProduct(product)
             .setPlacements(api.placements.getPlacements())
             .load()
-            .then((data: object) => {
+            .then((data) => {
               renderCampaigns(data, api);
             });
-        },
-        [
-          clientScriptLoaded,
-          currentVariation,
-          product,
-          recommendationComponent,
-          pageTypeUpdated,
-        ]
+        }
       );
     }
-  });
+  }, [
+    clientScriptLoaded,
+    currentVariation,
+    product,
+    recommendationComponent,
+    pageTypeUpdated,
+  ]);
 
   return (
     <>

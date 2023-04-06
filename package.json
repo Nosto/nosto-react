@@ -27,18 +27,15 @@
     "dist",
     "src"
   ],
-  "dependencies": {
-    "snakeize": "^0.1.0",
-    "use-deep-compare-effect": "^1.3.1",
-    "@vitejs/plugin-react": "^1.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "vite": "^2.9.9",
     "typescript": "^4.6.3",
     "prettier": "^2.0.5",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "@vitejs/plugin-react": "^1.3.0"
   },
   "main": "./dist/index.umd.client.js",
   "module": "./dist/index.es.client.js",

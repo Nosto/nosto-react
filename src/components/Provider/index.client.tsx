@@ -4,10 +4,10 @@ import { createRoot } from "react-dom/client";
 
 interface NostoProviderProps {
   account: string;
-  currentVariation: string;
-  host: string;
+  currentVariation?: string;
+  host?: string;
   children: React.ReactElement;
-  multiCurrency: boolean;
+  multiCurrency?: boolean;
   recommendationComponent?: any;
 }
 
@@ -88,11 +88,12 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
       script.async = true;
       script.setAttribute("nosto-client-script", "");
-      script.onload = () => {
+
+      script.addEventListener("load", () => {
         console.log("Nosto client script loaded");
         setClientScriptLoadedState(true);
-      };
-      document.head.appendChild(script);
+      });
+      document.body.appendChild(script);
     }
 
     window.nostojs = (cb: Function) =>

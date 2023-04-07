@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
-const NostoHome: React.FC = () => {
+export const NostoHome: React.FC = () => {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -13,6 +13,7 @@ const NostoHome: React.FC = () => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home");
 
   useEffect(() => {
+    console.log("HELLO", clientScriptLoaded, pageTypeUpdated);
     if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api) => {
         api

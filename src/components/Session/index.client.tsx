@@ -3,7 +3,7 @@ import React from "react";
 import { useNostoContext } from "../Provider/context.client";
 import { Cart, Customer } from "../../types";
 import { snakeize } from "../../utils/snakeize";
-import {useDeepCompareEffect} from "../../utils/hooks";
+import { useDeepCompareEffect } from "../../utils/hooks";
 
 interface NostoSessionProps {
   cart: Cart;

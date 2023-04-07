@@ -64,6 +64,10 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
+    "testEnvironmentOptions": {
+      "resources": "usable",
+      "runScripts": "dangerously"
+    },
     "setupFilesAfterEnv": [
       "<rootDir>/jest-setup.ts"
     ]

@@ -4,24 +4,19 @@ import "@testing-library/jest-dom";
 import { NostoProvider, NostoHome } from "../src/index.client";
 
 test("Home page render", async () => {
-  // ARRANGE
-  render(
+  const dom = render(
     <NostoProvider
       account="shopify-11368366139"
       recommendationComponent={({ nostoRecommendation }: any) => {
         console.log("nostoRecommendation", nostoRecommendation);
-        return <div className="myrec">Hello</div>;
+        return <div data-testid="rec">Hello</div>;
       }}
     >
-      <div>
-        <h1>reter</h1>
-        <NostoHome />
-      </div>
+      <NostoHome />
     </NostoProvider>
   );
-  screen.logTestingPlaygroundURL();
 
-  await waitFor(() => screen.findByDisplayValue("Hello"));
-
-  expect(screen.getByText("Hello"));
+  await waitFor(() => {
+    expect(screen.getByTestId('rec')).toBeDefined()
+  });
 });

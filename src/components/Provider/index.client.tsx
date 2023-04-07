@@ -82,6 +82,13 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   };
 
   useEffect(() => {
+    if (!window.nostojs) {
+      window.nostojs = (cb: Function) => {
+        (window.nostojs.q = window.nostojs.q || []).push(cb);
+      };
+      window.nostojs((api) => api.setAutoLoad(false));
+    }
+
     if (!document.querySelectorAll("[nosto-client-script]").length) {
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -89,16 +96,12 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       script.async = true;
       script.setAttribute("nosto-client-script", "");
 
-      script.addEventListener("load", () => {
-        console.log("Nosto client script loaded");
+      script.onload = () => {
+        console.log("Nosto client script loaded", window.nostojs.toString());
         setClientScriptLoadedState(true);
-      });
+      };
       document.body.appendChild(script);
     }
-
-    window.nostojs = (cb: Function) =>
-      (window.nostojs.q = window.nostojs.q || []).push(cb);
-    window.nostojs((api) => api.setAutoLoad(false));
   }, []);
 
   return (

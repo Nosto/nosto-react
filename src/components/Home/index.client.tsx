@@ -13,7 +13,6 @@ export const NostoHome: React.FC = () => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home");
 
   useEffect(() => {
-    console.log("HELLO", clientScriptLoaded, pageTypeUpdated);
     if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api) => {
         api

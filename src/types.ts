@@ -1,5 +1,8 @@
 declare global {
   interface Window {
+    nosto?: {
+      reload(settings: unknown): void
+    }
     nostojs: {
       (callback: (api: NostoClient) => void): void
       q?: unknown[]

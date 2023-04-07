@@ -97,7 +97,11 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       script.setAttribute("nosto-client-script", "");
 
       script.onload = () => {
-        console.log("Nosto client script loaded", window.nostojs.toString());
+        if (typeof jest !== 'undefined') {
+          window.nosto?.reload({
+            site: 'localhost'
+          })
+        }
         setClientScriptLoadedState(true);
       };
       document.body.appendChild(script);

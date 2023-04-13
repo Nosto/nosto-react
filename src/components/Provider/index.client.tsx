@@ -1,6 +1,7 @@
 import React, { useEffect, isValidElement, useState, useRef } from "react";
 import { NostoContext } from "./context.client";
 import { createRoot } from "react-dom/client";
+import { Recommendation } from "../../types";
 
 interface NostoProviderProps {
   account: string;
@@ -8,8 +9,14 @@ interface NostoProviderProps {
   host?: string;
   children: React.ReactElement;
   multiCurrency?: boolean;
-  recommendationComponent?: any;
+  recommendationComponent?: React.ReactElement<{
+    nostoRecommendation: Recommendation;
+  }>;
 }
+
+export type RecommendationComponentType = React.ComponentType<{
+  nostoRecommendation?: Recommendation;
+}>;
 
 const NostoProvider: React.FC<NostoProviderProps> = ({
   account,
@@ -35,8 +42,10 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     : "HTML";
 
   // RecommendationComponent for client-side rendering:
-  function RecommendationComponentWrapper(props: any) {
-    return React.cloneElement(recommendationComponent, {
+  function RecommendationComponentWrapper(props: {
+    nostoRecommendation: Recommendation;
+  }) {
+    return React.cloneElement(recommendationComponent!, {
       nostoRecommendation: props.nostoRecommendation,
     });
   }
@@ -65,6 +74,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
           let placementSelector = "#" + key;
           let placement: Function = () =>
             document.querySelector(placementSelector);
+
           if (!!placement()) {
             if (!placementRefs.current[key])
               placementRefs.current[key] = createRoot(placement());
@@ -97,10 +107,10 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       script.setAttribute("nosto-client-script", "");
 
       script.onload = () => {
-        if (typeof jest !== 'undefined') {
+        if (typeof jest !== "undefined") {
           window.nosto?.reload({
-            site: 'localhost'
-          })
+            site: "localhost",
+          });
         }
         setClientScriptLoadedState(true);
       };

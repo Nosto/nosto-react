@@ -1,9 +1,9 @@
 import { Product } from "../../types";
 import React from "react";
 import { useNostoContext } from "../Provider/context.client";
-import {useDeepCompareEffect} from "../../utils/hooks";
+import { useDeepCompareEffect } from "../../utils/hooks";
 
-const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
+const NostoProduct: React.FC<{ product: string; tagging?: Product }> = ({
   product,
   tagging,
 }) => {
@@ -19,19 +19,17 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
 
   useDeepCompareEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs(
-        (api) => {
-          api
-            .defaultSession()
-            .setResponseMode(responseMode)
-            .viewProduct(product)
-            .setPlacements(api.placements.getPlacements())
-            .load()
-            .then((data) => {
-              renderCampaigns(data, api);
-            });
-        }
-      );
+      window.nostojs((api) => {
+        api
+          .defaultSession()
+          .setResponseMode(responseMode)
+          .viewProduct(product)
+          .setPlacements(api.placements.getPlacements())
+          .load()
+          .then((data) => {
+            renderCampaigns(data, api);
+          });
+      });
     }
   }, [
     clientScriptLoaded,

@@ -24,7 +24,7 @@ export const NostoHome: React.FC = () => {
           .load()
           .then((data) => {
             renderCampaigns(data, api);
-          })
+          });
       });
     }
   }, [

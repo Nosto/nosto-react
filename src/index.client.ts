@@ -19,6 +19,7 @@ export { default as NostoHome } from "./components/Home/index.client";
 export { default as NostoPlacement } from "./components/Placement/index.client";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoProvider } from "./components/Provider/index.client";
+export type { RecommendationComponentType } from "./components/Provider/index.client";
 // noinspection JSUnusedGlobalSymbols
 export {
   NostoContext,

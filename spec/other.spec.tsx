@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import {
   NostoProvider,
-  NostoCategory,
+  NostoOther,
   NostoPlacement,
   RecommendationComponentType,
 } from "../src/index.client";
@@ -22,22 +22,24 @@ const RecommendationComponent: RecommendationComponentType = ({
   );
 };
 
-test("Category page render", async () => {
+test("Other page render", async () => {
   render(
     <NostoProvider
       account="shopify-11368366139"
       recommendationComponent={<RecommendationComponent />}
     >
       <>
+        <NostoPlacement id="cartpage-nosto-1" />
         <NostoPlacement id="categorypage-nosto-1" />
-        <NostoPlacement id="categorypage-nosto-2" />
-        <NostoCategory category="Rings" />
+        <NostoPlacement id="productpage-nosto-1" />
+        <NostoPlacement id="productpage-nosto-2" />
+        <NostoOther />
       </>
     </NostoProvider>
   );
 
   await waitFor(() => {
-    expect(screen.getAllByTestId("recommendation")).toHaveLength(2);
+    expect(screen.getAllByTestId("recommendation")).toHaveLength(4);
   });
 
   screen.logTestingPlaygroundURL();

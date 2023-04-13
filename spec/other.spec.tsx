@@ -42,8 +42,6 @@ test("Other page render", async () => {
     expect(screen.getAllByTestId("recommendation")).toHaveLength(4);
   });
 
-  screen.logTestingPlaygroundURL();
-
   expect(
     screen.getAllByTestId("recommendation-product").length
   ).toBeGreaterThanOrEqual(3);

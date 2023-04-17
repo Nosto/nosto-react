@@ -1,30 +1,31 @@
 import { Purchase } from "../../types";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 import { snakeize } from "../../utils/snakeize";
 
-export interface OrderProps {
-  /**
-   * Indicates purchase data:  number, buyer information and items
-   */
-  purchase: Purchase;
-}
-
 /**
- * Order-confirmation/thank-you page can be personalized with NostoOrder component. Component takes order prop, which holds purchase data. 
+ * You can personalise your order-confirmation/thank-you page by using the `NostoOrder` component.
+ * The component requires that you provide it with the details of the order.
+ *
+ * By default, your account, when created, has one other-page placement named `thankyou-nosto-1`.
+ * You may omit this and use any identifier you need. The identifier used here is simply provided to illustrate the example.
+ *
+ * The order prop requires a value that adheres to the type `Purchase`.
+ *
  * @example
  * ```
  * <div className="thankyou-page">
-  ...
-  ...
-  ...
-    <NostoPlacement id="thankyou-nosto-1" />
-    <NostoOrder order={{ purchase: toOrder(order) }} />
-</div>
+ *     <NostoPlacement id="thankyou-nosto-1" />
+ *     <NostoOrder order={{ purchase: toOrder(order) }} />
+ * </div>
  * ```
+ *
+ * @group Personalisation Components
  */
-
-const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
+export default function NostoOrder(props: {
+  order: { purchase: Purchase };
+}): JSX.Element {
+  const { order } = props;
   const {
     clientScriptLoaded,
     currentVariation,
@@ -67,6 +68,4 @@ const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
       </div>
     </>
   );
-};
-
-export default NostoOrder;
+}

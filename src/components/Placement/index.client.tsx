@@ -1,22 +1,22 @@
 import React from "react";
 
-export interface PlacementProps {
-  /**
-   * Indicates placement id from nosto dashboard recommendation campaigns
-   */
-  id: string;
-  pageType?: string;
-}
-
 /**
- * Placement component takes prop id and renders nosto placement.
+ * Nosto React has a special component called NostoPlacement.
+ * The component is a simply a hidden `<div>` placeholder into which Nosto injects recommendations or personalises the content between the tags.
+ *
+ * We recommend adding as many placements across your views as needed as these are hidden and only populated when a corresponding campaign (targeting that placement) is configured.
+ *
  * @example
  * ```
- *  <NostoProduct product={nostoProductId} tagging={product} />
+ * <NostoPlacement id="frontpage-nosto-1" />
  * ```
+ *
+ * @group Personalisation Components
  */
-const NostoPlacement: React.FC<PlacementProps> = ({ id, pageType }) => {
+export default function NostoPlacement(props: {
+  id: string;
+  pageType?: string;
+}): JSX.Element {
+  const { id, pageType } = props;
   return <div className="nosto_element" id={id} key={id + (pageType || "")} />;
-};
-
-export default NostoPlacement;
+}

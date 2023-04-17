@@ -1,25 +1,23 @@
-import React from "react";
-
 import { useNostoContext } from "../Provider/context.client";
 import { Cart, Customer } from "../../types";
 import { snakeize } from "../../utils/snakeize";
 import { useDeepCompareEffect } from "../../utils/hooks";
 
-export interface NostoSessionProps {
-  /**
-   * Cart holds current items
-   */
-  cart: Cart;
-  /**
-   * The information about the currently logged-in customer.
-   */
-  customer: Customer;
-}
-
 /**
- * Makes it easy to keep the session up to date as long as the cart and the customer are provided.
+ * Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change.
+ * This makes it easier to add attribution.
+ *
+ * The `NostoSession` component makes it very easy to keep the session up to date so long as the cart and the customer are provided.
+ *
+ * The cart prop requires a value that adheres to the type `Cart`, while the customer prop requires a value that adheres to the type `Customer`.
+ *
+ * @group Essential Functions
  */
-const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
+export default function NostoSession(props: {
+  cart: Cart;
+  customer: Customer;
+}): JSX.Element {
+  const { cart, customer } = props;
   const { clientScriptLoaded } = useNostoContext();
 
   useDeepCompareEffect(() => {
@@ -40,6 +38,4 @@ const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   }, [clientScriptLoaded, cart, customer]);
 
   return <></>;
-};
-
-export default NostoSession;
+}

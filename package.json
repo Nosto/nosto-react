@@ -20,8 +20,8 @@
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",
     "clean": "rimraf dist",
-    "prettier": "prettier '*/**/*.{ts,tsx,js,jsx,html,css,less}' --list-different",
-    "prettier:fix": "prettier '*/**/*.{ts,tsx,js,jsx,html,css,less}' --write",
+    "prettier": "prettier '{src,spec}/*/**' --list-different",
+    "prettier:fix": "prettier '{src,spec}/*/**' --write",
     "test": "jest spec"
   },
   "files": [
@@ -68,9 +68,6 @@
     "testEnvironmentOptions": {
       "resources": "usable",
       "runScripts": "dangerously"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/jest-setup.ts"
-    ]
+    }
   }
 }

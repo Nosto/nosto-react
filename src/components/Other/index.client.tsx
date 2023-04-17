@@ -2,18 +2,25 @@ import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
 /**
- *`NostoOther` component is used to personalize miscellaneous pages. The component does not require any props.
+ * You can personalise your miscellaneous pages by using the NostoOther component.
+ * The component does not require any props.
+ *
+ * By default, your account, when created, has two other-page placements named `other-nosto-1` and `other-nosto-2`.
+ * You may omit these and use any identifier you need.
+ * The identifiers used here are simply provided to illustrate the example.
+ *
  * @example
  * ```
-<div className="other-page">
-  ... ... ...
-    <NostoPlacement id="other-nosto-1" />
-    <NostoPlacement id="other-nosto-2" />
-    <NostoOther />
-</div>;
+ * <div className="other-page">
+ *     <NostoPlacement id="other-nosto-1" />
+ *     <NostoPlacement id="other-nosto-2" />
+ *     <NostoOther />
+ * </div>;
  * ```
+ *
+ * @group Personalisation Components
  */
-const NostoOther: React.FC = () => {
+export default function NostoOther(): JSX.Element {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -53,6 +60,4 @@ const NostoOther: React.FC = () => {
       </div>
     </>
   );
-};
-
-export default NostoOther;
+}

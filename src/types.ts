@@ -10,6 +10,9 @@ declare global {
   }
 }
 
+/**
+ * @group Types
+ */
 export interface NostoClient {
   addOrder(order: { purchase: Purchase }): NostoClient;
   defaultSession(): NostoClient;
@@ -43,6 +46,9 @@ export interface NostoClient {
   };
 }
 
+/**
+ * @group Types
+ */
 export interface Recommendation {
   result_id: string;
   products: Product[];
@@ -53,6 +59,9 @@ export interface Recommendation {
   params: unknown;
 }
 
+/**
+ * @group Types
+ */
 export interface Item {
   name: string;
   price_currency_code: string;
@@ -62,10 +71,16 @@ export interface Item {
   unit_price: number;
 }
 
+/**
+ * @group Types
+ */
 export interface Cart {
   items: Item[];
 }
 
+/**
+ * @group Types
+ */
 export interface Customer {
   customer_reference: string;
   email: string;
@@ -74,6 +89,9 @@ export interface Customer {
   newsletter: boolean;
 }
 
+/**
+ * @group Types
+ */
 export interface Buyer {
   first_name: string;
   last_name: string;
@@ -82,15 +100,18 @@ export interface Buyer {
   newsletter: boolean;
 }
 
+/**
+ * @group Types
+ */
 export interface Purchase {
   number: string;
-  /**
-   * Indicates buyer data:  first_name, last_name, email, type, newsletter
-   */
   info: Buyer;
   items: Item[];
 }
 
+/**
+ * @group Types
+ */
 export interface SKU {
   id: string;
   name: string;
@@ -103,6 +124,9 @@ export interface SKU {
   customFields?: { [key: string]: string };
 }
 
+/**
+ * @group Types
+ */
 export interface Product {
   alternateImageUrls?: URL[];
   availability: "InStock" | "OutOfStock";

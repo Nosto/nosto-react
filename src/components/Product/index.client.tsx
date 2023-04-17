@@ -1,25 +1,36 @@
 import { Product } from "../../types";
-import React from "react";
 import { useNostoContext } from "../Provider/context.client";
 import { useDeepCompareEffect } from "../../utils/hooks";
 
 /**
-
- * Product component takes prop product and optional prop tagging and renders product card.
-
-* @param {String} product indicates product id
- * @param {Object} tagging indicates product data such as availability, category, description etc.
-
+ * The NostoProduct component must be used to personalise the product page.
+ * The component requires that you provide it the identifier of the current product being viewed.
+ *
+ * By default, your account, when created, has three product-page placements named `productpage-nosto-1`, `productpage-nosto-2` and `productpage-nosto-3`.
+ * You may omit these and use any identifier you need.
+ * The identifiers used here are simply provided to illustrate the example.
+ *
+ * The `<NostoProduct \>` component needs to be added after the placements.
+ * Content and recommendations will be rendered through this component.
+ * Pass in the product ID via the product prop to pass this information back to Nosto.
+ *
  * @example
  * ```
- *  <NostoProduct product={nostoProductId} tagging={product} />
+ * <div className="product-page">
+ *   <NostoPlacement id="productpage-nosto-1" />
+ *   <NostoPlacement id="productpage-nosto-2" />
+ *   <NostoPlacement id="productpage-nosto-3" />
+ *   <NostoProduct product={product.id} />
+ * </div>
  * ```
+ *
+ * @group Personalisation Components
  */
-
-const NostoProduct: React.FC<{ product: string; tagging?: Product }> = ({
-  product,
-  tagging,
-}) => {
+export default function NostoProduct(props: {
+  product: string;
+  tagging?: Product;
+}): JSX.Element {
+  const { product, tagging } = props;
   const {
     clientScriptLoaded,
     currentVariation,
@@ -172,6 +183,4 @@ const NostoProduct: React.FC<{ product: string; tagging?: Product }> = ({
       </div>
     </>
   );
-};
-
-export default NostoProduct;
+}

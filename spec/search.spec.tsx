@@ -1,14 +1,15 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import {
   NostoProvider,
   NostoSearch,
   NostoPlacement,
-  RecommendationComponentType,
+  Recommendation,
 } from "../src/index.client";
 
-const RecommendationComponent: RecommendationComponentType = ({
+import "@testing-library/jest-dom";
+
+const RecommendationComponent: React.ComponentType<{nostoRecommendation?: Recommendation}> = ({
   nostoRecommendation,
 }) => {
   return (

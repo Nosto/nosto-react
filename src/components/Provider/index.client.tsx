@@ -3,7 +3,28 @@ import { NostoContext } from "./context.client";
 import { createRoot } from "react-dom/client";
 import { Recommendation } from "../../types";
 
-export interface NostoProviderProps {
+/**
+ * This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub.
+ * This widget wraps all other React Nosto widgets.
+ *
+ * ```
+ * <NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
+ *   <App />
+ * </NostoProvider>
+ * ```
+ *
+ * **Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`.
+ * In advanced use-cases, the need to configure the host may surface.
+ *
+ * In order to implement client-side rendering, the requires a designated component to render the recommendations provided by Nosto.
+ * This component should be capable of processing the JSON response received from our backend.
+ * Notice the `recommendationComponent` prop passed to `<NostoProvider>` above.
+ *
+ * Learn more [here](https://github.com/Nosto/shopify-hydrogen/blob/main/README.md#client-side-rendering-for-recommendations) and see a [live example](https://github.com/Nosto/shopify-hydrogen-demo) on our demo store.
+ *
+ * @group Essential Functions
+ */
+export default function NostoProvider(props: {
   /**
    * Indicates merchant id
    */
@@ -25,20 +46,15 @@ export interface NostoProviderProps {
    * Recommendation component which holds nostoRecommendation object
    */
   recommendationComponent?: any;
-}
-
-export type RecommendationComponentType = React.ComponentType<{
-  nostoRecommendation?: Recommendation;
-}>;
-
-const NostoProvider: React.FC<NostoProviderProps> = ({
-  account,
-  currentVariation = "",
-  multiCurrency = false,
-  host,
-  children,
-  recommendationComponent,
-}) => {
+}): JSX.Element {
+  let {
+    account,
+    currentVariation = "",
+    multiCurrency = false,
+    host,
+    children,
+    recommendationComponent,
+  } = props;
   const [clientScriptLoadedState, setClientScriptLoadedState] =
     React.useState(false);
   const clientScriptLoaded = React.useMemo(
@@ -160,6 +176,4 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       {children}
     </NostoContext.Provider>
   );
-};
-
-export default NostoProvider;
+}

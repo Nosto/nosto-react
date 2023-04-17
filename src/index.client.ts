@@ -1,4 +1,6 @@
-export * from "./types";
+export type {
+  Buyer, Cart, Customer, Item, Product, Purchase, Recommendation, SKU
+} from "./types";
 // noinspection JSUnusedGlobalSymbols
 export { default as Nosto404 } from "./components/Fohofo/index.client";
 // noinspection JSUnusedGlobalSymbols
@@ -24,13 +26,8 @@ export {
   NostoContext,
   useNostoContext,
 } from "./components/Provider/context.client";
+export type {
+  NostoContextType,
+} from "./components/Provider/context.client";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoSession } from "./components/Session/index.client";
-
-// Export types
-export type { RecommendationComponentType } from "./components/Provider/index.client";
-export type { NostoSessionProps } from "./components/Session/index.client";
-export type { NostoProviderProps } from "./components/Provider/index.client";
-export type { PlacementProps } from "./components/Placement/index.client";
-export type { OrderProps } from "./components/Order/index.client";
-export type { NostoInterface } from "./components/Provider/context.client";

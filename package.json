@@ -72,8 +72,5 @@
     "setupFilesAfterEnv": [
       "<rootDir>/jest-setup.ts"
     ]
-  },
-  "dependencies": {
-    "node-fetch": "^3.3.1"
   }
 }

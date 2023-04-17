@@ -1,3 +1,42 @@
+declare global {
+  interface Window {
+    nostojs: {
+      (callback: (api: NostoClient) => void): void
+      q?: unknown[]
+    }
+  }
+}
+
+export interface NostoClient {
+  addOrder(order: { purchase: Purchase }): NostoClient
+  defaultSession(): NostoClient
+  setAutoLoad(autoload: boolean): NostoClient
+  setCart(cart?: Cart): NostoClient
+  setCustomer(customer?: Customer): NostoClient
+  setPlacements(placements: string[]): NostoClient
+  setResponseMode(mode: string): NostoClient
+  setVariation(variation: string): NostoClient
+  viewCategory(category: string): NostoClient
+  viewProduct(product: string): NostoClient
+  viewFrontPage(): NostoClient
+  viewNotFound(): NostoClient
+  viewOther(): NostoClient
+  viewSearch(query: string): NostoClient
+  viewCart(): NostoClient
+  load(): Promise<{
+    affinities: Record<string, {
+      name: string
+      score: number
+    }[]>
+    geo_location?: string[]
+    page_views: number
+    recommendations: unknown[]
+  }>
+  placements: {
+    getPlacements(): string[]
+  }
+}
+
 export interface Item {
   name: string;
   price_currency_code: string;

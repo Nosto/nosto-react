@@ -1,7 +1,7 @@
 import { Purchase } from "../../types";
 import React, { useEffect } from "react";
-import snakeize from "snakeize";
 import { useNostoContext } from "../Provider/context.client";
+import { snakeize } from "../../utils/snakeize";
 
 export interface OrderProps {
   purchase: Purchase;
@@ -19,9 +19,8 @@ const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("order");
 
   useEffect(() => {
-    // @ts-ignore
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api: any) => {
+      window.nostojs((api) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -29,7 +28,7 @@ const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
           .addOrder(snakeize(order))
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {
+          .then((data) => {
             renderCampaigns(data, api);
           });
       });

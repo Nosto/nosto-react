@@ -13,9 +13,8 @@ const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home");
 
   useEffect(() => {
-    // @ts-ignore
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api: any) => {
+      window.nostojs((api) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -23,7 +22,7 @@ const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
           .viewCategory(category)
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {
+          .then((data) => {
             renderCampaigns(data, api);
           });
       });

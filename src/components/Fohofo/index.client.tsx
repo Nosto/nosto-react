@@ -13,9 +13,8 @@ const NostoFohofo: React.FC = () => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("404");
 
   useEffect(() => {
-    // @ts-ignore
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api: any) => {
+      window.nostojs((api) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -23,7 +22,7 @@ const NostoFohofo: React.FC = () => {
           .viewNotFound()
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {
+          .then((data) => {
             renderCampaigns(data, api);
           });
       });

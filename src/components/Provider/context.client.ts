@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactComponentElement } from "react";
+import { createContext, useContext } from "react";
 
 export interface NostoInterface {
   account: string;

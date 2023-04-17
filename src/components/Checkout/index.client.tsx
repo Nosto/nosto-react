@@ -13,9 +13,8 @@ const NostoCheckout: React.FC = () => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("checkout");
 
   useEffect(() => {
-    // @ts-ignore
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api: any) => {
+      window.nostojs((api) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -23,7 +22,7 @@ const NostoCheckout: React.FC = () => {
           .viewCart()
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {
+          .then((data) => {
             renderCampaigns(data, api);
           });
       });

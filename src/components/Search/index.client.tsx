@@ -13,9 +13,8 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("search");
 
   useEffect(() => {
-    // @ts-ignore
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api: any) => {
+      window.nostojs((api) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -23,7 +22,7 @@ const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
           .viewSearch(query)
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {
+          .then((data) => {
             renderCampaigns(data, api);
           });
       });

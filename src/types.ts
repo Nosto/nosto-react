@@ -84,6 +84,9 @@ export interface Buyer {
 
 export interface Purchase {
   number: string;
+  /**
+   * Indicates buyer data:  first_name, last_name, email, type, newsletter
+   */
   info: Buyer;
   items: Item[];
 }

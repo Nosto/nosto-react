@@ -19,7 +19,6 @@ export { default as NostoHome } from "./components/Home/index.client";
 export { default as NostoPlacement } from "./components/Placement/index.client";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoProvider } from "./components/Provider/index.client";
-export type { RecommendationComponentType } from "./components/Provider/index.client";
 // noinspection JSUnusedGlobalSymbols
 export {
   NostoContext,
@@ -27,3 +26,11 @@ export {
 } from "./components/Provider/context.client";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoSession } from "./components/Session/index.client";
+
+// Export types
+export type { RecommendationComponentType } from "./components/Provider/index.client";
+export type { NostoSessionProps } from "./components/Session/index.client";
+export type { NostoProviderProps } from "./components/Provider/index.client";
+export type { PlacementProps } from "./components/Placement/index.client";
+export type { OrderProps } from "./components/Order/index.client";
+export type { NostoInterface } from "./components/Provider/context.client";

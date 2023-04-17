@@ -4,8 +4,25 @@ import { useNostoContext } from "../Provider/context.client";
 import { snakeize } from "../../utils/snakeize";
 
 export interface OrderProps {
+  /**
+   * Indicates purchase data:  number, buyer information and items
+   */
   purchase: Purchase;
 }
+
+/**
+ * Order-confirmation/thank-you page can be personalized with NostoOrder component. Component takes order prop, which holds purchase data. 
+ * @example
+ * ```
+ * <div className="thankyou-page">
+  ...
+  ...
+  ...
+    <NostoPlacement id="thankyou-nosto-1" />
+    <NostoOrder order={{ purchase: toOrder(order) }} />
+</div>
+ * ```
+ */
 
 const NostoOrder: React.FC<{ order: OrderProps }> = ({ order }) => {
   const {

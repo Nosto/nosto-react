@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { Recommendation } from "../../types";
 
 export interface NostoInterface {
   account: string;
@@ -6,7 +7,9 @@ export interface NostoInterface {
   currentVariation: string;
   renderFunction?: Function;
   responseMode: string;
-  recommendationComponent?: any;
+  recommendationComponent?: React.ReactElement<{
+    nostoRecommendation: Recommendation;
+  }>;
   useRenderCampaigns: Function;
   pageType: string;
 }
@@ -20,6 +23,10 @@ export const NostoContext = createContext<NostoInterface>({
 });
 
 /* tslint:enable:no-empty */
+
+/**
+A hook that allows you to access the NostoContext and retrieve Nosto-related data from it in React components.
+ */
 export function useNostoContext() {
   const context = useContext(NostoContext);
 

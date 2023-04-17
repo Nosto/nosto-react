@@ -3,6 +3,19 @@ import React from "react";
 import { useNostoContext } from "../Provider/context.client";
 import { useDeepCompareEffect } from "../../utils/hooks";
 
+/**
+
+ * Product component takes prop product and optional prop tagging and renders product card.
+
+* @param {String} product indicates product id
+ * @param {Object} tagging indicates product data such as availability, category, description etc.
+
+ * @example
+ * ```
+ *  <NostoProduct product={nostoProductId} tagging={product} />
+ * ```
+ */
+
 const NostoProduct: React.FC<{ product: string; tagging?: Product }> = ({
   product,
   tagging,

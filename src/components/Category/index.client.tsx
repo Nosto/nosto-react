@@ -1,6 +1,21 @@
 import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
+/**
+ * @param category a string passed to search params
+ * */
+/**
+ *Category component takes a single prop called category, which is a string representing the current category.
+ * @example
+ * ```
+ <div className="category-page">
+  ... ... ...
+  <NostoPlacement id="categorypage-nosto-1" />
+  <NostoPlacement id="categorypage-nosto-2" />
+  <NostoCategory category={category.name} />
+</div>;
+ * ```
+ */
 const NostoCategory: React.FC<{ category: string }> = ({ category }) => {
   const {
     clientScriptLoaded,

@@ -5,11 +5,20 @@ import { Cart, Customer } from "../../types";
 import { snakeize } from "../../utils/snakeize";
 import { useDeepCompareEffect } from "../../utils/hooks";
 
-interface NostoSessionProps {
+export interface NostoSessionProps {
+  /**
+   * Cart holds current items
+   */
   cart: Cart;
+  /**
+   * The information about the currently logged-in customer.
+   */
   customer: Customer;
 }
 
+/**
+ * Makes it easy to keep the session up to date as long as the cart and the customer are provided.
+ */
 const NostoSession: React.FC<NostoSessionProps> = ({ cart, customer }) => {
   const { clientScriptLoaded } = useNostoContext();
 

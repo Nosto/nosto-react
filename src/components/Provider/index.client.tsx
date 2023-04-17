@@ -3,15 +3,28 @@ import { NostoContext } from "./context.client";
 import { createRoot } from "react-dom/client";
 import { Recommendation } from "../../types";
 
-interface NostoProviderProps {
+export interface NostoProviderProps {
+  /**
+   * Indicates merchant id
+   */
   account: string;
+  /**
+   * Indicates currency
+   */
   currentVariation?: string;
+  /**
+   * Indicates an url of a server
+   */
   host?: string;
   children: React.ReactElement;
+  /**
+   * Indicates if merchant uses multiple currencies
+   */
   multiCurrency?: boolean;
-  recommendationComponent?: React.ReactElement<{
-    nostoRecommendation: Recommendation;
-  }>;
+  /**
+   * Recommendation component which holds nostoRecommendation object
+   */
+  recommendationComponent?: any;
 }
 
 export type RecommendationComponentType = React.ComponentType<{
@@ -62,7 +75,21 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
 
     const pageTypeUpdated = type == pageType;
 
-    function renderCampaigns(data: any, api: any) {
+    function renderCampaigns(
+      data: {
+        recommendations: any;
+        campaigns: {
+          recommendations: {
+            [key: string]: any;
+          };
+        };
+      },
+      api: {
+        placements: {
+          injectCampaigns: (recommendations: any) => void;
+        };
+      }
+    ) {
       if (responseMode == "HTML") {
         // inject content campaigns as usual:
         api.placements.injectCampaigns(data.recommendations);

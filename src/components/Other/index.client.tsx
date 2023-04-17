@@ -1,6 +1,18 @@
 import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
+/**
+ *`NostoOther` component is used to personalize miscellaneous pages. The component does not require any props.
+ * @example
+ * ```
+<div className="other-page">
+  ... ... ...
+    <NostoPlacement id="other-nosto-1" />
+    <NostoPlacement id="other-nosto-2" />
+    <NostoOther />
+</div>;
+ * ```
+ */
 const NostoOther: React.FC = () => {
   const {
     clientScriptLoaded,

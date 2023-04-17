@@ -1,6 +1,16 @@
 import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
+/**
+ * * @param query a string passed to search params
+ * */
+/**
+ *Search component takes a single prop called query, which is a string representing the search query entered by the user.
+ * @example
+ * ```
+ * <NostoSearch query={searchTerm ? decodeURI(searchTerm) : ''} />
+ * ```
+ */
 const NostoSearch: React.FC<{ query: string }> = ({ query }) => {
   const {
     clientScriptLoaded,

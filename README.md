@@ -4,8 +4,6 @@ Nosto React is a React component library to make it even easier to implement Nos
 
 The library provides you everything to get started with personalisation on your React site. It's dead simple, and beginner friendly.
 
-
-
 ### Why?
 
 You should be using Nosto React if you want to:
@@ -14,25 +12,23 @@ You should be using Nosto React if you want to:
 - Customize your components at will and with ease
 - Follow React principles
 
-
 ## Feature list
 
 Our React component library includes the following features:
 
-* Recommendations, including client-side rendering
-* Onsite content personalisation
-* Dynamic bundles
-* Debug toolbar* (excluding advanced use cases)
-* Pop-ups & personalised emails
-* A/B testing
-* Segmentation and Insights
-* Analytics
-* Search** (when implemented via our code editor)
+- Recommendations, including client-side rendering
+- Onsite content personalisation
+- Dynamic bundles
+- Debug toolbar\* (excluding advanced use cases)
+- Pop-ups & personalised emails
+- A/B testing
+- Segmentation and Insights
+- Analytics
+- Search\*\* (when implemented via our code editor)
 
-_*Note: Our React component library currently does not support advanced use cases of the debug toolbar, but we are constantly working to improve our library and provide you with the best possible integration options. We support most use-cases with page tagging and debug workflows._
+_\*Note: Our React component library currently does not support advanced use cases of the debug toolbar, but we are constantly working to improve our library and provide you with the best possible integration options. We support most use-cases with page tagging and debug workflows._
 
-_**Note: The search feature is available when implemented via our code editor._
-
+_\*\*Note: The search feature is available when implemented via our code editor._
 
 ### Additional features
 
@@ -42,10 +38,10 @@ _**Note: The search feature is available when implemented via our code editor._
 - ✓ Full support for the JS API.
 - ✓ Full support for placements.
 
-
 ### Building
 
 #### Required versions
+
 - npm: 8.5.5
 - node: v16.15.0
 
@@ -59,8 +55,6 @@ _**Note: The search feature is available when implemented via our code editor._
 
     npm install @nosto/nosto-react
 
-
-
 ### Getting Started
 
 ##### The root widget
@@ -72,30 +66,31 @@ This widget is what we call the Nosto root widget, which is responsible for addi
 ```jsx
 import { NostoProvider } from "@nosto/nosto-react";
 
-<NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
+<NostoProvider
+  account="your-nosto-account-id"
+  recommendationComponent={<NostoSlot />}
+>
   <App />
-</NostoProvider>
+</NostoProvider>;
 ```
 
-**Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`. In advanced use-cases, the need to configure the host may surface.   
+**Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`. In advanced use-cases, the need to configure the host may surface.
 
 #### Client side rendering for recommendations
 
-In order to implement client-side rendering, the <NostoProvider> requires a designated component to render the recommendations provided by Nosto. This component should be capable of processing the JSON response received from our backend. Notice the `recommendationComponent={<NostoSlot />}` prop passed to `<NostoProvider>` above. 
+In order to implement client-side rendering, the <NostoProvider> requires a designated component to render the recommendations provided by Nosto. This component should be capable of processing the JSON response received from our backend. Notice the `recommendationComponent={<NostoSlot />}` prop passed to `<NostoProvider>` above.
 
 Learn more [here](https://github.com/Nosto/shopify-hydrogen/blob/main/README.md#client-side-rendering-for-recommendations) and see a [live example](https://github.com/Nosto/shopify-hydrogen-demo) on our demo store.
 
 ##### Understanding Placements
 
-Nosto React has a special component called `NostoPlacement`. The component is a simply a <u>hidden</u> `<div>` placeholder into which Nosto injects recommendations or personalises the content between the tags. 
+Nosto React has a special component called `NostoPlacement`. The component is a simply a <u>hidden</u> `<div>` placeholder into which Nosto injects recommendations or personalises the content between the tags.
 
 We recommend adding as many placements across your views as needed as these are hidden and only populated when a corresponding campaign (targeting that placement) is configured.
 
-
-
 ##### Managing the session
- 
-Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change. This makes it easier to add attribution. 
+
+Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change. This makes it easier to add attribution.
 
 The `NostoSession` component makes it very easy to keep the session up to date so long as the cart and the customer are provided.
 
@@ -105,25 +100,19 @@ The `cart` prop requires a value that adheres to the type `Cart`, while the `cus
 import { NostoSession } from "@nosto/nosto-react";
 
 <>
-<Meta/>
-<header>
-  <MainMenu/>
-  <NostoSession cart={currentCart} customer={currentUser}/>
-</header>
-<Routes/>
-<Footer/>
-</>
+  <Meta />
+  <header>
+    <MainMenu />
+    <NostoSession cart={currentCart} customer={currentUser} />
+  </header>
+  <Routes />
+  <Footer />
+</>;
 ```
-
-
-
-
 
 ### Adding Personalisation
 
 Nosto React ships with canned components for the different page types. Each component contains all lifecycle methods to dispatch the necessary events.
-
-
 
 ##### Personalising your home page
 
@@ -137,22 +126,18 @@ The `<NostoHome \>` component needs to be added after the placements. Content an
 import { NostoHome, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="front-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="frontpage-nosto-1" />
   <NostoPlacement id="frontpage-nosto-2" />
   <NostoPlacement id="frontpage-nosto-3" />
   <NostoPlacement id="frontpage-nosto-4" />
   <NostoHome />
-</div>
+</div>;
 ```
-
-
 
 ##### Personalising your product pages
 
-The `NostoProduct` component must be used to personalise the product page. The component requires that  you provide it the identifier of the current product being viewed.
+The `NostoProduct` component must be used to personalise the product page. The component requires that you provide it the identifier of the current product being viewed.
 
 By default, your account, when created, has <u>three</u> product-page placements named `productpage-nosto-1`, `productpage-nosto-2` and `productpage-nosto-3`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
@@ -162,17 +147,13 @@ The `<NostoProduct \>` component needs to be added after the placements. Content
 import { NostoPlacement, NostoProduct } from "@nosto/nosto-react";
 
 <div className="product-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="productpage-nosto-1" />
   <NostoPlacement id="productpage-nosto-2" />
   <NostoPlacement id="productpage-nosto-3" />
   <NostoProduct product={product.id} />
-</div>
+</div>;
 ```
-
-
 
 ##### Personalising your search result pages
 
@@ -184,18 +165,14 @@ By default, your account, when created, has <u>two</u> search-page placements na
 import { NostoPlacement, NostoSearch } from "@nosto/nosto-react";
 
 <div className="search-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="searchpage-nosto-1" />
   <NostoPlacement id="searchpage-nosto-2" />
   <NostoSearch query={search} />
-</div>
+</div>;
 ```
 
 **Note:** Do not encode the search term in any way. It should be provided an unencoded string. A query for "black shoes" must be provided as-is and not as "black+shoes". Doing so will lead to invalid results.
-
-
 
 ##### Personalising your category list pages
 
@@ -207,18 +184,14 @@ By default, your account, when created, has <u>two</u> category placements named
 import { NostoCategory, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="category-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="categorypage-nosto-1" />
   <NostoPlacement id="categorypage-nosto-2" />
   <NostoCategory category={category.name} />
-</div>
+</div>;
 ```
 
 **Note:** Be sure to pass in the correct category representation. If the category being viewed is Mens >> Jackets, you must provide the name as `/Mens/Jackets` . You must ensure that the category path provided here matches that of the categories tagged in your products.
-
-
 
 ##### Personalising your cart checkout pages
 
@@ -230,20 +203,16 @@ By default, your account, when created, has <u>two</u> cart-page placements name
 import { NostoCheckout, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="checkout-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="checkout-nosto-1" />
   <NostoPlacement id="checkout-nosto-2" />
   <NostoCheckout />
-</div>
+</div>;
 ```
-
-
 
 ##### Personalising your 404 error pages
 
-You can personalise your cart and checkout pages by using the `Nosto404` component. The component does not require any props.
+You can personalise not found pages by using the `Nosto404` component. The component does not require any props.
 
 By default, your account, when created, has three 404-page placements named `notfound-nosto-1`, `notfound-nosto-2` and `notfound-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
@@ -251,17 +220,13 @@ By default, your account, when created, has three 404-page placements named `not
 import { Nosto404, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="notfound-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="notfound-nosto-1" />
   <NostoPlacement id="notfound-nosto-2" />
   <NostoPlacement id="notfound-nosto-3" />
   <Nosto404 />
-</div>
+</div>;
 ```
-
-
 
 ##### Personalising your miscellaneous pages
 
@@ -273,16 +238,12 @@ By default, your account, when created, has two other-page placements named `oth
 import { NostoOther, NostoPlacement } from "@nosto/nosto-react";
 
 <div className="other-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="other-nosto-1" />
   <NostoPlacement id="other-nosto-2" />
   <NostoOther />
-</div>
+</div>;
 ```
-
-
 
 ##### Personalising your order confirmation page
 
@@ -293,30 +254,30 @@ By default, your account, when created, has one other-page placement named `than
 The `order` prop requires a value that adheres to the type `Purchase`.
 
 ```jsx
-import { Buyer, Item, NostoOrder, NostoPlacement, Purchase } from "@nosto/nosto-react";
+import {
+  Buyer,
+  Item,
+  NostoOrder,
+  NostoPlacement,
+  Purchase,
+} from "@nosto/nosto-react";
 
 <div className="thankyou-page">
-  ...
-  ...
-  ...
+  ... ... ...
   <NostoPlacement id="thankyou-nosto-1" />
   <NostoOrder order={{ purchase: toOrder(order) }} />
-</div>
+</div>;
 ```
 
 ### Feedback
 
-If you've found a feature missing or you would like to report an issue, simply [open up an issue](https://github.com/nosto/nosto-react/issues/new) and let us know. 
+If you've found a feature missing or you would like to report an issue, simply [open up an issue](https://github.com/nosto/nosto-react/issues/new) and let us know.
 
 We're always collecting feedback and learning from your use-cases. If you find your self customising widgets and forking the repo to make patches - do drop a message. We'd love to know more and understand how we can make React Nosto an even slicker library for you.
-
-
 
 ### Contributing
 
 Please take a moment to review the guidelines for contributing.
-
-
 
 ### License
 

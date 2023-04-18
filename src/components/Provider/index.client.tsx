@@ -1,24 +1,60 @@
 import React, { useEffect, isValidElement, useState, useRef } from "react";
 import { NostoContext } from "./context.client";
 import { createRoot } from "react-dom/client";
+import { Recommendation } from "../../types";
 
-interface NostoProviderProps {
+/**
+ * This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub.
+ * This widget wraps all other React Nosto widgets.
+ *
+ * ```
+ * <NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
+ *   <App />
+ * </NostoProvider>
+ * ```
+ *
+ * **Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`.
+ * In advanced use-cases, the need to configure the host may surface.
+ *
+ * In order to implement client-side rendering, the requires a designated component to render the recommendations provided by Nosto.
+ * This component should be capable of processing the JSON response received from our backend.
+ * Notice the `recommendationComponent` prop passed to `<NostoProvider>` above.
+ *
+ * Learn more [here](https://github.com/Nosto/shopify-hydrogen/blob/main/README.md#client-side-rendering-for-recommendations) and see a [live example](https://github.com/Nosto/shopify-hydrogen-demo) on our demo store.
+ *
+ * @group Essential Functions
+ */
+export default function NostoProvider(props: {
+  /**
+   * Indicates merchant id
+   */
   account: string;
-  currentVariation: string;
-  host: string;
+  /**
+   * Indicates currency
+   */
+  currentVariation?: string;
+  /**
+   * Indicates an url of a server
+   */
+  host?: string;
   children: React.ReactElement;
-  multiCurrency: boolean;
+  /**
+   * Indicates if merchant uses multiple currencies
+   */
+  multiCurrency?: boolean;
+  /**
+   * Recommendation component which holds nostoRecommendation object
+   */
   recommendationComponent?: any;
-}
-
-const NostoProvider: React.FC<NostoProviderProps> = ({
-  account,
-  currentVariation = "",
-  multiCurrency = false,
-  host,
-  children,
-  recommendationComponent,
-}) => {
+}): JSX.Element {
+  let {
+    account,
+    currentVariation = "",
+    multiCurrency = false,
+    host,
+    children,
+    recommendationComponent,
+  } = props;
   const [clientScriptLoadedState, setClientScriptLoadedState] =
     React.useState(false);
   const clientScriptLoaded = React.useMemo(
@@ -35,8 +71,10 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
     : "HTML";
 
   // RecommendationComponent for client-side rendering:
-  function RecommendationComponentWrapper(props: any) {
-    return React.cloneElement(recommendationComponent, {
+  function RecommendationComponentWrapper(props: {
+    nostoRecommendation: Recommendation;
+  }) {
+    return React.cloneElement(recommendationComponent!, {
       nostoRecommendation: props.nostoRecommendation,
     });
   }
@@ -53,7 +91,21 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
 
     const pageTypeUpdated = type == pageType;
 
-    function renderCampaigns(data: any, api: any) {
+    function renderCampaigns(
+      data: {
+        recommendations: any;
+        campaigns: {
+          recommendations: {
+            [key: string]: any;
+          };
+        };
+      },
+      api: {
+        placements: {
+          injectCampaigns: (recommendations: any) => void;
+        };
+      }
+    ) {
       if (responseMode == "HTML") {
         // inject content campaigns as usual:
         api.placements.injectCampaigns(data.recommendations);
@@ -65,6 +117,7 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
           let placementSelector = "#" + key;
           let placement: Function = () =>
             document.querySelector(placementSelector);
+
           if (!!placement()) {
             if (!placementRefs.current[key])
               placementRefs.current[key] = createRoot(placement());
@@ -82,23 +135,30 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
   };
 
   useEffect(() => {
+    if (!window.nostojs) {
+      window.nostojs = (cb: Function) => {
+        (window.nostojs.q = window.nostojs.q || []).push(cb);
+      };
+      window.nostojs((api) => api.setAutoLoad(false));
+    }
+
     if (!document.querySelectorAll("[nosto-client-script]").length) {
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
       script.async = true;
       script.setAttribute("nosto-client-script", "");
+
       script.onload = () => {
-        console.log("Nosto client script loaded");
+        if (typeof jest !== "undefined") {
+          window.nosto?.reload({
+            site: "localhost",
+          });
+        }
         setClientScriptLoadedState(true);
       };
-      document.head.appendChild(script);
+      document.body.appendChild(script);
     }
-
-    window.nostojs = (cb: Function) =>
-      (window.nostojs.q = window.nostojs.q || []).push(cb);
-    // @ts-ignore
-    window.nostojs((api) => api.setAutoLoad(false));
   }, []);
 
   return (
@@ -116,6 +176,4 @@ const NostoProvider: React.FC<NostoProviderProps> = ({
       {children}
     </NostoContext.Provider>
   );
-};
-
-export default NostoProvider;
+}

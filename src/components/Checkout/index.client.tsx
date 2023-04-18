@@ -1,7 +1,27 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
-const NostoCheckout: React.FC = () => {
+/**
+ * You can personalise your cart and checkout pages by using the NostoCheckout component.
+ * The component does not require any props.
+ *
+ * By default, your account, when created, has two cart-page placements named `categorypage-nosto-1` and `categorypage-nosto-2`.
+ * You may omit these and use any identifier you need.
+ * The identifiers used here are simply provided to illustrate the example.
+ *
+ * @example
+ * ```
+ * <div className="checkout-page">
+ *   <NostoPlacement id="checkout-nosto-1" />
+ *   <NostoPlacement id="checkout-nosto-2" />
+ *   <NostoCheckout />
+ * </div>
+ * ```
+ *
+ * @group Personalisation Components
+ */
+
+export default function NostoCheckout(): JSX.Element {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -13,9 +33,8 @@ const NostoCheckout: React.FC = () => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("checkout");
 
   useEffect(() => {
-    // @ts-ignore
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api: any) => {
+      window.nostojs((api) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -23,7 +42,7 @@ const NostoCheckout: React.FC = () => {
           .viewCart()
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {
+          .then((data) => {
             renderCampaigns(data, api);
           });
       });
@@ -42,6 +61,4 @@ const NostoCheckout: React.FC = () => {
       </div>
     </>
   );
-};
-
-export default NostoCheckout;
+}

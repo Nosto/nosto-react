@@ -1,11 +1,36 @@
 import { Product } from "../../types";
-import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
+import { useDeepCompareEffect } from "../../utils/hooks";
 
-const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
-  product,
-  tagging,
-}) => {
+/**
+ * The NostoProduct component must be used to personalise the product page.
+ * The component requires that you provide it the identifier of the current product being viewed.
+ *
+ * By default, your account, when created, has three product-page placements named `productpage-nosto-1`, `productpage-nosto-2` and `productpage-nosto-3`.
+ * You may omit these and use any identifier you need.
+ * The identifiers used here are simply provided to illustrate the example.
+ *
+ * The `<NostoProduct \>` component needs to be added after the placements.
+ * Content and recommendations will be rendered through this component.
+ * Pass in the product ID via the product prop to pass this information back to Nosto.
+ *
+ * @example
+ * ```
+ * <div className="product-page">
+ *   <NostoPlacement id="productpage-nosto-1" />
+ *   <NostoPlacement id="productpage-nosto-2" />
+ *   <NostoPlacement id="productpage-nosto-3" />
+ *   <NostoProduct product={product.id} />
+ * </div>
+ * ```
+ *
+ * @group Personalisation Components
+ */
+export default function NostoProduct(props: {
+  product: string;
+  tagging?: Product;
+}): JSX.Element {
+  const { product, tagging } = props;
   const {
     clientScriptLoaded,
     currentVariation,
@@ -16,31 +41,27 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product");
 
-  useEffect(() => {
-    // @ts-ignore
+  useDeepCompareEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs(
-        (api: any) => {
-          api
-            .defaultSession()
-            .setResponseMode(responseMode)
-            .viewProduct(product)
-            .setPlacements(api.placements.getPlacements())
-            .load()
-            .then((data: object) => {
-              renderCampaigns(data, api);
-            });
-        },
-        [
-          clientScriptLoaded,
-          currentVariation,
-          product,
-          recommendationComponent,
-          pageTypeUpdated,
-        ]
-      );
+      window.nostojs((api) => {
+        api
+          .defaultSession()
+          .setResponseMode(responseMode)
+          .viewProduct(product)
+          .setPlacements(api.placements.getPlacements())
+          .load()
+          .then((data) => {
+            renderCampaigns(data, api);
+          });
+      });
     }
-  });
+  }, [
+    clientScriptLoaded,
+    currentVariation,
+    product,
+    recommendationComponent,
+    pageTypeUpdated,
+  ]);
 
   return (
     <>
@@ -162,6 +183,4 @@ const NostoProduct: React.FC<{ product: string; tagging: Product }> = ({
       </div>
     </>
   );
-};
-
-export default NostoProduct;
+}

@@ -1,12 +1,6 @@
-declare global {
-  // noinspection JSUnusedGlobalSymbols
-  interface Window {
-    nostojs: any;
-    nosto: any;
-  }
-}
-
-export * from "./types";
+export type {
+  Buyer, Cart, Customer, Item, Product, Purchase, Recommendation, SKU
+} from "./types";
 // noinspection JSUnusedGlobalSymbols
 export { default as Nosto404 } from "./components/Fohofo/index.client";
 // noinspection JSUnusedGlobalSymbols
@@ -31,6 +25,9 @@ export { default as NostoProvider } from "./components/Provider/index.client";
 export {
   NostoContext,
   useNostoContext,
+} from "./components/Provider/context.client";
+export type {
+  NostoContextType,
 } from "./components/Provider/context.client";
 // noinspection JSUnusedGlobalSymbols
 export { default as NostoSession } from "./components/Session/index.client";

@@ -1,7 +1,27 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
 
-const NostoFohofo: React.FC = () => {
+/**
+ * You can personalise your cart and checkout pages by using the `Nosto404` component.
+ * The component does not require any props.
+ *
+ * By default, your account, when created, has three 404-page placements named `notfound-nosto-1`, `notfound-nosto-2` and `notfound-nosto-3`.
+ * You may omit these and use any identifier you need.
+ * The identifiers used here are simply provided to illustrate the example.
+ *
+ * @example
+ * ```
+ * <div className="notfound-page">
+ *   <NostoPlacement id="notfound-nosto-1" />
+ *   <NostoPlacement id="notfound-nosto-2" />
+ *   <NostoPlacement id="notfound-nosto-3" />
+ *   <Nosto404 />
+ * </div>
+ * ```
+ *
+ * @group Personalisation Components
+ */
+export default function Nosto404(): JSX.Element {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -13,9 +33,8 @@ const NostoFohofo: React.FC = () => {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("404");
 
   useEffect(() => {
-    // @ts-ignore
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api: any) => {
+      window.nostojs((api) => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -23,7 +42,7 @@ const NostoFohofo: React.FC = () => {
           .viewNotFound()
           .setPlacements(api.placements.getPlacements())
           .load()
-          .then((data: object) => {
+          .then((data) => {
             renderCampaigns(data, api);
           });
       });
@@ -42,6 +61,4 @@ const NostoFohofo: React.FC = () => {
       </div>
     </>
   );
-};
-
-export default NostoFohofo;
+}

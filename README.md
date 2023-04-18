@@ -269,6 +269,9 @@ import {
 </div>;
 ```
 
+### Detailed technical documentation
+Find our latest technical specs and documentation hosted [here](https://nosto.github.io/nosto-react).
+
 ### Feedback
 
 If you've found a feature missing or you would like to report an issue, simply [open up an issue](https://github.com/nosto/nosto-react/issues/new) and let us know.

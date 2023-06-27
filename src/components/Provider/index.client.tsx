@@ -62,7 +62,7 @@ export default function NostoProvider(props: {
     [clientScriptLoadedState]
   );
 
-  console.log('NOSTO REACT PROVIDER RENDER!!!');
+  console.log('nosto-react provider');
 
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";

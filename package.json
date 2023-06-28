@@ -14,9 +14,8 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && typedoc src/index.client.ts",
+    "build": "vite build && typedoc src/index.client.ts",
     "preview": "vite preview",
-    "postinstall": "tsc && vite build",
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",
     "clean": "rimraf dist",

@@ -186,7 +186,7 @@ export default function NostoProvider(props: {
         script.src = "//" + (host || "connect.nosto.com") + `/script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets?.language?.toLowerCase() || ''}`
         script.async = true;
         script.setAttribute("nosto-client-script", "");
-        script.setAttribute("nosto-language", shopifyMarkets?.language || '');
+        script.setAttribute("nosto-language", shopifyMarkets?.language?.toLowerCase() || '');
         script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId));
 
         script.onload = () => {

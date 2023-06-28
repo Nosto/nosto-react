@@ -172,14 +172,14 @@ export default function NostoProvider(props: {
     //Enable Shopify markets functionality:
     if (!!shopifyMarkets) {
 
-      let existingScript = document.querySelector("[nosto-client-script]");
-      let nostoSandbox = document.querySelector('#nosto-sandbox');
+      const existingScript = document.querySelector("[nosto-client-script]");
+      const nostoSandbox = document.querySelector('#nosto-sandbox');
 
       if (!existingScript || existingScript?.getAttribute('nosto-language') != shopifyMarkets.language || existingScript?.getAttribute('nosto-market-id') != shopifyMarkets.marketId) {
         if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
 
-        !!existingScript && existingScript.parentNode?.removeChild(existingScript)
-        !!nostoSandbox && nostoSandbox.parentNode?.removeChild(nostoSandbox)
+        existingScript?.parentNode?.removeChild(existingScript)
+        nostoSandbox?.parentNode?.removeChild(nostoSandbox)
 
         const script = document.createElement("script");
         script.type = "text/javascript";

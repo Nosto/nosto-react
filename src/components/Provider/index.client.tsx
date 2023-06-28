@@ -46,6 +46,10 @@ export default function NostoProvider(props: {
    * Recommendation component which holds nostoRecommendation object
    */
   recommendationComponent?: any;
+  /**
+  * Enables Shopify markets with language and market id
+  */
+  shopifyMarkets?: object;
 }): JSX.Element {
   let {
     account,
@@ -54,6 +58,7 @@ export default function NostoProvider(props: {
     host,
     children,
     recommendationComponent,
+    shopifyMarkets
   } = props;
   const [clientScriptLoadedState, setClientScriptLoadedState] =
     React.useState(false);
@@ -144,7 +149,7 @@ export default function NostoProvider(props: {
       window.nostojs((api) => api.setAutoLoad(false));
     }
 
-    if (!document.querySelectorAll("[nosto-client-script]").length) {
+    if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
@@ -161,6 +166,11 @@ export default function NostoProvider(props: {
       };
       document.body.appendChild(script);
     }
+
+    if (!!shopifyMarkets) {
+      console.log('NOSTO REACT - SHOPIFY MARKETS ENABLED:', shopifyMarkets)
+    }
+
   }, []);
 
   return (

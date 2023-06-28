@@ -70,7 +70,7 @@ export default function NostoProvider(props: {
     [clientScriptLoadedState]
   );
 
-  console.log('nosto-react provider 3');
+  console.log('nosto-react provider 4');
 
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";
@@ -178,7 +178,7 @@ export default function NostoProvider(props: {
         if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
         const script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "//" + (host || "connect.nosto.com") + `script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets.language || ''}`
+        script.src = "//" + (host || "connect.nosto.com") + `/script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets.language || ''}`
         script.async = true;
         script.setAttribute("nosto-client-script", "");
         script.setAttribute("nosto-language", shopifyMarkets.language);

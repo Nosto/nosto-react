@@ -70,8 +70,6 @@ export default function NostoProvider(props: {
     [clientScriptLoadedState]
   );
 
-  console.log('nosto-react provider 4');
-
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";
 
@@ -171,10 +169,9 @@ export default function NostoProvider(props: {
       document.body.appendChild(script);
     }
 
+    //Enable Shopify markets functionality:
     if (!!shopifyMarkets) {
-      console.log('NOSTO REACT - SHOPIFY MARKETS ENABLED:', shopifyMarkets);
 
-      console.log('use effect markets 3')
       let existingScript = document.querySelector("[nosto-client-script]");
       let nostoSandbox = document.querySelector('#nosto-sandbox');
 
@@ -186,11 +183,11 @@ export default function NostoProvider(props: {
 
         const script = document.createElement("script");
         script.type = "text/javascript";
-        script.src = "//" + (host || "connect.nosto.com") + `/script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets.language || ''}`
+        script.src = "//" + (host || "connect.nosto.com") + `/script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets?.language?.toLowerCase() || ''}`
         script.async = true;
         script.setAttribute("nosto-client-script", "");
-        script.setAttribute("nosto-language", shopifyMarkets.language);
-        script.setAttribute("nosto-market-id", shopifyMarkets.marketId);
+        script.setAttribute("nosto-language", shopifyMarkets?.language || '');
+        script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId));
 
         script.onload = () => {
           if (typeof jest !== "undefined") {

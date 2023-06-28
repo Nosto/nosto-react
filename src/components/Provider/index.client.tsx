@@ -175,7 +175,7 @@ export default function NostoProvider(props: {
       const existingScript = document.querySelector("[nosto-client-script]");
       const nostoSandbox = document.querySelector('#nosto-sandbox');
 
-      if (!existingScript || existingScript?.getAttribute('nosto-language') != shopifyMarkets.language || existingScript?.getAttribute('nosto-market-id') != shopifyMarkets.marketId) {
+      if (!existingScript || existingScript?.getAttribute('nosto-language') != shopifyMarkets?.language || existingScript?.getAttribute('nosto-market-id') != shopifyMarkets?.marketId) {
         if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
 
         existingScript?.parentNode?.removeChild(existingScript)

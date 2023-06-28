@@ -174,6 +174,8 @@ export default function NostoProvider(props: {
     if (!!shopifyMarkets) {
       console.log('NOSTO REACT - SHOPIFY MARKETS ENABLED:', shopifyMarkets);
 
+      console.log('use effect markets')
+
       if (!document.querySelectorAll("[nosto-client-script]").length || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-language') != shopifyMarkets.language || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-market-id') != shopifyMarkets.marketId) {
         if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
         const script = document.createElement("script");
@@ -197,7 +199,7 @@ export default function NostoProvider(props: {
 
     }
 
-  }, [clientScriptLoadedState]);
+  }, [clientScriptLoadedState, shopifyMarkets]);
 
   return (
     <NostoContext.Provider

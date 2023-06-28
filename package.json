@@ -17,6 +17,7 @@
     "build": "tsc && vite build && typedoc src/index.client.ts",
     "preview": "vite preview",
     "prepare": "vite build",
+    "prepack": "vite build",
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",
     "clean": "rimraf dist",

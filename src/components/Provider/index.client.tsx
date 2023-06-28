@@ -174,10 +174,14 @@ export default function NostoProvider(props: {
     if (!!shopifyMarkets) {
       console.log('NOSTO REACT - SHOPIFY MARKETS ENABLED:', shopifyMarkets);
 
-      console.log('use effect markets')
+      console.log('use effect markets 2')
 
       if (!document.querySelectorAll("[nosto-client-script]").length || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-language') != shopifyMarkets.language || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-market-id') != shopifyMarkets.marketId) {
         if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
+
+        let oldScript = document.querySelector("[nosto-clienasdt-script]");
+        oldScript && oldScript?.parentNode?.removeChild(oldScript) && console.log('remove old script');
+
         const script = document.createElement("script");
         script.type = "text/javascript";
         script.src = "//" + (host || "connect.nosto.com") + `/script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets.language || ''}`

@@ -49,7 +49,10 @@ export default function NostoProvider(props: {
   /**
   * Enables Shopify markets with language and market id
   */
-  shopifyMarkets?: object;
+  shopifyMarkets?: {
+    language?: string;
+    marketId?: string | number;
+  }
 }): JSX.Element {
   let {
     account,
@@ -67,7 +70,7 @@ export default function NostoProvider(props: {
     [clientScriptLoadedState]
   );
 
-  console.log('nosto-react provider');
+  console.log('nosto-react provider 3');
 
   //Pass currentVariation as empty string if multiCurrency is disabled
   currentVariation = multiCurrency ? currentVariation : "";
@@ -141,6 +144,7 @@ export default function NostoProvider(props: {
     return { renderCampaigns, pageTypeUpdated };
   };
 
+
   useEffect(() => {
     if (!window.nostojs) {
       window.nostojs = (cb: Function) => {
@@ -168,10 +172,32 @@ export default function NostoProvider(props: {
     }
 
     if (!!shopifyMarkets) {
-      console.log('NOSTO REACT - SHOPIFY MARKETS ENABLED:', shopifyMarkets)
+      console.log('NOSTO REACT - SHOPIFY MARKETS ENABLED:', shopifyMarkets);
+
+      if (!document.querySelectorAll("[nosto-client-script]").length || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-language') != shopifyMarkets.language || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-market-id') != shopifyMarkets.marketId) {
+        if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "//" + (host || "connect.nosto.com") + `script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets.language || ''}`
+        script.async = true;
+        script.setAttribute("nosto-client-script", "");
+        script.setAttribute("nosto-language", shopifyMarkets.language);
+        script.setAttribute("nosto-market-id", shopifyMarkets.marketId);
+
+        script.onload = () => {
+          if (typeof jest !== "undefined") {
+            window.nosto?.reload({
+              site: "localhost",
+            });
+          }
+          setClientScriptLoadedState(true);
+        };
+        document.body.appendChild(script);
+      }
+
     }
 
-  }, []);
+  }, [clientScriptLoadedState]);
 
   return (
     <NostoContext.Provider

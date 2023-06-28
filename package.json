@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && typedoc src/index.client.ts",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",

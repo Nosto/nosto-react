@@ -174,13 +174,15 @@ export default function NostoProvider(props: {
     if (!!shopifyMarkets) {
       console.log('NOSTO REACT - SHOPIFY MARKETS ENABLED:', shopifyMarkets);
 
-      console.log('use effect markets 2')
+      console.log('use effect markets 3')
+      let existingScript = document.querySelector("[nosto-client-script]");
+      let nostoSandbox = document.querySelector('#nosto-sandbox');
 
-      if (!document.querySelectorAll("[nosto-client-script]").length || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-language') != shopifyMarkets.language || document.querySelector("[nosto-client-script]")?.getAttribute('nosto-market-id') != shopifyMarkets.marketId) {
+      if (!existingScript || existingScript?.getAttribute('nosto-language') != shopifyMarkets.language || existingScript?.getAttribute('nosto-market-id') != shopifyMarkets.marketId) {
         if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
 
-        let oldScript = document.querySelector("[nosto-clienasdt-script]");
-        oldScript && oldScript?.parentNode?.removeChild(oldScript) && console.log('remove old script');
+        !!existingScript && existingScript.parentNode?.removeChild(existingScript)
+        !!nostoSandbox && nostoSandbox.parentNode?.removeChild(nostoSandbox)
 
         const script = document.createElement("script");
         script.type = "text/javascript";

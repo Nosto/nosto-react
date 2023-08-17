@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
+import {Purchase} from "../../types";
 
 /**
  * You can personalise your miscellaneous pages by using the NostoOther component.
@@ -20,7 +21,9 @@ import { useNostoContext } from "../Provider/context.client";
  *
  * @group Personalisation Components
  */
-export default function NostoOther(): JSX.Element {
+export default function NostoOther(props: {
+    placements?: string[];
+}): JSX.Element {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -31,6 +34,7 @@ export default function NostoOther(): JSX.Element {
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other");
 
+  //Here is placements is present in props, we will use it instead of the default placements
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api) => {
@@ -39,7 +43,7 @@ export default function NostoOther(): JSX.Element {
           .setVariation(currentVariation)
           .setResponseMode(responseMode)
           .viewOther()
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

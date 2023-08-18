@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNostoContext } from "../Provider/context.client";
-import {Purchase} from "../../types";
 
 /**
  * You can personalise your miscellaneous pages by using the NostoOther component.
@@ -33,8 +32,7 @@ export default function NostoOther(props: {
   } = useNostoContext();
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other");
-
-  //Here is placements is present in props, we will use it instead of the default placements
+  
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api) => {

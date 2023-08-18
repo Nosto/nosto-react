@@ -32,7 +32,6 @@ export default function NostoOther(props: {
   } = useNostoContext();
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other");
-  
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api) => {

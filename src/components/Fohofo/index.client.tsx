@@ -21,7 +21,9 @@ import { useNostoContext } from "../Provider/context.client";
  *
  * @group Personalisation Components
  */
-export default function Nosto404(): JSX.Element {
+export default function Nosto404(props: {
+  placements?: string[];
+}): JSX.Element {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -40,7 +42,7 @@ export default function Nosto404(): JSX.Element {
           .setVariation(currentVariation)
           .setResponseMode(responseMode)
           .viewNotFound()
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

@@ -25,6 +25,7 @@ import { useNostoContext } from "../Provider/context.client";
  */
 export default function NostoCategory(props: {
   category: string;
+  placements?: string[];
 }): JSX.Element {
   const { category } = props;
   const {
@@ -45,7 +46,7 @@ export default function NostoCategory(props: {
           .setVariation(currentVariation)
           .setResponseMode(responseMode)
           .viewCategory(category)
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

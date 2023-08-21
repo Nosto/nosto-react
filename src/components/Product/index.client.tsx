@@ -29,6 +29,7 @@ import { useDeepCompareEffect } from "../../utils/hooks";
 export default function NostoProduct(props: {
   product: string;
   tagging?: Product;
+  placements?: string[];
 }): JSX.Element {
   const { product, tagging } = props;
   const {
@@ -48,7 +49,7 @@ export default function NostoProduct(props: {
           .defaultSession()
           .setResponseMode(responseMode)
           .viewProduct(product)
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

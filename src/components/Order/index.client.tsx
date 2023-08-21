@@ -24,6 +24,7 @@ import { snakeize } from "../../utils/snakeize";
  */
 export default function NostoOrder(props: {
   order: { purchase: Purchase };
+  placements?: string[];
 }): JSX.Element {
   const { order } = props;
   const {
@@ -44,7 +45,7 @@ export default function NostoOrder(props: {
           .setVariation(currentVariation)
           .setResponseMode(responseMode)
           .addOrder(snakeize(order))
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

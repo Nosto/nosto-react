@@ -24,7 +24,9 @@ import { useNostoContext } from "../Provider/context.client";
  *
  * @group Personalisation Components
  */
-export default function NostoHome(): JSX.Element {
+export default function NostoHome(props: {
+  placements?: string[];
+}): JSX.Element {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -43,7 +45,7 @@ export default function NostoHome(): JSX.Element {
           .setVariation(currentVariation)
           .setResponseMode(responseMode)
           .viewFrontPage()
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

@@ -20,7 +20,9 @@ import { useNostoContext } from "../Provider/context.client";
  *
  * @group Personalisation Components
  */
-export default function NostoOther(): JSX.Element {
+export default function NostoOther(props: {
+    placements?: string[];
+}): JSX.Element {
   const {
     clientScriptLoaded,
     currentVariation,
@@ -30,7 +32,6 @@ export default function NostoOther(): JSX.Element {
   } = useNostoContext();
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other");
-
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
       window.nostojs((api) => {
@@ -39,7 +40,7 @@ export default function NostoOther(): JSX.Element {
           .setVariation(currentVariation)
           .setResponseMode(responseMode)
           .viewOther()
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

@@ -24,7 +24,10 @@ import { useNostoContext } from "../Provider/context.client";
  *
  * @group Personalisation Components
  */
-export default function NostoSearch(props: { query: string }): JSX.Element {
+export default function NostoSearch(props: {
+  query: string,
+  placements?: string[];
+}): JSX.Element {
   const { query } = props;
   const {
     clientScriptLoaded,
@@ -44,7 +47,7 @@ export default function NostoSearch(props: { query: string }): JSX.Element {
           .setVariation(currentVariation)
           .setResponseMode(responseMode)
           .viewSearch(query)
-          .setPlacements(api.placements.getPlacements())
+          .setPlacements(props.placements || api.placements.getPlacements())
           .load()
           .then((data) => {
             renderCampaigns(data, api);

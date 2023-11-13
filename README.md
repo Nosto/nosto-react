@@ -42,8 +42,8 @@ _\*\*Note: The search feature is available when implemented via our code editor.
 
 #### Required versions
 
-- npm: 8.5.5
-- node: v16.15.0
+- npm: 9.8.1
+- node: v18.18.0
 
 ### Installation
 

@@ -1,7 +1,7 @@
 import React, { useEffect, isValidElement, useState, useRef } from "react"
 import { NostoContext } from "./context.client"
-import { createRoot } from "react-dom/client"
-import { Recommendation } from "../../types"
+import { createRoot, Root } from "react-dom/client"
+import { NostoClient, Recommendation } from "../../types"
 
 /**
  * This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub.
@@ -45,7 +45,9 @@ export default function NostoProvider(props: {
   /**
    * Recommendation component which holds nostoRecommendation object
    */
-  recommendationComponent?: any
+  recommendationComponent?: React.ReactElement<{
+    nostoRecommendation: Recommendation
+  }>
   /**
    * Enables Shopify markets with language and market id
    */
@@ -54,9 +56,8 @@ export default function NostoProvider(props: {
     marketId?: string | number
   }
 }): JSX.Element {
-  let {
+  const {
     account,
-    currentVariation = "",
     multiCurrency = false,
     host,
     children,
@@ -70,8 +71,8 @@ export default function NostoProvider(props: {
     [clientScriptLoadedState]
   )
 
-  //Pass currentVariation as empty string if multiCurrency is disabled
-  currentVariation = multiCurrency ? currentVariation : ""
+  // Pass currentVariation as empty string if multiCurrency is disabled
+  const currentVariation = multiCurrency ? props.currentVariation : ""
 
   // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent)
@@ -83,53 +84,47 @@ export default function NostoProvider(props: {
     nostoRecommendation: Recommendation
   }) {
     return React.cloneElement(recommendationComponent!, {
+      // eslint-disable-next-line react/prop-types
       nostoRecommendation: props.nostoRecommendation,
     })
   }
 
   // custom hook for rendering campaigns (CSR/SSR):
   const [pageType, setPageType] = useState("")
-  const useRenderCampaigns: any = function (type: string = "") {
-    const placementRefs: any = useRef({})
+  const useRenderCampaigns = (type: string = "") => {
+    const placementRefs = useRef<Record<string, Root>>({})
     useEffect(() => {
-      if (pageType != type) {
+      if (pageType !== type) {
         setPageType(type)
       }
     }, [])
 
-    const pageTypeUpdated = type == pageType
+    const pageTypeUpdated = type === pageType
 
     function renderCampaigns(
       data: {
-        recommendations: any
+        recommendations: Record<string, Recommendation>
         campaigns: {
-          recommendations: {
-            [key: string]: any
-          }
+          recommendations: Record<string, Recommendation>
         }
       },
-      api: {
-        placements: {
-          injectCampaigns: (recommendations: any) => void
-        }
-      }
+      api: NostoClient
     ) {
-      if (responseMode == "HTML") {
+      if (responseMode === "HTML") {
         // inject content campaigns as usual:
         api.placements.injectCampaigns(data.recommendations)
       } else {
         // render recommendation component into placements:
         const recommendations = data.campaigns.recommendations
         for (const key in recommendations) {
-          let recommendation = recommendations[key]
-          let placementSelector = "#" + key
-          let placement: Function = () =>
-            document.querySelector(placementSelector)
+          const recommendation = recommendations[key]
+          const placementSelector = "#" + key
+          const placement = () => document.querySelector(placementSelector)
 
-          if (!!placement()) {
+          if (placement()) {
             if (!placementRefs.current[key])
-              placementRefs.current[key] = createRoot(placement())
-            const root = placementRefs.current[key]
+              placementRefs.current[key] = createRoot(placement()!)
+            const root = placementRefs.current[key]!
             root.render(
               <RecommendationComponentWrapper
                 nostoRecommendation={recommendation}
@@ -144,7 +139,7 @@ export default function NostoProvider(props: {
 
   useEffect(() => {
     if (!window.nostojs) {
-      window.nostojs = (cb: Function) => {
+      window.nostojs = (cb: (api: NostoClient) => void) => {
         ;(window.nostojs.q = window.nostojs.q || []).push(cb)
       }
       window.nostojs(api => api.setAutoLoad(false))
@@ -171,16 +166,16 @@ export default function NostoProvider(props: {
       document.body.appendChild(script)
     }
 
-    //Enable Shopify markets functionality:
-    if (!!shopifyMarkets) {
+    // Enable Shopify markets functionality:
+    if (shopifyMarkets) {
       const existingScript = document.querySelector("[nosto-client-script]")
       const nostoSandbox = document.querySelector("#nosto-sandbox")
 
       if (
         !existingScript ||
-        existingScript?.getAttribute("nosto-language") !=
+        existingScript?.getAttribute("nosto-language") !==
           shopifyMarkets?.language ||
-        existingScript?.getAttribute("nosto-market-id") !=
+        existingScript?.getAttribute("nosto-market-id") !==
           shopifyMarkets?.marketId
       ) {
         if (clientScriptLoadedState) {

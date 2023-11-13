@@ -1,5 +1,7 @@
 import { createContext, useContext } from "react"
-import { Recommendation } from "../../types"
+import { NostoClient, Recommendation } from "../../types"
+
+type AnyFunction = (...args: unknown[]) => unknown
 
 /**
  * @group Types
@@ -7,13 +9,16 @@ import { Recommendation } from "../../types"
 export interface NostoContextType {
   account: string
   clientScriptLoaded: boolean
-  currentVariation: string
-  renderFunction?: Function
+  currentVariation?: string
+  renderFunction?: AnyFunction
   responseMode: string
   recommendationComponent?: React.ReactElement<{
     nostoRecommendation: Recommendation
   }>
-  useRenderCampaigns: Function
+  useRenderCampaigns(type: string): {
+    renderCampaigns(data: unknown, api: NostoClient): void
+    pageTypeUpdated: boolean
+  }
   pageType: string
 }
 
@@ -26,7 +31,12 @@ export const NostoContext = createContext<NostoContextType>({
   pageType: "",
   responseMode: "HTML",
   clientScriptLoaded: false,
-  useRenderCampaigns: () => undefined,
+  useRenderCampaigns: () => {
+    return {
+      renderCampaigns: () => {},
+      pageTypeUpdated: false,
+    }
+  },
 })
 
 /**

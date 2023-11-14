@@ -1,4 +1,4 @@
-export function isPlainObject<T = Record<keyof any, unknown>>(
+export function isPlainObject<T = Record<string, unknown>>(
   value: unknown
 ): value is T {
   const isObject = (v: unknown): v is object => String(v) === "[object Object]"
@@ -12,6 +12,7 @@ export function isPlainObject<T = Record<keyof any, unknown>>(
   if (!isObject(prototype)) return false
 
   // Checks if it is not a class
+  // eslint-disable-next-line no-prototype-builtins
   if (!prototype.hasOwnProperty("isPrototypeOf")) {
     return false
   }

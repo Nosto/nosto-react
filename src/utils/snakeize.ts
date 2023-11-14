@@ -9,14 +9,14 @@ export function snakeize<T>(obj: T): T {
     return obj.map(snakeize) as T
   }
   return Object.keys(obj).reduce((acc, key) => {
-    var camel =
+    const camel =
       key[0].toLowerCase() +
       key.slice(1).replace(/([A-Z]+)/g, (_, x) => {
         return "_" + x.toLowerCase()
       })
     acc[camel as keyof typeof acc] = snakeize(obj[key as keyof typeof acc])
     return acc
-  }, {} as T)
+  }, {}) as T
 }
 
 function isDate(obj: unknown) {

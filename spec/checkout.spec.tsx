@@ -1,17 +1,17 @@
-import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import React from "react"
+import { render, screen, waitFor } from "@testing-library/react"
 import {
   NostoProvider,
   NostoCheckout,
   NostoPlacement,
-  Recommendation
-} from "../src/index.client";
+  Recommendation,
+} from "../src/index.client"
 
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom"
 
-const RecommendationComponent: React.ComponentType<{nostoRecommendation?: Recommendation}> = ({
-  nostoRecommendation,
-}) => {
+const RecommendationComponent: React.ComponentType<{
+  nostoRecommendation?: Recommendation
+}> = ({ nostoRecommendation }) => {
   return (
     <div className="nosto-list" data-testid="recommendation">
       {nostoRecommendation?.products.map((product, i) => (
@@ -20,8 +20,8 @@ const RecommendationComponent: React.ComponentType<{nostoRecommendation?: Recomm
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
 test("Checkout page render", async () => {
   render(
@@ -36,17 +36,17 @@ test("Checkout page render", async () => {
         <NostoCheckout />
       </>
     </NostoProvider>
-  );
+  )
 
   await waitFor(() => {
-    expect(screen.getAllByTestId("recommendation")).toHaveLength(3);
-  });
+    expect(screen.getAllByTestId("recommendation")).toHaveLength(3)
+  })
 
   expect(
     screen.getAllByTestId("recommendation-product").length
-  ).toBeGreaterThanOrEqual(3);
+  ).toBeGreaterThanOrEqual(3)
 
-  screen.getAllByTestId("recommendation-product-name").forEach((el) => {
-    expect(el.textContent?.trim().length).toBeGreaterThan(5);
-  });
-});
+  screen.getAllByTestId("recommendation-product-name").forEach(el => {
+    expect(el.textContent?.trim().length).toBeGreaterThan(5)
+  })
+})

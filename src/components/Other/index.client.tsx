@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useNostoContext } from "../Provider/context.client";
+import React, { useEffect } from "react"
+import { useNostoContext } from "../Provider/context.client"
 
 /**
  * You can personalise your miscellaneous pages by using the NostoOther component.
@@ -21,7 +21,7 @@ import { useNostoContext } from "../Provider/context.client";
  * @group Personalisation Components
  */
 export default function NostoOther(props: {
-    placements?: string[];
+  placements?: string[]
 }): JSX.Element {
   const {
     clientScriptLoaded,
@@ -29,12 +29,12 @@ export default function NostoOther(props: {
     responseMode,
     recommendationComponent,
     useRenderCampaigns,
-  } = useNostoContext();
+  } = useNostoContext()
 
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other");
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other")
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -42,17 +42,17 @@ export default function NostoOther(props: {
           .viewOther()
           .setPlacements(props.placements || api.placements.getPlacements())
           .load()
-          .then((data) => {
-            renderCampaigns(data, api);
-          });
-      });
+          .then(data => {
+            renderCampaigns(data, api)
+          })
+      })
     }
   }, [
     clientScriptLoaded,
     currentVariation,
     recommendationComponent,
     pageTypeUpdated,
-  ]);
+  ])
 
   return (
     <>
@@ -60,5 +60,5 @@ export default function NostoOther(props: {
         other
       </div>
     </>
-  );
+  )
 }

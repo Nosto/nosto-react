@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useNostoContext } from "../Provider/context.client";
+import { useEffect } from "react"
+import { useNostoContext } from "../Provider/context.client"
 
 /**
  * The `NostoHome` component must be used to personalise the home page. The component does not require any props.
@@ -25,7 +25,7 @@ import { useNostoContext } from "../Provider/context.client";
  * @group Personalisation Components
  */
 export default function NostoHome(props: {
-  placements?: string[];
+  placements?: string[]
 }): JSX.Element {
   const {
     clientScriptLoaded,
@@ -33,13 +33,13 @@ export default function NostoHome(props: {
     responseMode,
     recommendationComponent,
     useRenderCampaigns,
-  } = useNostoContext();
+  } = useNostoContext()
 
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home");
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -47,17 +47,17 @@ export default function NostoHome(props: {
           .viewFrontPage()
           .setPlacements(props.placements || api.placements.getPlacements())
           .load()
-          .then((data) => {
-            renderCampaigns(data, api);
-          });
-      });
+          .then(data => {
+            renderCampaigns(data, api)
+          })
+      })
     }
   }, [
     clientScriptLoaded,
     currentVariation,
     recommendationComponent,
     pageTypeUpdated,
-  ]);
+  ])
 
   return (
     <>
@@ -65,5 +65,5 @@ export default function NostoHome(props: {
         front
       </div>
     </>
-  );
+  )
 }

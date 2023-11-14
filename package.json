@@ -20,8 +20,8 @@
     "typecheck": "tsc",
     "tslint": "tslint 'src/**/*.ts?(x)'",
     "clean": "rimraf dist",
-    "prettier": "prettier '{src,spec}/*/**' --list-different",
-    "prettier:fix": "prettier '{src,spec}/*/**' --write",
+    "prettier": "prettier '{src,spec}/**' --list-different",
+    "prettier:fix": "prettier '{src,spec}/**' --write",
     "test": "jest spec"
   },
   "files": [

@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 /**
  * Nosto React has a special component called NostoPlacement.
@@ -14,9 +14,9 @@ import React from "react";
  * @group Personalisation Components
  */
 export default function NostoPlacement(props: {
-  id: string;
-  pageType?: string;
+  id: string
+  pageType?: string
 }): JSX.Element {
-  const { id, pageType } = props;
-  return <div className="nosto_element" id={id} key={id + (pageType || "")} />;
+  const { id, pageType } = props
+  return <div className="nosto_element" id={id} key={id + (pageType || "")} />
 }

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useNostoContext } from "../Provider/context.client";
+import { useEffect } from "react"
+import { useNostoContext } from "../Provider/context.client"
 
 /**
  * You can personalise your cart and checkout pages by using the NostoCheckout component.
@@ -22,7 +22,7 @@ import { useNostoContext } from "../Provider/context.client";
  */
 
 export default function NostoCheckout(props: {
-  placements?: string[];
+  placements?: string[]
 }): JSX.Element {
   const {
     clientScriptLoaded,
@@ -30,13 +30,13 @@ export default function NostoCheckout(props: {
     responseMode,
     recommendationComponent,
     useRenderCampaigns,
-  } = useNostoContext();
+  } = useNostoContext()
 
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("checkout");
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("checkout")
 
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -44,17 +44,17 @@ export default function NostoCheckout(props: {
           .viewCart()
           .setPlacements(props.placements || api.placements.getPlacements())
           .load()
-          .then((data) => {
-            renderCampaigns(data, api);
-          });
-      });
+          .then(data => {
+            renderCampaigns(data, api)
+          })
+      })
     }
   }, [
     clientScriptLoaded,
     currentVariation,
     recommendationComponent,
     pageTypeUpdated,
-  ]);
+  ])
 
   return (
     <>
@@ -62,5 +62,5 @@ export default function NostoCheckout(props: {
         cart
       </div>
     </>
-  );
+  )
 }

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useNostoContext } from "../Provider/context.client";
+import { useEffect } from "react"
+import { useNostoContext } from "../Provider/context.client"
 
 /**
  * You can personalise your search pages by using the NostoSearch component.
@@ -25,23 +25,23 @@ import { useNostoContext } from "../Provider/context.client";
  * @group Personalisation Components
  */
 export default function NostoSearch(props: {
-  query: string,
-  placements?: string[];
+  query: string
+  placements?: string[]
 }): JSX.Element {
-  const { query } = props;
+  const { query } = props
   const {
     clientScriptLoaded,
     currentVariation,
     responseMode,
     recommendationComponent,
     useRenderCampaigns,
-  } = useNostoContext();
+  } = useNostoContext()
 
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("search");
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("search")
 
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -49,10 +49,10 @@ export default function NostoSearch(props: {
           .viewSearch(query)
           .setPlacements(props.placements || api.placements.getPlacements())
           .load()
-          .then((data) => {
-            renderCampaigns(data, api);
-          });
-      });
+          .then(data => {
+            renderCampaigns(data, api)
+          })
+      })
     }
   }, [
     clientScriptLoaded,
@@ -60,7 +60,7 @@ export default function NostoSearch(props: {
     query,
     recommendationComponent,
     pageTypeUpdated,
-  ]);
+  ])
 
   return (
     <>
@@ -71,5 +71,5 @@ export default function NostoSearch(props: {
         {query}
       </div>
     </>
-  );
+  )
 }

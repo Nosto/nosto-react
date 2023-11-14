@@ -1,7 +1,7 @@
-import { useNostoContext } from "../Provider/context.client";
-import { Cart, Customer } from "../../types";
-import { snakeize } from "../../utils/snakeize";
-import { useDeepCompareEffect } from "../../utils/hooks";
+import { useNostoContext } from "../Provider/context.client"
+import { Cart, Customer } from "../../types"
+import { snakeize } from "../../utils/snakeize"
+import { useDeepCompareEffect } from "../../utils/hooks"
 
 /**
  * Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change.
@@ -14,28 +14,28 @@ import { useDeepCompareEffect } from "../../utils/hooks";
  * @group Essential Functions
  */
 export default function NostoSession(props: {
-  cart: Cart;
-  customer: Customer;
+  cart: Cart
+  customer: Customer
 }): JSX.Element {
-  const { cart, customer } = props;
-  const { clientScriptLoaded } = useNostoContext();
+  const { cart, customer } = props
+  const { clientScriptLoaded } = useNostoContext()
 
   useDeepCompareEffect(() => {
-    const currentCart = cart ? snakeize(cart) : undefined;
-    const currentCustomer = customer ? snakeize(customer) : undefined;
+    const currentCart = cart ? snakeize(cart) : undefined
+    const currentCustomer = customer ? snakeize(customer) : undefined
 
     if (clientScriptLoaded) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setResponseMode("HTML")
           .setCart(currentCart)
           .setCustomer(currentCustomer)
           .viewOther()
-          .load();
-      });
+          .load()
+      })
     }
-  }, [clientScriptLoaded, cart, customer]);
+  }, [clientScriptLoaded, cart, customer])
 
-  return <></>;
+  return <></>
 }

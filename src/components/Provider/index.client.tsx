@@ -1,7 +1,7 @@
-import React, { useEffect, isValidElement, useState, useRef } from "react";
-import { NostoContext } from "./context.client";
-import { createRoot } from "react-dom/client";
-import { Recommendation } from "../../types";
+import React, { useEffect, isValidElement, useState, useRef } from "react"
+import { NostoContext } from "./context.client"
+import { createRoot } from "react-dom/client"
+import { Recommendation } from "../../types"
 
 /**
  * This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub.
@@ -28,30 +28,30 @@ export default function NostoProvider(props: {
   /**
    * Indicates merchant id
    */
-  account: string;
+  account: string
   /**
    * Indicates currency
    */
-  currentVariation?: string;
+  currentVariation?: string
   /**
    * Indicates an url of a server
    */
-  host?: string;
-  children: React.ReactElement;
+  host?: string
+  children: React.ReactElement
   /**
    * Indicates if merchant uses multiple currencies
    */
-  multiCurrency?: boolean;
+  multiCurrency?: boolean
   /**
    * Recommendation component which holds nostoRecommendation object
    */
-  recommendationComponent?: any;
+  recommendationComponent?: any
   /**
-  * Enables Shopify markets with language and market id
-  */
+   * Enables Shopify markets with language and market id
+   */
   shopifyMarkets?: {
-    language?: string;
-    marketId?: string | number;
+    language?: string
+    marketId?: string | number
   }
 }): JSX.Element {
   let {
@@ -61,148 +61,160 @@ export default function NostoProvider(props: {
     host,
     children,
     recommendationComponent,
-    shopifyMarkets
-  } = props;
+    shopifyMarkets,
+  } = props
   const [clientScriptLoadedState, setClientScriptLoadedState] =
-    React.useState(false);
+    React.useState(false)
   const clientScriptLoaded = React.useMemo(
     () => clientScriptLoadedState,
     [clientScriptLoadedState]
-  );
+  )
 
   //Pass currentVariation as empty string if multiCurrency is disabled
-  currentVariation = multiCurrency ? currentVariation : "";
+  currentVariation = multiCurrency ? currentVariation : ""
 
   // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent)
     ? "JSON_ORIGINAL"
-    : "HTML";
+    : "HTML"
 
   // RecommendationComponent for client-side rendering:
   function RecommendationComponentWrapper(props: {
-    nostoRecommendation: Recommendation;
+    nostoRecommendation: Recommendation
   }) {
     return React.cloneElement(recommendationComponent!, {
       nostoRecommendation: props.nostoRecommendation,
-    });
+    })
   }
 
   // custom hook for rendering campaigns (CSR/SSR):
-  const [pageType, setPageType] = useState("");
+  const [pageType, setPageType] = useState("")
   const useRenderCampaigns: any = function (type: string = "") {
-    const placementRefs: any = useRef({});
+    const placementRefs: any = useRef({})
     useEffect(() => {
       if (pageType != type) {
-        setPageType(type);
+        setPageType(type)
       }
-    }, []);
+    }, [])
 
-    const pageTypeUpdated = type == pageType;
+    const pageTypeUpdated = type == pageType
 
     function renderCampaigns(
       data: {
-        recommendations: any;
+        recommendations: any
         campaigns: {
           recommendations: {
-            [key: string]: any;
-          };
-        };
+            [key: string]: any
+          }
+        }
       },
       api: {
         placements: {
-          injectCampaigns: (recommendations: any) => void;
-        };
+          injectCampaigns: (recommendations: any) => void
+        }
       }
     ) {
       if (responseMode == "HTML") {
         // inject content campaigns as usual:
-        api.placements.injectCampaigns(data.recommendations);
+        api.placements.injectCampaigns(data.recommendations)
       } else {
         // render recommendation component into placements:
-        const recommendations = data.campaigns.recommendations;
+        const recommendations = data.campaigns.recommendations
         for (const key in recommendations) {
-          let recommendation = recommendations[key];
-          let placementSelector = "#" + key;
+          let recommendation = recommendations[key]
+          let placementSelector = "#" + key
           let placement: Function = () =>
-            document.querySelector(placementSelector);
+            document.querySelector(placementSelector)
 
           if (!!placement()) {
             if (!placementRefs.current[key])
-              placementRefs.current[key] = createRoot(placement());
-            const root = placementRefs.current[key];
+              placementRefs.current[key] = createRoot(placement())
+            const root = placementRefs.current[key]
             root.render(
               <RecommendationComponentWrapper
                 nostoRecommendation={recommendation}
               ></RecommendationComponentWrapper>
-            );
+            )
           }
         }
       }
     }
-    return { renderCampaigns, pageTypeUpdated };
-  };
-
+    return { renderCampaigns, pageTypeUpdated }
+  }
 
   useEffect(() => {
     if (!window.nostojs) {
       window.nostojs = (cb: Function) => {
-        (window.nostojs.q = window.nostojs.q || []).push(cb);
-      };
-      window.nostojs((api) => api.setAutoLoad(false));
+        ;(window.nostojs.q = window.nostojs.q || []).push(cb)
+      }
+      window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = "//" + (host || "connect.nosto.com") + "/include/" + account;
-      script.async = true;
-      script.setAttribute("nosto-client-script", "");
+    if (
+      !document.querySelectorAll("[nosto-client-script]").length &&
+      !shopifyMarkets
+    ) {
+      const script = document.createElement("script")
+      script.type = "text/javascript"
+      script.src = "//" + (host || "connect.nosto.com") + "/include/" + account
+      script.async = true
+      script.setAttribute("nosto-client-script", "")
 
       script.onload = () => {
         if (typeof jest !== "undefined") {
           window.nosto?.reload({
             site: "localhost",
-          });
+          })
         }
-        setClientScriptLoadedState(true);
-      };
-      document.body.appendChild(script);
+        setClientScriptLoadedState(true)
+      }
+      document.body.appendChild(script)
     }
 
     //Enable Shopify markets functionality:
     if (!!shopifyMarkets) {
+      const existingScript = document.querySelector("[nosto-client-script]")
+      const nostoSandbox = document.querySelector("#nosto-sandbox")
 
-      const existingScript = document.querySelector("[nosto-client-script]");
-      const nostoSandbox = document.querySelector('#nosto-sandbox');
-
-      if (!existingScript || existingScript?.getAttribute('nosto-language') != shopifyMarkets?.language || existingScript?.getAttribute('nosto-market-id') != shopifyMarkets?.marketId) {
-        if (clientScriptLoadedState) { setClientScriptLoadedState(false) };
+      if (
+        !existingScript ||
+        existingScript?.getAttribute("nosto-language") !=
+          shopifyMarkets?.language ||
+        existingScript?.getAttribute("nosto-market-id") !=
+          shopifyMarkets?.marketId
+      ) {
+        if (clientScriptLoadedState) {
+          setClientScriptLoadedState(false)
+        }
 
         existingScript?.parentNode?.removeChild(existingScript)
         nostoSandbox?.parentNode?.removeChild(nostoSandbox)
 
-        const script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "//" + (host || "connect.nosto.com") + `/script/shopify/market/nosto.js?merchant=${account}&market=${shopifyMarkets.marketId || ''}&locale=${shopifyMarkets?.language?.toLowerCase() || ''}`
-        script.async = true;
-        script.setAttribute("nosto-client-script", "");
-        script.setAttribute("nosto-language", shopifyMarkets?.language || '');
-        script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId));
+        const script = document.createElement("script")
+        script.type = "text/javascript"
+        script.src =
+          "//" +
+          (host || "connect.nosto.com") +
+          `/script/shopify/market/nosto.js?merchant=${account}&market=${
+            shopifyMarkets.marketId || ""
+          }&locale=${shopifyMarkets?.language?.toLowerCase() || ""}`
+        script.async = true
+        script.setAttribute("nosto-client-script", "")
+        script.setAttribute("nosto-language", shopifyMarkets?.language || "")
+        script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
 
         script.onload = () => {
           if (typeof jest !== "undefined") {
             window.nosto?.reload({
               site: "localhost",
-            });
+            })
           }
-          setClientScriptLoadedState(true);
-        };
-        document.body.appendChild(script);
+          setClientScriptLoadedState(true)
+        }
+        document.body.appendChild(script)
       }
-
     }
-
-  }, [clientScriptLoadedState, shopifyMarkets]);
+  }, [clientScriptLoadedState, shopifyMarkets])
 
   return (
     <NostoContext.Provider
@@ -218,5 +230,5 @@ export default function NostoProvider(props: {
     >
       {children}
     </NostoContext.Provider>
-  );
+  )
 }

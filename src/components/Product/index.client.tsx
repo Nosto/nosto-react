@@ -1,6 +1,6 @@
-import { Product } from "../../types";
-import { useNostoContext } from "../Provider/context.client";
-import { useDeepCompareEffect } from "../../utils/hooks";
+import { Product } from "../../types"
+import { useNostoContext } from "../Provider/context.client"
+import { useDeepCompareEffect } from "../../utils/hooks"
 
 /**
  * The NostoProduct component must be used to personalise the product page.
@@ -27,34 +27,34 @@ import { useDeepCompareEffect } from "../../utils/hooks";
  * @group Personalisation Components
  */
 export default function NostoProduct(props: {
-  product: string;
-  tagging?: Product;
-  placements?: string[];
+  product: string
+  tagging?: Product
+  placements?: string[]
 }): JSX.Element {
-  const { product, tagging } = props;
+  const { product, tagging } = props
   const {
     clientScriptLoaded,
     currentVariation,
     responseMode,
     recommendationComponent,
     useRenderCampaigns,
-  } = useNostoContext();
+  } = useNostoContext()
 
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product");
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product")
 
   useDeepCompareEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setResponseMode(responseMode)
           .viewProduct(product)
           .setPlacements(props.placements || api.placements.getPlacements())
           .load()
-          .then((data) => {
-            renderCampaigns(data, api);
-          });
-      });
+          .then(data => {
+            renderCampaigns(data, api)
+          })
+      })
     }
   }, [
     clientScriptLoaded,
@@ -62,7 +62,7 @@ export default function NostoProduct(props: {
     product,
     recommendationComponent,
     pageTypeUpdated,
-  ]);
+  ])
 
   return (
     <>
@@ -183,5 +183,5 @@ export default function NostoProduct(props: {
           ))}
       </div>
     </>
-  );
+  )
 }

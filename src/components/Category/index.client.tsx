@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useNostoContext } from "../Provider/context.client";
+import { useEffect } from "react"
+import { useNostoContext } from "../Provider/context.client"
 
 /**
  * You can personalise your category and collection pages by using the NostoCategory component.
@@ -24,23 +24,23 @@ import { useNostoContext } from "../Provider/context.client";
  * @group Personalisation Components
  */
 export default function NostoCategory(props: {
-  category: string;
-  placements?: string[];
+  category: string
+  placements?: string[]
 }): JSX.Element {
-  const { category } = props;
+  const { category } = props
   const {
     clientScriptLoaded,
     currentVariation,
     responseMode,
     recommendationComponent,
     useRenderCampaigns,
-  } = useNostoContext();
+  } = useNostoContext()
 
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home");
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -48,10 +48,10 @@ export default function NostoCategory(props: {
           .viewCategory(category)
           .setPlacements(props.placements || api.placements.getPlacements())
           .load()
-          .then((data) => {
-            renderCampaigns(data, api);
-          });
-      });
+          .then(data => {
+            renderCampaigns(data, api)
+          })
+      })
     }
   }, [
     clientScriptLoaded,
@@ -59,7 +59,7 @@ export default function NostoCategory(props: {
     currentVariation,
     recommendationComponent,
     pageTypeUpdated,
-  ]);
+  ])
 
   return (
     <>
@@ -70,5 +70,5 @@ export default function NostoCategory(props: {
         {category}
       </div>
     </>
-  );
+  )
 }

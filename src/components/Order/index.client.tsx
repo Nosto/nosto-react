@@ -1,7 +1,7 @@
-import { Purchase } from "../../types";
-import { useEffect } from "react";
-import { useNostoContext } from "../Provider/context.client";
-import { snakeize } from "../../utils/snakeize";
+import { Purchase } from "../../types"
+import { useEffect } from "react"
+import { useNostoContext } from "../Provider/context.client"
+import { snakeize } from "../../utils/snakeize"
 
 /**
  * You can personalise your order-confirmation/thank-you page by using the `NostoOrder` component.
@@ -23,23 +23,23 @@ import { snakeize } from "../../utils/snakeize";
  * @group Personalisation Components
  */
 export default function NostoOrder(props: {
-  order: { purchase: Purchase };
-  placements?: string[];
+  order: { purchase: Purchase }
+  placements?: string[]
 }): JSX.Element {
-  const { order } = props;
+  const { order } = props
   const {
     clientScriptLoaded,
     currentVariation,
     responseMode,
     recommendationComponent,
     useRenderCampaigns,
-  } = useNostoContext();
+  } = useNostoContext()
 
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("order");
+  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("order")
 
   useEffect(() => {
     if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs((api) => {
+      window.nostojs(api => {
         api
           .defaultSession()
           .setVariation(currentVariation)
@@ -47,17 +47,17 @@ export default function NostoOrder(props: {
           .addOrder(snakeize(order))
           .setPlacements(props.placements || api.placements.getPlacements())
           .load()
-          .then((data) => {
-            renderCampaigns(data, api);
-          });
-      });
+          .then(data => {
+            renderCampaigns(data, api)
+          })
+      })
     }
   }, [
     clientScriptLoaded,
     currentVariation,
     recommendationComponent,
     pageTypeUpdated,
-  ]);
+  ])
 
   return (
     <>
@@ -68,5 +68,5 @@ export default function NostoOrder(props: {
         {order.purchase.number}
       </div>
     </>
-  );
+  )
 }

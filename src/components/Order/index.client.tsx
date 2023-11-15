@@ -1,7 +1,7 @@
 import { Purchase } from "../../types"
-import { useEffect } from "react"
 import { useNostoContext } from "../Provider/context.client"
 import { snakeize } from "../../utils/snakeize"
+import { useNostoApi } from "../../utils/hooks"
 
 /**
  * You can personalise your order-confirmation/thank-you page by using the `NostoOrder` component.
@@ -28,33 +28,22 @@ export default function NostoOrder(props: {
 }): JSX.Element {
   const { order } = props
   const {
-    clientScriptLoaded,
-    currentVariation,
-    responseMode,
     recommendationComponent,
     useRenderCampaigns,
   } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("order")
 
-  useEffect(() => {
-    if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs(api => {
-        api
-          .defaultSession()
-          .setVariation(currentVariation)
-          .setResponseMode(responseMode)
-          .addOrder(snakeize(order))
-          .setPlacements(props.placements || api.placements.getPlacements())
-          .load()
-          .then(data => {
-            renderCampaigns(data, api)
-          })
+  useNostoApi(api => {
+    api
+      .defaultSession()
+      .addOrder(snakeize(order))
+      .setPlacements(props.placements || api.placements.getPlacements())
+      .load()
+      .then(data => {
+        renderCampaigns(data, api)
       })
-    }
   }, [
-    clientScriptLoaded,
-    currentVariation,
     recommendationComponent,
     pageTypeUpdated,
   ])

@@ -1,5 +1,5 @@
-import { useEffect } from "react"
 import { useNostoContext } from "../Provider/context.client"
+import { useNostoApi } from "../../utils/hooks"
 
 /**
  * You can personalise your category and collection pages by using the NostoCategory component.
@@ -29,34 +29,23 @@ export default function NostoCategory(props: {
 }): JSX.Element {
   const { category } = props
   const {
-    clientScriptLoaded,
-    currentVariation,
-    responseMode,
     recommendationComponent,
     useRenderCampaigns,
   } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
-  useEffect(() => {
-    if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs(api => {
-        api
-          .defaultSession()
-          .setVariation(currentVariation)
-          .setResponseMode(responseMode)
-          .viewCategory(category)
-          .setPlacements(props.placements || api.placements.getPlacements())
-          .load()
-          .then(data => {
-            renderCampaigns(data, api)
-          })
+  useNostoApi(api => {
+    api
+      .defaultSession()
+      .viewCategory(category)
+      .setPlacements(props.placements || api.placements.getPlacements())
+      .load()
+      .then(data => {
+        renderCampaigns(data, api)
       })
-    }
   }, [
-    clientScriptLoaded,
     category,
-    currentVariation,
     recommendationComponent,
     pageTypeUpdated,
   ])

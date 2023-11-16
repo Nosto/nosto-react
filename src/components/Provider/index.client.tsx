@@ -91,7 +91,7 @@ export default function NostoProvider(props: {
 
   // custom hook for rendering campaigns (CSR/SSR):
   const [pageType, setPageType] = useState("")
-  const useRenderCampaigns = (type: string = "") => {
+  function useRenderCampaigns(type: string = "") {
     const placementRefs = useRef<Record<string, Root>>({})
     useEffect(() => {
       if (pageType !== type) {
@@ -140,7 +140,7 @@ export default function NostoProvider(props: {
   useEffect(() => {
     if (!window.nostojs) {
       window.nostojs = (cb: (api: NostoClient) => void) => {
-        ;(window.nostojs.q = window.nostojs.q || []).push(cb)
+        (window.nostojs.q = window.nostojs.q || []).push(cb)
       }
       window.nostojs(api => api.setAutoLoad(false))
     }

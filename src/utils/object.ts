@@ -1,8 +1,6 @@
-export function isPlainObject<T = Record<string, unknown>>(
-  value: unknown
-): value is T {
-  const isObject = (v: unknown): v is object => String(v) === "[object Object]"
+const isObject = (v: unknown): v is object => String(v) === "[object Object]"
 
+export function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (!isObject(value)) return false
 
   const constructor = value.constructor

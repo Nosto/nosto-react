@@ -1,5 +1,7 @@
 import { useEffect, useRef, useMemo } from "react"
+import { useNostoContext } from "../components/Provider/context.client"
 import { deepCompare } from "./compare"
+import { NostoClient } from "../types"
 
 export function useDeepCompareEffect(
   callback: Parameters<typeof useEffect>[0],
@@ -18,4 +20,20 @@ function useDeepCompareMemoize<T>(value: T) {
   }
 
   return useMemo(() => ref.current, [signalRef.current])
+}
+
+export function useNostoApi(cb: (api: NostoClient) => void, deps?: React.DependencyList, flags?: {  deep?: boolean }): void {
+  const { clientScriptLoaded, currentVariation, responseMode, } = useNostoContext()
+  const useEffectFn = flags?.deep ? useDeepCompareEffect : useEffect
+
+  useEffectFn(() => {
+    if (clientScriptLoaded) {
+      window.nostojs(api => {
+        api.defaultSession()
+          .setVariation(currentVariation)
+          .setResponseMode(responseMode)
+        cb(api)
+      })
+    }
+  }, [clientScriptLoaded, currentVariation, ...deps ?? []])
 }

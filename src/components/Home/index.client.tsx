@@ -1,5 +1,5 @@
-import { useEffect } from "react"
 import { useNostoContext } from "../Provider/context.client"
+import { useNostoApi } from "../../utils/hooks"
 
 /**
  * The `NostoHome` component must be used to personalise the home page. The component does not require any props.
@@ -28,33 +28,22 @@ export default function NostoHome(props: {
   placements?: string[]
 }): JSX.Element {
   const {
-    clientScriptLoaded,
-    currentVariation,
-    responseMode,
     recommendationComponent,
     useRenderCampaigns,
   } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
-  useEffect(() => {
-    if (clientScriptLoaded && pageTypeUpdated) {
-      window.nostojs(api => {
-        api
-          .defaultSession()
-          .setVariation(currentVariation)
-          .setResponseMode(responseMode)
-          .viewFrontPage()
-          .setPlacements(props.placements || api.placements.getPlacements())
-          .load()
-          .then(data => {
-            renderCampaigns(data, api)
-          })
+  useNostoApi(api => {
+    api
+      .defaultSession()
+      .viewFrontPage()
+      .setPlacements(props.placements || api.placements.getPlacements())
+      .load()
+      .then(data => {
+        renderCampaigns(data, api)
       })
-    }
   }, [
-    clientScriptLoaded,
-    currentVariation,
     recommendationComponent,
     pageTypeUpdated,
   ])

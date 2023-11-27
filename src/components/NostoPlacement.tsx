@@ -13,10 +13,7 @@ import React from "react"
  *
  * @group Personalisation Components
  */
-export default function NostoPlacement(props: {
-  id: string
-  pageType?: string
-}): JSX.Element {
+export default function NostoPlacement(props: { id: string; pageType?: string }) {
   const { id, pageType } = props
   return <div className="nosto_element" id={id} key={id + (pageType || "")} />
 }

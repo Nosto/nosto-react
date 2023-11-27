@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import { NostoClient, Recommendation } from "../../types"
+import { NostoClient, Recommendation } from "../types"
 
 type AnyFunction = (...args: unknown[]) => unknown
 

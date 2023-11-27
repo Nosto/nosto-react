@@ -1,5 +1,5 @@
-import { useNostoContext } from "../Provider/context.client"
-import { useNostoApi } from "../../utils/hooks"
+import { useNostoContext } from "./context"
+import { useNostoApi } from "../utils/hooks"
 
 /**
  * You can personalise your cart and checkout pages by using the `Nosto404` component.
@@ -21,29 +21,24 @@ import { useNostoApi } from "../../utils/hooks"
  *
  * @group Personalisation Components
  */
-export default function Nosto404(props: {
-  placements?: string[]
-}): JSX.Element {
-  const {
-    recommendationComponent,
-    useRenderCampaigns,
-  } = useNostoContext()
+export default function Nosto404(props: { placements?: string[] }) {
+  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("404")
 
-  useNostoApi(api => {
-    api
-      .defaultSession()
-      .viewNotFound()
-      .setPlacements(props.placements || api.placements.getPlacements())
-      .load()
-      .then(data => {
-        renderCampaigns(data, api)
-      })
-  }, [
-    recommendationComponent,
-    pageTypeUpdated,
-  ])
+  useNostoApi(
+    api => {
+      api
+        .defaultSession()
+        .viewNotFound()
+        .setPlacements(props.placements || api.placements.getPlacements())
+        .load()
+        .then(data => {
+          renderCampaigns(data, api)
+        })
+    },
+    [recommendationComponent, pageTypeUpdated]
+  )
 
   return (
     <>

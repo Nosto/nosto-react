@@ -1,5 +1,5 @@
-import { useNostoContext } from "../Provider/context.client"
-import { useNostoApi } from "../../utils/hooks"
+import { useNostoContext } from "./context"
+import { useNostoApi } from "../utils/hooks"
 
 /**
  * You can personalise your search pages by using the NostoSearch component.
@@ -24,32 +24,25 @@ import { useNostoApi } from "../../utils/hooks"
  *
  * @group Personalisation Components
  */
-export default function NostoSearch(props: {
-  query: string
-  placements?: string[]
-}): JSX.Element {
-  const { query } = props
-  const {
-    recommendationComponent,
-    useRenderCampaigns,
-  } = useNostoContext()
+export default function NostoSearch(props: { query: string; placements?: string[] }) {
+  const { query, placements } = props
+  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("search")
 
-  useNostoApi(api => {
-    api
-      .defaultSession()
-      .viewSearch(query)
-      .setPlacements(props.placements || api.placements.getPlacements())
-      .load()
-      .then(data => {
-        renderCampaigns(data, api)
-      })
-  }, [
-    query,
-    recommendationComponent,
-    pageTypeUpdated,
-  ])
+  useNostoApi(
+    api => {
+      api
+        .defaultSession()
+        .viewSearch(query)
+        .setPlacements(placements || api.placements.getPlacements())
+        .load()
+        .then(data => {
+          renderCampaigns(data, api)
+        })
+    },
+    [query, recommendationComponent, pageTypeUpdated]
+  )
 
   return (
     <>

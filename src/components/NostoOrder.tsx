@@ -1,7 +1,7 @@
-import { Purchase } from "../../types"
-import { useNostoContext } from "../Provider/context.client"
-import { snakeize } from "../../utils/snakeize"
-import { useNostoApi } from "../../utils/hooks"
+import { Purchase } from "../types"
+import { useNostoContext } from "./context"
+import { snakeize } from "../utils/snakeize"
+import { useNostoApi } from "../utils/hooks"
 
 /**
  * You can personalise your order-confirmation/thank-you page by using the `NostoOrder` component.
@@ -25,28 +25,25 @@ import { useNostoApi } from "../../utils/hooks"
 export default function NostoOrder(props: {
   order: { purchase: Purchase }
   placements?: string[]
-}): JSX.Element {
-  const { order } = props
-  const {
-    recommendationComponent,
-    useRenderCampaigns,
-  } = useNostoContext()
+}) {
+  const { order, placements } = props
+  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("order")
 
-  useNostoApi(api => {
-    api
-      .defaultSession()
-      .addOrder(snakeize(order))
-      .setPlacements(props.placements || api.placements.getPlacements())
-      .load()
-      .then(data => {
-        renderCampaigns(data, api)
-      })
-  }, [
-    recommendationComponent,
-    pageTypeUpdated,
-  ])
+  useNostoApi(
+    api => {
+      api
+        .defaultSession()
+        .addOrder(snakeize(order))
+        .setPlacements(placements || api.placements.getPlacements())
+        .load()
+        .then(data => {
+          renderCampaigns(data, api)
+        })
+    },
+    [recommendationComponent, pageTypeUpdated]
+  )
 
   return (
     <>

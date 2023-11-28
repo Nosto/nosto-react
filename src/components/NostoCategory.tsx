@@ -1,5 +1,5 @@
-import { useNostoContext } from "../Provider/context.client"
-import { useNostoApi } from "../../utils/hooks"
+import { useNostoContext } from "./context"
+import { useNostoApi } from "../utils/hooks"
 
 /**
  * You can personalise your category and collection pages by using the NostoCategory component.
@@ -23,32 +23,25 @@ import { useNostoApi } from "../../utils/hooks"
  *
  * @group Personalisation Components
  */
-export default function NostoCategory(props: {
-  category: string
-  placements?: string[]
-}): JSX.Element {
-  const { category } = props
-  const {
-    recommendationComponent,
-    useRenderCampaigns,
-  } = useNostoContext()
+export default function NostoCategory(props: { category: string; placements?: string[] }) {
+  const { category, placements } = props
+  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
-  useNostoApi(api => {
-    api
-      .defaultSession()
-      .viewCategory(category)
-      .setPlacements(props.placements || api.placements.getPlacements())
-      .load()
-      .then(data => {
-        renderCampaigns(data, api)
-      })
-  }, [
-    category,
-    recommendationComponent,
-    pageTypeUpdated,
-  ])
+  useNostoApi(
+    api => {
+      api
+        .defaultSession()
+        .viewCategory(category)
+        .setPlacements(placements || api.placements.getPlacements())
+        .load()
+        .then(data => {
+          renderCampaigns(data, api)
+        })
+    },
+    [category, recommendationComponent, pageTypeUpdated]
+  )
 
   return (
     <>

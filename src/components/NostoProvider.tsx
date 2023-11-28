@@ -1,7 +1,7 @@
 import React, { useEffect, isValidElement, useState, useRef } from "react"
-import { NostoContext } from "./context.client"
+import { NostoContext } from "./context"
 import { createRoot, Root } from "react-dom/client"
-import { NostoClient, Recommendation } from "../../types"
+import { NostoClient, Recommendation } from "../types"
 
 /**
  * This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub.
@@ -55,7 +55,7 @@ export default function NostoProvider(props: {
     language?: string
     marketId?: string | number
   }
-}): JSX.Element {
+}) {
   const {
     account,
     multiCurrency = false,
@@ -64,25 +64,17 @@ export default function NostoProvider(props: {
     recommendationComponent,
     shopifyMarkets,
   } = props
-  const [clientScriptLoadedState, setClientScriptLoadedState] =
-    React.useState(false)
-  const clientScriptLoaded = React.useMemo(
-    () => clientScriptLoadedState,
-    [clientScriptLoadedState]
-  )
+  const [clientScriptLoadedState, setClientScriptLoadedState] = React.useState(false)
+  const clientScriptLoaded = React.useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
 
   // Set responseMode for loading campaigns:
-  const responseMode = isValidElement(recommendationComponent)
-    ? "JSON_ORIGINAL"
-    : "HTML"
+  const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
 
   // RecommendationComponent for client-side rendering:
-  function RecommendationComponentWrapper(props: {
-    nostoRecommendation: Recommendation
-  }) {
+  function RecommendationComponentWrapper(props: { nostoRecommendation: Recommendation }) {
     return React.cloneElement(recommendationComponent!, {
       // eslint-disable-next-line react/prop-types
       nostoRecommendation: props.nostoRecommendation,
@@ -110,7 +102,7 @@ export default function NostoProvider(props: {
       },
       api: NostoClient
     ) {
-      if (responseMode === "HTML") {
+      if (responseMode == "HTML") {
         // inject content campaigns as usual:
         api.placements.injectCampaigns(data.recommendations)
       } else {
@@ -122,8 +114,7 @@ export default function NostoProvider(props: {
           const placement = () => document.querySelector(placementSelector)
 
           if (placement()) {
-            if (!placementRefs.current[key])
-              placementRefs.current[key] = createRoot(placement()!)
+            if (!placementRefs.current[key]) placementRefs.current[key] = createRoot(placement()!)
             const root = placementRefs.current[key]!
             root.render(
               <RecommendationComponentWrapper
@@ -145,10 +136,7 @@ export default function NostoProvider(props: {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (
-      !document.querySelectorAll("[nosto-client-script]").length &&
-      !shopifyMarkets
-    ) {
+    if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
       const script = document.createElement("script")
       script.type = "text/javascript"
       script.src = "//" + (host || "connect.nosto.com") + "/include/" + account
@@ -173,10 +161,8 @@ export default function NostoProvider(props: {
 
       if (
         !existingScript ||
-        existingScript?.getAttribute("nosto-language") !==
-          shopifyMarkets?.language ||
-        existingScript?.getAttribute("nosto-market-id") !==
-          shopifyMarkets?.marketId
+        existingScript?.getAttribute("nosto-language") !== shopifyMarkets?.language ||
+        existingScript?.getAttribute("nosto-market-id") !== shopifyMarkets?.marketId
       ) {
         if (clientScriptLoadedState) {
           setClientScriptLoadedState(false)

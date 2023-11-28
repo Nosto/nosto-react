@@ -1,5 +1,5 @@
-import { useNostoContext } from "../Provider/context.client"
-import { useNostoApi } from "../../utils/hooks"
+import { useNostoContext } from "./context"
+import { useNostoApi } from "../utils/hooks"
 
 /**
  * The `NostoHome` component must be used to personalise the home page. The component does not require any props.
@@ -24,29 +24,24 @@ import { useNostoApi } from "../../utils/hooks"
  *
  * @group Personalisation Components
  */
-export default function NostoHome(props: {
-  placements?: string[]
-}): JSX.Element {
-  const {
-    recommendationComponent,
-    useRenderCampaigns,
-  } = useNostoContext()
+export default function NostoHome(props: { placements?: string[] }) {
+  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
-  useNostoApi(api => {
-    api
-      .defaultSession()
-      .viewFrontPage()
-      .setPlacements(props.placements || api.placements.getPlacements())
-      .load()
-      .then(data => {
-        renderCampaigns(data, api)
-      })
-  }, [
-    recommendationComponent,
-    pageTypeUpdated,
-  ])
+  useNostoApi(
+    api => {
+      api
+        .defaultSession()
+        .viewFrontPage()
+        .setPlacements(props.placements || api.placements.getPlacements())
+        .load()
+        .then(data => {
+          renderCampaigns(data, api)
+        })
+    },
+    [recommendationComponent, pageTypeUpdated]
+  )
 
   return (
     <>

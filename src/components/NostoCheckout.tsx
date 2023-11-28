@@ -1,5 +1,5 @@
-import { useNostoContext } from "../Provider/context.client"
-import { useNostoApi } from "../../utils/hooks"
+import { useNostoContext } from "./context"
+import { useNostoApi } from "../utils/hooks"
 
 /**
  * You can personalise your cart and checkout pages by using the NostoCheckout component.
@@ -21,29 +21,24 @@ import { useNostoApi } from "../../utils/hooks"
  * @group Personalisation Components
  */
 
-export default function NostoCheckout(props: {
-  placements?: string[]
-}): JSX.Element {
-  const {
-    recommendationComponent,
-    useRenderCampaigns,
-  } = useNostoContext()
+export default function NostoCheckout(props: { placements?: string[] }) {
+  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("checkout")
 
-  useNostoApi(api => {
-    api
-      .defaultSession()
-      .viewCart()
-      .setPlacements(props.placements || api.placements.getPlacements())
-      .load()
-      .then(data => {
-        renderCampaigns(data, api)
-      })
-  }, [
-    recommendationComponent,
-    pageTypeUpdated,
-  ])
+  useNostoApi(
+    api => {
+      api
+        .defaultSession()
+        .viewCart()
+        .setPlacements(props.placements || api.placements.getPlacements())
+        .load()
+        .then(data => {
+          renderCampaigns(data, api)
+        })
+    },
+    [recommendationComponent, pageTypeUpdated]
+  )
 
   return (
     <>

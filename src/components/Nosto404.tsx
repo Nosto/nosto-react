@@ -19,7 +19,7 @@ import { useNostoApi } from "../utils/hooks"
  * </div>
  * ```
  *
- * @group Personalisation Components
+ * @group Components
  */
 export default function Nosto404(props: { placements?: string[] }) {
   const { recommendationComponent, useRenderCampaigns } = useNostoContext()

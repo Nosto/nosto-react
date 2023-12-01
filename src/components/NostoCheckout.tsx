@@ -18,7 +18,7 @@ import { useNostoApi } from "../utils/hooks"
  * </div>
  * ```
  *
- * @group Personalisation Components
+ * @group Components
  */
 
 export default function NostoCheckout(props: { placements?: string[] }) {

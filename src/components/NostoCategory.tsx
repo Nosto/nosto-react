@@ -21,7 +21,7 @@ import { useNostoApi } from "../utils/hooks"
  * If the category being viewed is `Mens >> Jackets`, you must provide the name as `/Mens/Jackets`.
  * You must ensure that the category path provided here matches that of the categories tagged in your products.
  *
- * @group Personalisation Components
+ * @group Components
  */
 export default function NostoCategory(props: { category: string; placements?: string[] }) {
   const { category, placements } = props

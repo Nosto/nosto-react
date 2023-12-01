@@ -24,7 +24,7 @@ import { useNostoApi } from "../utils/hooks"
  * </div>
  * ```
  *
- * @group Personalisation Components
+ * @group Components
  */
 export default function NostoProduct(props: {
   product: string

@@ -22,7 +22,7 @@ import { useNostoApi } from "../utils/hooks"
  * A query for `black shoes` must be provided as-is and not as `black+shoes`.
  * Doing so will lead to invalid results.
  *
- * @group Personalisation Components
+ * @group Components
  */
 export default function NostoSearch(props: { query: string; placements?: string[] }) {
   const { query, placements } = props

@@ -22,7 +22,7 @@ import { useNostoApi } from "../utils/hooks"
  * </div>
  * ```
  *
- * @group Personalisation Components
+ * @group Components
  */
 export default function NostoHome(props: { placements?: string[] }) {
   const { recommendationComponent, useRenderCampaigns } = useNostoContext()

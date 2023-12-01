@@ -20,7 +20,7 @@ import { useNostoApi } from "../utils/hooks"
  * </div>
  * ```
  *
- * @group Personalisation Components
+ * @group Components
  */
 export default function NostoOrder(props: {
   order: { purchase: Purchase }

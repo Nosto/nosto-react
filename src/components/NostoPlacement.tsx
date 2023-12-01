@@ -11,7 +11,7 @@ import React from "react"
  * <NostoPlacement id="frontpage-nosto-1" />
  * ```
  *
- * @group Personalisation Components
+ * @group Components
  */
 export default function NostoPlacement(props: { id: string; pageType?: string }) {
   const { id, pageType } = props

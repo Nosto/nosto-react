@@ -4,27 +4,9 @@ import { createRoot, Root } from "react-dom/client"
 import { NostoClient, Recommendation } from "../types"
 
 /**
- * This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub.
- * This widget wraps all other React Nosto widgets.
- *
- * ```
- * <NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
- *   <App />
- * </NostoProvider>
- * ```
- *
- * **Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`.
- * In advanced use-cases, the need to configure the host may surface.
- *
- * In order to implement client-side rendering, the requires a designated component to render the recommendations provided by Nosto.
- * This component should be capable of processing the JSON response received from our backend.
- * Notice the `recommendationComponent` prop passed to `<NostoProvider>` above.
- *
- * Learn more [here](https://github.com/Nosto/shopify-hydrogen/blob/main/README.md#client-side-rendering-for-recommendations) and see a [live example](https://github.com/Nosto/shopify-hydrogen-demo) on our demo store.
- *
- * @group Essential Functions
+ * @group Components
  */
-export default function NostoProvider(props: {
+export interface NostoProviderProps {
   /**
    * Indicates merchant id
    */
@@ -55,7 +37,30 @@ export default function NostoProvider(props: {
     language?: string
     marketId?: string | number
   }
-}) {
+}
+
+/**
+ * This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub.
+ * This widget wraps all other React Nosto widgets.
+ *
+ * ```
+ * <NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
+ *   <App />
+ * </NostoProvider>
+ * ```
+ *
+ * **Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`.
+ * In advanced use-cases, the need to configure the host may surface.
+ *
+ * In order to implement client-side rendering, the requires a designated component to render the recommendations provided by Nosto.
+ * This component should be capable of processing the JSON response received from our backend.
+ * Notice the `recommendationComponent` prop passed to `<NostoProvider>` above.
+ *
+ * Learn more [here](https://github.com/Nosto/shopify-hydrogen/blob/main/README.md#client-side-rendering-for-recommendations) and see a [live example](https://github.com/Nosto/shopify-hydrogen-demo) on our demo store.
+ *
+ * @group Components
+ */
+export default function NostoProvider(props: NostoProviderProps) {
   const {
     account,
     multiCurrency = false,

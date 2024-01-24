@@ -37,15 +37,12 @@ export default function NostoProduct(props: {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product")
 
   useNostoApi(
-    api => {
-      api
-        .defaultSession()
+    async (api) => {
+      const data = await api.defaultSession()
         .viewProduct(product)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-        .then(data => {
-          renderCampaigns(data, api)
-        })
+      renderCampaigns(data, api)
     },
     [product, recommendationComponent, pageTypeUpdated],
     { deep: true }

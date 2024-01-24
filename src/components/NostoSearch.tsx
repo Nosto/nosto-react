@@ -31,15 +31,12 @@ export default function NostoSearch(props: { query: string; placements?: string[
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("search")
 
   useNostoApi(
-    api => {
-      api
-        .defaultSession()
+    async (api) => {
+      const data = await api.defaultSession()
         .viewSearch(query)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-        .then(data => {
-          renderCampaigns(data, api)
-        })
+      renderCampaigns(data, api)
     },
     [query, recommendationComponent, pageTypeUpdated]
   )

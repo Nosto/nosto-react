@@ -4,8 +4,9 @@
     "es2021": true
   },
   "extends": [
-    "eslint:recommended",
+    "eslint:recommended",    
     "plugin:@typescript-eslint/recommended",
+    "plugin:promise/recommended",
     "plugin:react/recommended"
   ],
   "parser": "@typescript-eslint/parser",
@@ -15,7 +16,8 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "react"
+    "react",
+    "promise"
   ],
   "rules": {
     "react/react-in-jsx-scope": "off"

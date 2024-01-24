@@ -27,15 +27,12 @@ export default function NostoCheckout(props: { placements?: string[] }) {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("checkout")
 
   useNostoApi(
-    api => {
-      api
-        .defaultSession()
+    async (api) => {
+      const data = await api.defaultSession()
         .viewCart()
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
-        .then(data => {
-          renderCampaigns(data, api)
-        })
+      renderCampaigns(data, api)
     },
     [recommendationComponent, pageTypeUpdated]
   )

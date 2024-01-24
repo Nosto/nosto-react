@@ -32,15 +32,12 @@ export default function NostoOrder(props: {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("order")
 
   useNostoApi(
-    api => {
-      api
-        .defaultSession()
+    async (api) => {
+      const data = await api.defaultSession()
         .addOrder(snakeize(order))
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-        .then(data => {
-          renderCampaigns(data, api)
-        })
+      renderCampaigns(data, api)
     },
     [recommendationComponent, pageTypeUpdated]
   )

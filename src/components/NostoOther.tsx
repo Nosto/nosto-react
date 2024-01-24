@@ -26,15 +26,12 @@ export default function NostoOther(props: { placements?: string[] }) {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other")
 
   useNostoApi(
-    api => {
-      api
-        .defaultSession()
+    async (api) => {
+      const data = await api.defaultSession()
         .viewOther()
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
-        .then(data => {
-          renderCampaigns(data, api)
-        })
+      renderCampaigns(data, api)
     },
     [recommendationComponent, pageTypeUpdated]
   )

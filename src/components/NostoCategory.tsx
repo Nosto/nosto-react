@@ -30,15 +30,12 @@ export default function NostoCategory(props: { category: string; placements?: st
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
   useNostoApi(
-    api => {
-      api
-        .defaultSession()
+    async (api) => {
+      const data = await api.defaultSession()
         .viewCategory(category)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-        .then(data => {
-          renderCampaigns(data, api)
-        })
+      renderCampaigns(data, api)
     },
     [category, recommendationComponent, pageTypeUpdated]
   )

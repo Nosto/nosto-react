@@ -30,15 +30,12 @@ export default function NostoHome(props: { placements?: string[] }) {
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
 
   useNostoApi(
-    api => {
-      api
-        .defaultSession()
+    async (api) => {
+      const data = await api.defaultSession()
         .viewFrontPage()
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
-        .then(data => {
-          renderCampaigns(data, api)
-        })
+      renderCampaigns(data, api)
     },
     [recommendationComponent, pageTypeUpdated]
   )

@@ -160,7 +160,7 @@ export default function NostoProvider(props: NostoProviderProps) {
     }
 
     // Enable Shopify markets functionality:
-    /*if (!!shopifyMarkets) {
+    if (!!shopifyMarkets) {
       const existingScript = document.querySelector("[nosto-client-script]")
       const nostoSandbox = document.querySelector("#nosto-sandbox")
 
@@ -199,7 +199,7 @@ export default function NostoProvider(props: NostoProviderProps) {
         }
         document.body.appendChild(script)
       }
-    }*/
+    }
   }, [clientScriptLoadedState, shopifyMarkets])
 
   return (

@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && npm run lint && vite build && npm run typedef",
+    "build": "tsc && npm run lint && vite build && npm run typedoc",
     "preview": "vite preview",
     "prepare": "vite build",
     "typecheck": "tsc",
@@ -23,7 +23,7 @@
     "prettier": "prettier '{src,spec}/**' --list-different",
     "prettier:fix": "prettier '{src,spec}/**' --write",
     "test": "jest spec",
-    "typedef": "typedoc src/index.ts"
+    "typedoc": "typedoc src/index.ts"
   },
   "files": [
     "dist",

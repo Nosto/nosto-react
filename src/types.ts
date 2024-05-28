@@ -34,11 +34,11 @@ export interface SessionAction {
 /**
  * @group Types
  */
-export interface NostoSession {
-  setCart(cart?: Cart): NostoSession
-  setCustomer(customer?: Customer): NostoSession
-  setResponseMode(mode: string): NostoSession
-  setVariation(variation?: string): NostoSession
+export interface NostoClientSession {
+  setCart(cart?: Cart): NostoClientSession
+  setCustomer(customer?: Customer): NostoClientSession
+  setResponseMode(mode: string): NostoClientSession
+  setVariation(variation?: string): NostoClientSession
   addOrder(order: { purchase: Purchase }): SessionAction
   viewCategory(category: string): SessionAction
   viewProduct(product: string): SessionAction
@@ -54,7 +54,7 @@ export interface NostoSession {
  */
 export interface NostoClient {
   setAutoLoad(autoload: boolean): NostoClient
-  defaultSession(): NostoSession
+  defaultSession(): NostoClientSession
   placements: {
     getPlacements(): string[]
     injectCampaigns(recommendations: Record<string, Recommendation>): void

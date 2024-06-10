@@ -157,18 +157,19 @@ export default function NostoProvider(props: NostoProviderProps) {
         script.src = scriptUrl
         script.async = true
         script.setAttribute("nosto-client-script", "")
-      }
-
-      script.onload = () => {
-        if (typeof jest !== "undefined") {
-          window.nosto?.reload({
-            site: "localhost",
-          })
+        script.onload = () => {
+          if (typeof jest !== "undefined") {
+            window.nosto?.reload({
+              site: "localhost",
+            })
+          }
+          setClientScriptLoadedState(true)
         }
-        setClientScriptLoadedState(true)
+        document.body.appendChild(script)
       }
-      document.body.appendChild(script)
     }
+
+
 
     // Enable Shopify markets functionality:
     if (!!shopifyMarkets) {
@@ -203,18 +204,16 @@ export default function NostoProvider(props: NostoProviderProps) {
           script.setAttribute("nosto-client-script", "")
           script.setAttribute("nosto-language", shopifyMarkets?.language || "")
           script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
-        }
-
-
-        script.onload = () => {
-          if (typeof jest !== "undefined") {
-            window.nosto?.reload({
-              site: "localhost",
-            })
+          script.onload = () => {
+            if (typeof jest !== "undefined") {
+              window.nosto?.reload({
+                site: "localhost",
+              })
+            }
+            setClientScriptLoadedState(true)
           }
-          setClientScriptLoadedState(true)
+          document.body.appendChild(script)
         }
-        document.body.appendChild(script)
       }
     }
   }, [clientScriptLoadedState, shopifyMarkets])

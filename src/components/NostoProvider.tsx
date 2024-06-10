@@ -37,6 +37,10 @@ export interface NostoProviderProps {
     language?: string
     marketId?: string | number
   }
+  /**
+   * Callback for setting script URL, if on Shopify. Can be empty
+   */
+  setScriptUrl?: (url: string) => void; // New prop for callback
 }
 
 /**
@@ -67,7 +71,8 @@ export default function NostoProvider(props: NostoProviderProps) {
     host,
     children,
     recommendationComponent,
-    shopifyMarkets,
+    shopifyMarkets = {},
+    setScriptUrl,
   } = props
   const [clientScriptLoadedState, setClientScriptLoadedState] = React.useState(false)
   const clientScriptLoaded = React.useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
@@ -142,25 +147,32 @@ export default function NostoProvider(props: NostoProviderProps) {
     }
 
     if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
-      const script = document.createElement("script")
-      script.type = "text/javascript"
-      script.src = "//" + (host || "connect.nosto.com") + "/include/" + account
-      script.async = true
-      script.setAttribute("nosto-client-script", "")
+      const scriptUrl = `//${host || "connect.nosto.com"}/include/${account}`
 
-      script.onload = () => {
-        if (typeof jest !== "undefined") {
-          window.nosto?.reload({
-            site: "localhost",
-          })
+      if (typeof setScriptUrl === "function") {
+          setScriptUrl(scriptUrl)
+      } else {
+        const script = document.createElement("script")
+        script.type = "text/javascript"
+        script.src = scriptUrl
+        script.async = true
+        script.setAttribute("nosto-client-script", "")
+        script.onload = () => {
+          if (typeof jest !== "undefined") {
+            window.nosto?.reload({
+              site: "localhost",
+            })
+          }
+          setClientScriptLoadedState(true)
         }
-        setClientScriptLoadedState(true)
+        document.body.appendChild(script)
       }
-      document.body.appendChild(script)
     }
 
+
+
     // Enable Shopify markets functionality:
-    if (shopifyMarkets) {
+    if (!!shopifyMarkets) {
       const existingScript = document.querySelector("[nosto-client-script]")
       const nostoSandbox = document.querySelector("#nosto-sandbox")
 
@@ -176,28 +188,32 @@ export default function NostoProvider(props: NostoProviderProps) {
         existingScript?.parentNode?.removeChild(existingScript)
         nostoSandbox?.parentNode?.removeChild(nostoSandbox)
 
-        const script = document.createElement("script")
-        script.type = "text/javascript"
-        script.src =
-          "//" +
-          (host || "connect.nosto.com") +
-          `/script/shopify/market/nosto.js?merchant=${account}&market=${
-            shopifyMarkets.marketId || ""
-          }&locale=${shopifyMarkets?.language?.toLowerCase() || ""}`
-        script.async = true
-        script.setAttribute("nosto-client-script", "")
-        script.setAttribute("nosto-language", shopifyMarkets?.language || "")
-        script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
+        const scriptUrl = "//" +
+            (host || "connect.nosto.com") +
+            `/script/shopify/market/nosto.js?merchant=${account}&market=${
+                shopifyMarkets.marketId || ""
+            }&locale=${shopifyMarkets?.language?.toLowerCase() || ""}`
 
-        script.onload = () => {
-          if (typeof jest !== "undefined") {
-            window.nosto?.reload({
-              site: "localhost",
-            })
+        if (typeof setScriptUrl === "function") {
+          setScriptUrl(scriptUrl)
+        } else {
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.src = scriptUrl
+          script.async = true
+          script.setAttribute("nosto-client-script", "")
+          script.setAttribute("nosto-language", shopifyMarkets?.language || "")
+          script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
+          script.onload = () => {
+            if (typeof jest !== "undefined") {
+              window.nosto?.reload({
+                site: "localhost",
+              })
+            }
+            setClientScriptLoadedState(true)
           }
-          setClientScriptLoadedState(true)
+          document.body.appendChild(script)
         }
-        document.body.appendChild(script)
       }
     }
   }, [clientScriptLoadedState, shopifyMarkets])

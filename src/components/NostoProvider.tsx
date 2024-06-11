@@ -147,7 +147,7 @@ export default function NostoProvider(props: NostoProviderProps) {
     }
 
     if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
-      const scriptUrl = `${host || "connect.nosto.com"}/include/${account}`//fixme - add back the '//' in front of the URL
+      const scriptUrl = `//${host || "connect.nosto.com"}/include/${account}`
 
       if (typeof setScriptUrl === "function") {
         console.log("Setting script URL")
@@ -171,8 +171,6 @@ export default function NostoProvider(props: NostoProviderProps) {
       }
     }
 
-
-
     // Enable Shopify markets functionality:
     if (!!shopifyMarkets) {
       const existingScript = document.querySelector("[nosto-client-script]")
@@ -190,7 +188,7 @@ export default function NostoProvider(props: NostoProviderProps) {
         existingScript?.parentNode?.removeChild(existingScript)
         nostoSandbox?.parentNode?.removeChild(nostoSandbox)
 
-        const scriptUrl = /*"//" +*/
+        const scriptUrl = "//" +
             (host || "connect.nosto.com") +
             `/script/shopify/market/nosto.js?merchant=${account}&market=${
                 shopifyMarkets.marketId || ""

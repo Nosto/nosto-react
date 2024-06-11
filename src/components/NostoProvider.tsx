@@ -150,8 +150,10 @@ export default function NostoProvider(props: NostoProviderProps) {
       const scriptUrl = `//${host || "connect.nosto.com"}/include/${account}`
 
       if (typeof setScriptUrl === "function") {
+        console.log("Setting script URL")
           setScriptUrl(scriptUrl)
       } else {
+        console.log("Creating script element")
         const script = document.createElement("script")
         script.type = "text/javascript"
         script.src = scriptUrl
@@ -195,8 +197,10 @@ export default function NostoProvider(props: NostoProviderProps) {
             }&locale=${shopifyMarkets?.language?.toLowerCase() || ""}`
 
         if (typeof setScriptUrl === "function") {
+            console.log("Setting script URL")
           setScriptUrl(scriptUrl)
         } else {
+            console.log("Creating script element")
           const script = document.createElement("script")
           script.type = "text/javascript"
           script.src = scriptUrl

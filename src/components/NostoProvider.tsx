@@ -147,7 +147,7 @@ export default function NostoProvider(props: NostoProviderProps) {
     }
 
     if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
-      const scriptUrl = `//${host || "connect.nosto.com"}/include/${account}`
+      const scriptUrl = `${host || "connect.nosto.com"}/include/${account}`//fixme - add back the '//' in front of the URL
 
       if (typeof setScriptUrl === "function") {
         console.log("Setting script URL")
@@ -190,7 +190,7 @@ export default function NostoProvider(props: NostoProviderProps) {
         existingScript?.parentNode?.removeChild(existingScript)
         nostoSandbox?.parentNode?.removeChild(nostoSandbox)
 
-        const scriptUrl = "//" +
+        const scriptUrl = /*"//" +*/
             (host || "connect.nosto.com") +
             `/script/shopify/market/nosto.js?merchant=${account}&market=${
                 shopifyMarkets.marketId || ""

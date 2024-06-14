@@ -1,5 +1,6 @@
 import { useNostoContext } from "./context"
 import { useNostoApi } from "../utils/hooks"
+import { Product } from "../types"
 
 /**
  * The NostoProduct component must be used to personalise the product page.
@@ -27,9 +28,10 @@ import { useNostoApi } from "../utils/hooks"
  */
 export default function NostoProduct(props: {
   product: string
+  tagging?: Product
   placements?: string[]
 }) {
-  const { product, placements } = props
+  const { product, tagging, placements } = props
   const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
   const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product")
@@ -37,7 +39,7 @@ export default function NostoProduct(props: {
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
-        .viewProduct(product)
+        .viewProduct(tagging?.productId ?? product)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data, api)

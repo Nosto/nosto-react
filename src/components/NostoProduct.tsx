@@ -1,4 +1,3 @@
-import { Product } from "../types"
 import { useNostoContext } from "./context"
 import { useNostoApi } from "../utils/hooks"
 

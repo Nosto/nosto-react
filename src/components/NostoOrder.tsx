@@ -1,4 +1,4 @@
-import { Purchase } from "../types"
+import { Order } from "../types"
 import { useNostoContext } from "./context"
 import { snakeize } from "../utils/snakeize"
 import { useNostoApi } from "../utils/hooks"
@@ -23,7 +23,7 @@ import { useNostoApi } from "../utils/hooks"
  * @group Components
  */
 export default function NostoOrder(props: {
-  order: { purchase: Purchase }
+  order: Order,
   placements?: string[]
 }) {
   const { order, placements } = props

@@ -20,7 +20,6 @@ import { useNostoApi } from "../utils/hooks"
  *
  * @group Components
  */
-
 export default function NostoCheckout(props: { placements?: string[] }) {
   const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 

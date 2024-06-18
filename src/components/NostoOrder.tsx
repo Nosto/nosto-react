@@ -41,15 +41,5 @@ export default function NostoOrder(props: {
     },
     [recommendationComponent, pageTypeUpdated]
   )
-
-  return (
-    <>
-      <div className="nosto_page_type" style={{ display: "none" }}>
-        order
-      </div>
-      <div className="nosto_order" style={{ display: "none" }}>
-        {order.purchase.number}
-      </div>
-    </>
-  )
+  return null
 }

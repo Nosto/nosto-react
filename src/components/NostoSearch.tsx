@@ -40,15 +40,5 @@ export default function NostoSearch(props: { query: string; placements?: string[
     },
     [query, recommendationComponent, pageTypeUpdated]
   )
-
-  return (
-    <>
-      <div className="nosto_page_type" style={{ display: "none" }}>
-        search
-      </div>
-      <div className="nosto_search" style={{ display: "none" }}>
-        {query}
-      </div>
-    </>
-  )
+  return null
 }

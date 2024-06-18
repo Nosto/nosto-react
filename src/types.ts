@@ -41,7 +41,7 @@ export interface NostoClientSession {
   setVariation(variation?: string): NostoClientSession
   addOrder(order: { purchase: Purchase }): SessionAction
   viewCategory(category: string): SessionAction
-  viewProduct(product: string): SessionAction
+  viewProduct(product: Product | string): SessionAction
   viewFrontPage(): SessionAction
   viewNotFound(): SessionAction
   viewOther(): SessionAction

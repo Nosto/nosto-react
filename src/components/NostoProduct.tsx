@@ -39,7 +39,7 @@ export default function NostoProduct(props: {
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
-        .viewProduct(tagging?.productId ?? product)
+        .viewProduct(tagging ?? product)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data, api)
@@ -47,6 +47,5 @@ export default function NostoProduct(props: {
     [product, recommendationComponent, pageTypeUpdated],
     { deep: true }
   )
-
   return null
 }

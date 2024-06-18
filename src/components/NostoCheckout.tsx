@@ -36,12 +36,5 @@ export default function NostoCheckout(props: { placements?: string[] }) {
     },
     [recommendationComponent, pageTypeUpdated]
   )
-
-  return (
-    <>
-      <div className="nosto_page_type" style={{ display: "none" }}>
-        cart
-      </div>
-    </>
-  )
+  return null
 }

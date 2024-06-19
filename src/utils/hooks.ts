@@ -33,7 +33,7 @@ export function useNostoApi(
   useEffectFn(() => {
     if (clientScriptLoaded) {
       window.nostojs(api => {
-        api.defaultSession().setVariation(currentVariation).setResponseMode(responseMode)
+        api.defaultSession().setVariation(currentVariation!).setResponseMode(responseMode)
         cb(api)
       })
     }

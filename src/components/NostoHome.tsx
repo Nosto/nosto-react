@@ -39,12 +39,5 @@ export default function NostoHome(props: { placements?: string[] }) {
     },
     [recommendationComponent, pageTypeUpdated]
   )
-
-  return (
-    <>
-      <div className="nosto_page_type" style={{ display: "none" }}>
-        front
-      </div>
-    </>
-  )
+  return null
 }

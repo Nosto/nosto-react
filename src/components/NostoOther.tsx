@@ -35,12 +35,5 @@ export default function NostoOther(props: { placements?: string[] }) {
     },
     [recommendationComponent, pageTypeUpdated]
   )
-
-  return (
-    <>
-      <div className="nosto_page_type" style={{ display: "none" }}>
-        other
-      </div>
-    </>
-  )
+  return null
 }

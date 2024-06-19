@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import { NostoClient, Recommendation } from "../types"
+import { NostoClient, Recommendation, RenderMode } from "../types"
 
 type AnyFunction = (...args: unknown[]) => unknown
 
@@ -11,7 +11,7 @@ export interface NostoContextType {
   clientScriptLoaded: boolean
   currentVariation?: string
   renderFunction?: AnyFunction
-  responseMode: string
+  responseMode: RenderMode
   recommendationComponent?: React.ReactElement<{
     nostoRecommendation: Recommendation
   }>

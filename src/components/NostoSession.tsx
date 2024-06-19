@@ -13,8 +13,8 @@ import { useDeepCompareEffect } from "../utils/hooks"
  *
  * @group Essential Functions
  */
-export default function NostoSession(props: { cart: Cart; customer: Customer }) {
-  const { cart, customer } = props
+export default function NostoSession(props?: { cart?: Cart; customer?: Customer }) {
+  const { cart, customer } = props ?? {}
   const { clientScriptLoaded } = useNostoContext()
 
   useDeepCompareEffect(() => {

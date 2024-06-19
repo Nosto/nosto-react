@@ -20,7 +20,6 @@ import { useNostoApi } from "../utils/hooks"
  *
  * @group Components
  */
-
 export default function NostoCheckout(props: { placements?: string[] }) {
   const { recommendationComponent, useRenderCampaigns } = useNostoContext()
 
@@ -36,12 +35,5 @@ export default function NostoCheckout(props: { placements?: string[] }) {
     },
     [recommendationComponent, pageTypeUpdated]
   )
-
-  return (
-    <>
-      <div className="nosto_page_type" style={{ display: "none" }}>
-        cart
-      </div>
-    </>
-  )
+  return null
 }

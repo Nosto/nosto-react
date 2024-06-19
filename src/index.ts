@@ -1,3 +1,2 @@
-export type { Buyer, Cart, Customer, Item, Product, Purchase, Recommendation, SKU } from "./types"
-
+export type { Cart, Customer, Product, Order, Recommendation } from "./types"
 export * from "./components"

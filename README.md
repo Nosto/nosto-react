@@ -251,21 +251,16 @@ You can personalise your order-confirmation/thank-you page by using the `NostoOr
 
 By default, your account, when created, has one other-page placement named `thankyou-nosto-1`. You may omit this and use any identifier you need. The identifier used here is simply provided to illustrate the example.
 
-The `order` prop requires a value that adheres to the type `Purchase`.
-
 ```jsx
 import {
-  Buyer,
-  Item,
   NostoOrder,
   NostoPlacement,
-  Purchase,
 } from "@nosto/nosto-react";
 
 <div className="thankyou-page">
   ... ... ...
   <NostoPlacement id="thankyou-nosto-1" />
-  <NostoOrder order={{ purchase: toOrder(order) }} />
+  <NostoOrder order={ order } />
 </div>;
 ```
 

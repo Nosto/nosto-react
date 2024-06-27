@@ -149,10 +149,10 @@ export default function NostoProvider(props: NostoProviderProps) {
     if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
       const scriptUrl = `//${host || "connect.nosto.com"}/include/${account}`
 
-      if (typeof setScriptUrl === "function") {
+      /*if (typeof setScriptUrl === "function") {
         console.log("Setting script URL")
           setScriptUrl(scriptUrl)
-      } else {
+      } else {*/
         console.log("Creating script element")
         const script = document.createElement("script")
         script.type = "text/javascript"
@@ -167,8 +167,8 @@ export default function NostoProvider(props: NostoProviderProps) {
           }
           setClientScriptLoadedState(true)
         }
-        document.body.appendChild(script)
-      }
+        //document.body.appendChild(script)
+      /*}*/
     }
 
     // Enable Shopify markets functionality:
@@ -194,10 +194,10 @@ export default function NostoProvider(props: NostoProviderProps) {
                 shopifyMarkets.marketId || ""
             }&locale=${shopifyMarkets?.language?.toLowerCase() || ""}`
 
-        if (typeof setScriptUrl === "function") {
+        /*if (typeof setScriptUrl === "function") {
             console.log("Setting script URL")
           setScriptUrl(scriptUrl)
-        } else {
+        } else {*/
             console.log("Creating script element")
           const script = document.createElement("script")
           script.type = "text/javascript"
@@ -214,8 +214,8 @@ export default function NostoProvider(props: NostoProviderProps) {
             }
             setClientScriptLoadedState(true)
           }
-          document.body.appendChild(script)
-        }
+          //document.body.appendChild(script)
+        /*}*/
       }
     }
   }, [clientScriptLoadedState, shopifyMarkets])

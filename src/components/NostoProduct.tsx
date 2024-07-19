@@ -44,8 +44,7 @@ export default function NostoProduct(props: {
         .load()
       renderCampaigns(data, api)
     },
-    [product, recommendationComponent, pageTypeUpdated],
-    { deep: true }
+    [product, recommendationComponent, pageTypeUpdated]
   )
   return null
 }

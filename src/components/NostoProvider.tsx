@@ -86,7 +86,7 @@ export default function NostoProvider(props: NostoProviderProps) {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (!document.querySelectorAll("[nosto-client-script]").length && !shopifyMarkets) {
+    if (!window.nosto && !shopifyMarkets) {
       const script = document.createElement("script")
       script.type = "text/javascript"
       script.src = "//" + (host || "connect.nosto.com") + "/include/" + account

@@ -1,7 +1,6 @@
 import { Order } from "../types"
-import { useNostoContext } from "./context"
+import { useNostoContext, useNostoApi } from "../hooks"
 import { snakeize } from "../utils/snakeize"
-import { useNostoApi } from "../utils/hooks"
 
 /**
  * You can personalise your order-confirmation/thank-you page by using the `NostoOrder` component.

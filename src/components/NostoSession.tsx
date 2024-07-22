@@ -1,7 +1,6 @@
-import { useNostoContext } from "./context"
+import { useNostoContext, useDeepCompareEffect } from "../hooks"
 import { Cart, Customer } from "../types"
 import { snakeize } from "../utils/snakeize"
-import { useDeepCompareEffect } from "../utils/hooks"
 
 /**
  * Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change.

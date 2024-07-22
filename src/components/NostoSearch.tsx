@@ -1,5 +1,4 @@
-import { useNostoContext } from "./context"
-import { useNostoApi } from "../utils/hooks"
+import { useNostoContext, useNostoApi } from "../hooks"
 
 /**
  * You can personalise your search pages by using the NostoSearch component.

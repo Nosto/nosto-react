@@ -1,5 +1,4 @@
-import { useNostoContext } from "./context"
-import { useNostoApi } from "../utils/hooks"
+import { useNostoContext, useNostoApi } from "../hooks"
 
 /**
  * The `NostoHome` component must be used to personalise the home page. The component does not require any props.

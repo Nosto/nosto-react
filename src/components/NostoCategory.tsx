@@ -1,5 +1,4 @@
-import { useNostoContext } from "./context"
-import { useNostoApi } from "../utils/hooks"
+import { useNostoContext, useNostoApi } from "../hooks"
 
 /**
  * You can personalise your category and collection pages by using the NostoCategory component.

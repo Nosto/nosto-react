@@ -1,6 +1,7 @@
 import React, { useEffect, isValidElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
 import { NostoClient } from "../types"
+import { isNostoLoaded } from "./helpers"
 
 /**
  * @group Components
@@ -86,7 +87,7 @@ export default function NostoProvider(props: NostoProviderProps) {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (!window.nosto && !shopifyMarkets) {
+    if (!isNostoLoaded() && !shopifyMarkets) {
       const script = document.createElement("script")
       script.type = "text/javascript"
       script.src = "//" + (host || "connect.nosto.com") + "/include/" + account

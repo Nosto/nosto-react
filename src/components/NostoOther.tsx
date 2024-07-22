@@ -1,5 +1,4 @@
-import { useNostoContext } from "./context"
-import { useNostoApi } from "../utils/hooks"
+import { useNostoContext, useNostoApi } from "../hooks"
 
 /**
  * You can personalise your miscellaneous pages by using the NostoOther component.

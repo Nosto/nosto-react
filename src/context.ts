@@ -1,5 +1,5 @@
-import { createContext, useContext } from "react"
-import { NostoClient, Recommendation, RenderMode } from "../types"
+import { createContext } from "react"
+import { NostoClient, Recommendation, RenderMode } from "./types"
 
 type AnyFunction = (...args: unknown[]) => unknown
 
@@ -39,17 +39,3 @@ export const NostoContext = createContext<NostoContextType>({
   },
 })
 
-/**
- * A hook that allows you to access the NostoContext and retrieve Nosto-related data from it in React components.
- *
- * @group Essential Functions
- */
-export function useNostoContext(): NostoContextType {
-  const context = useContext(NostoContext)
-
-  if (!context) {
-    throw new Error("No nosto context found")
-  }
-
-  return context
-}

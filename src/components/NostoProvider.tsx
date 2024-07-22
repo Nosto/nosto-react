@@ -1,5 +1,5 @@
 import React, { useEffect, isValidElement, useState, useRef } from "react"
-import { NostoContext } from "./context"
+import { NostoContext } from "../context"
 import { createRoot, Root } from "react-dom/client"
 import { NostoClient, Recommendation } from "../types"
 
@@ -88,6 +88,7 @@ export default function NostoProvider(props: NostoProviderProps) {
 
   // custom hook for rendering campaigns (CSR/SSR):
   const [pageType, setPageType] = useState("")
+  
   function useRenderCampaigns(type: string = "") {
     const placementRefs = useRef<Record<string, Root>>({})
     useEffect(() => {
@@ -130,6 +131,7 @@ export default function NostoProvider(props: NostoProviderProps) {
         }
       }
     }
+
     return { renderCampaigns, pageTypeUpdated }
   }
 

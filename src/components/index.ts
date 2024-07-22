@@ -8,7 +8,4 @@ export { default as NostoOrder } from "./NostoOrder"
 export { default as NostoHome } from "./NostoHome"
 export { default as NostoPlacement } from "./NostoPlacement"
 export { default as NostoProvider } from "./NostoProvider"
-
-export { NostoContext, useNostoContext } from "./context"
-export type { NostoContextType } from "./context"
 export { default as NostoSession } from "./NostoSession"

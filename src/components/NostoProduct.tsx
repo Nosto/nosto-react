@@ -41,7 +41,7 @@ export default function NostoProduct(props: {
         .load()
       renderCampaigns(data)
     },
-    [product]
+    [product, tagging?.selected_sku_id]
   )
   return null
 }

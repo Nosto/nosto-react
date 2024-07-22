@@ -1,4 +1,14 @@
-function createEvent<T extends object>(event: T) {
+interface Event {
+  cart_popup?: boolean
+  elements?: string[]
+  events?: [string, string][]
+  response_mode?: string
+  url?: string
+  categories?: string[]
+  page_type?: string
+}
+
+function createEvent(event: Event): Event {
   return {
     cart_popup: false,
     elements: [],

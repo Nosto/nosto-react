@@ -1,4 +1,4 @@
-import { useNostoContext, useNostoApi } from "../hooks"
+import { useRenderCampaigns, useNostoApi } from "../hooks"
 import { Product } from "../types"
 
 /**
@@ -31,9 +31,7 @@ export default function NostoProduct(props: {
   placements?: string[]
 }) {
   const { product, tagging, placements } = props
-  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
-
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("product")
+  const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
@@ -43,7 +41,7 @@ export default function NostoProduct(props: {
         .load()
       renderCampaigns(data, api)
     },
-    [product, recommendationComponent, pageTypeUpdated]
+    [product]
   )
   return null
 }

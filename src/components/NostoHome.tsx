@@ -1,4 +1,4 @@
-import { useNostoContext, useNostoApi } from "../hooks"
+import { useRenderCampaigns, useNostoApi } from "../hooks"
 
 /**
  * The `NostoHome` component must be used to personalise the home page. The component does not require any props.
@@ -24,9 +24,7 @@ import { useNostoContext, useNostoApi } from "../hooks"
  * @group Components
  */
 export default function NostoHome(props: { placements?: string[] }) {
-  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
-
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
+  const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
@@ -35,8 +33,7 @@ export default function NostoHome(props: { placements?: string[] }) {
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data, api)
-    },
-    [recommendationComponent, pageTypeUpdated]
+    }
   )
   return null
 }

@@ -1,4 +1,4 @@
-import { useNostoContext, useNostoApi } from "../hooks"
+import { useRenderCampaigns, useNostoApi } from "../hooks"
 
 /**
  * You can personalise your miscellaneous pages by using the NostoOther component.
@@ -20,9 +20,7 @@ import { useNostoContext, useNostoApi } from "../hooks"
  * @group Components
  */
 export default function NostoOther(props: { placements?: string[] }) {
-  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
-
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("other")
+  const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
@@ -31,8 +29,6 @@ export default function NostoOther(props: { placements?: string[] }) {
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data, api)
-    },
-    [recommendationComponent, pageTypeUpdated]
-  )
+    })
   return null
 }

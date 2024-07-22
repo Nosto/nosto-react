@@ -1,4 +1,4 @@
-import { useNostoContext, useNostoApi } from "../hooks"
+import { useNostoApi, useRenderCampaigns } from "../hooks"
 
 /**
  * You can personalise your category and collection pages by using the NostoCategory component.
@@ -24,9 +24,7 @@ import { useNostoContext, useNostoApi } from "../hooks"
  */
 export default function NostoCategory(props: { category: string; placements?: string[] }) {
   const { category, placements } = props
-  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
-
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("home")
+  const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
@@ -36,7 +34,7 @@ export default function NostoCategory(props: { category: string; placements?: st
         .load()
       renderCampaigns(data, api)
     },
-    [category, recommendationComponent, pageTypeUpdated]
+    [category]
   )
   return null
 }

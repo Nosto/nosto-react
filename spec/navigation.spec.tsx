@@ -64,29 +64,29 @@ test("navigation events", async () => {
 
   const requests: unknown[] = []
   window.nostojs(api => api.listen("prerequest", req => requests.push(req)))
+
+  function verifyEvents(given: unknown[]) {
+    expect(requests).toEqual(given)
+    requests.length = 0
+  }
   
   // home -> category
   fireEvent.click(screen.getByText("Hoodies"))
-  expect(requests).toEqual([ frontEvent(), categoryEvent("hoodies")])
-  requests.length = 0
+  verifyEvents([ frontEvent(), categoryEvent("hoodies")])
 
   // category -> product
   fireEvent.click(screen.getByText("Product 123"))
-  expect(requests).toEqual([ productEvent("123") ])
-  requests.length = 0
+  verifyEvents([ productEvent("123") ])
 
   // product -> product
   fireEvent.click(screen.getByText("Product 234"))
-  expect(requests).toEqual([ productEvent("234") ])
-  requests.length = 0
+  verifyEvents([ productEvent("234") ])
 
   // product -> category
   fireEvent.click(screen.getByText("Hoodies"))
-  expect(requests).toEqual([ categoryEvent("hoodies") ])
-  requests.length = 0
+  verifyEvents([ categoryEvent("hoodies") ])
 
   // category -> home
   fireEvent.click(screen.getByText("Home"))
-  expect(requests).toEqual([ frontEvent() ])
-  requests.length = 0
+  verifyEvents([ frontEvent() ])
 })

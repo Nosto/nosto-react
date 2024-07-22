@@ -1,7 +1,6 @@
-import React, { useEffect, isValidElement, useState, useRef } from "react"
-import { NostoContext } from "../context"
-import { createRoot, Root } from "react-dom/client"
-import { NostoClient, Recommendation } from "../types"
+import React, { useEffect, isValidElement } from "react"
+import { NostoContext, RecommendationComponent } from "../context"
+import { NostoClient } from "../types"
 
 /**
  * @group Components
@@ -19,7 +18,10 @@ export interface NostoProviderProps {
    * Indicates an url of a server
    */
   host?: string
-  children: React.ReactElement
+  /**
+   * children
+   */
+  children: React.ReactElement | React.ReactElement[]
   /**
    * Indicates if merchant uses multiple currencies
    */
@@ -27,9 +29,7 @@ export interface NostoProviderProps {
   /**
    * Recommendation component which holds nostoRecommendation object
    */
-  recommendationComponent?: React.ReactElement<{
-    nostoRecommendation: Recommendation
-  }>
+  recommendationComponent?: RecommendationComponent
   /**
    * Enables Shopify markets with language and market id
    */
@@ -67,7 +67,7 @@ export default function NostoProvider(props: NostoProviderProps) {
     host,
     children,
     recommendationComponent,
-    shopifyMarkets,
+    shopifyMarkets
   } = props
   const [clientScriptLoadedState, setClientScriptLoadedState] = React.useState(false)
   const clientScriptLoaded = React.useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
@@ -77,63 +77,6 @@ export default function NostoProvider(props: NostoProviderProps) {
 
   // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
-
-  // RecommendationComponent for client-side rendering:
-  function RecommendationComponentWrapper(props: { nostoRecommendation: Recommendation }) {
-    return React.cloneElement(recommendationComponent!, {
-      // eslint-disable-next-line react/prop-types
-      nostoRecommendation: props.nostoRecommendation,
-    })
-  }
-
-  // custom hook for rendering campaigns (CSR/SSR):
-  const [pageType, setPageType] = useState("")
-  
-  function useRenderCampaigns(type: string = "") {
-    const placementRefs = useRef<Record<string, Root>>({})
-    useEffect(() => {
-      if (pageType !== type) {
-        setPageType(type)
-      }
-    }, [])
-
-    const pageTypeUpdated = type === pageType
-
-    function renderCampaigns(
-      data: {
-        recommendations: Record<string, Recommendation>
-        campaigns: {
-          recommendations: Record<string, Recommendation>
-        }
-      },
-      api: NostoClient
-    ) {
-      if (responseMode == "HTML") {
-        // inject content campaigns as usual:
-        api.placements.injectCampaigns(data.recommendations)
-      } else {
-        // render recommendation component into placements:
-        const recommendations = data.campaigns.recommendations
-        for (const key in recommendations) {
-          const recommendation = recommendations[key]
-          const placementSelector = "#" + key
-          const placement = () => document.querySelector(placementSelector)
-
-          if (placement()) {
-            if (!placementRefs.current[key]) placementRefs.current[key] = createRoot(placement()!)
-            const root = placementRefs.current[key]!
-            root.render(
-              <RecommendationComponentWrapper
-                nostoRecommendation={recommendation}
-              ></RecommendationComponentWrapper>
-            )
-          }
-        }
-      }
-    }
-
-    return { renderCampaigns, pageTypeUpdated }
-  }
 
   useEffect(() => {
     if (!window.nostojs) {
@@ -211,9 +154,7 @@ export default function NostoProvider(props: NostoProviderProps) {
         clientScriptLoaded,
         currentVariation,
         responseMode,
-        recommendationComponent,
-        useRenderCampaigns,
-        pageType,
+        recommendationComponent
       }}
     >
       {children}

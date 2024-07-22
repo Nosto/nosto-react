@@ -11,11 +11,9 @@ test("Search page render", async () => {
       account="shopify-11368366139"
       recommendationComponent={<RecommendationComponent />}
     >
-      <>
-        <NostoPlacement id="searchpage-nosto-1" />
-        <NostoPlacement id="searchpage-nosto-2" />
-        <NostoSearch query="" />
-      </>
+      <NostoPlacement id="searchpage-nosto-1" />
+      <NostoPlacement id="searchpage-nosto-2" />
+      <NostoSearch query="" />
     </NostoProvider>
   )
 

@@ -1,5 +1,5 @@
 import { Order } from "../types"
-import { useNostoContext, useNostoApi } from "../hooks"
+import { useRenderCampaigns, useNostoApi } from "../hooks"
 import { snakeize } from "../utils/snakeize"
 
 /**
@@ -26,9 +26,7 @@ export default function NostoOrder(props: {
   placements?: string[]
 }) {
   const { order, placements } = props
-  const { recommendationComponent, useRenderCampaigns } = useNostoContext()
-
-  const { renderCampaigns, pageTypeUpdated } = useRenderCampaigns("order")
+  const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
@@ -36,9 +34,10 @@ export default function NostoOrder(props: {
         .addOrder(snakeize(order))
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     },
-    [recommendationComponent, pageTypeUpdated]
+    [order],
+    { deep: true }
   )
   return null
 }

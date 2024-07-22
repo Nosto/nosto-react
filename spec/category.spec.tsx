@@ -11,11 +11,9 @@ test("Category page render", async () => {
       account="shopify-11368366139"
       recommendationComponent={<RecommendationComponent />}
     >
-      <>
-        <NostoPlacement id="categorypage-nosto-1" />
-        <NostoPlacement id="categorypage-nosto-2" />
-        <NostoCategory category="Rings" />
-      </>
+      <NostoPlacement id="categorypage-nosto-1" />
+      <NostoPlacement id="categorypage-nosto-2" />
+      <NostoCategory category="Rings" />
     </NostoProvider>
   )
 

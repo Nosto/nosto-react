@@ -17,6 +17,7 @@ declare global {
 export interface NostoClient {
   setAutoLoad(autoload: boolean): void
   defaultSession(): Session
+  listen(event: string, callback: (data: unknown) => void): void
   placements: {
     getPlacements(): string[]
     injectCampaigns(recommendations: Record<string, unknown>): void

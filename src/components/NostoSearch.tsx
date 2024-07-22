@@ -33,7 +33,7 @@ export default function NostoSearch(props: { query: string; placements?: string[
         .viewSearch(query)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     },
     [query]
   )

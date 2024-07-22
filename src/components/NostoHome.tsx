@@ -32,7 +32,7 @@ export default function NostoHome(props: { placements?: string[] }) {
         .viewFrontPage()
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     }
   )
   return null

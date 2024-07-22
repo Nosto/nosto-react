@@ -32,7 +32,7 @@ export default function NostoCategory(props: { category: string; placements?: st
         .viewCategory(category)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     },
     [category]
   )

@@ -29,7 +29,7 @@ export default function Nosto404(props: { placements?: string[] }) {
         .viewNotFound()
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     })
   return null
 }

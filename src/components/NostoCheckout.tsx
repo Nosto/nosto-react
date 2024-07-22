@@ -28,7 +28,7 @@ export default function NostoCheckout(props: { placements?: string[] }) {
         .viewCart()
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     })
   return null
 }

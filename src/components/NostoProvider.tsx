@@ -1,7 +1,6 @@
-import React, { useEffect, isValidElement, useState, useRef } from "react"
-import { NostoContext } from "../context"
-import { createRoot, Root } from "react-dom/client"
-import { NostoClient, Recommendation } from "../types"
+import React, { useEffect, isValidElement } from "react"
+import { NostoContext, RecommendationComponent } from "../context"
+import { NostoClient } from "../types"
 
 /**
  * @group Components
@@ -27,9 +26,7 @@ export interface NostoProviderProps {
   /**
    * Recommendation component which holds nostoRecommendation object
    */
-  recommendationComponent?: React.ReactElement<{
-    nostoRecommendation: Recommendation
-  }>
+  recommendationComponent?: RecommendationComponent
   /**
    * Enables Shopify markets with language and market id
    */

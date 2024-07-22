@@ -39,7 +39,7 @@ export default function NostoProduct(props: {
         .viewProduct(tagging ?? product)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     },
     [product]
   )

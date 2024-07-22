@@ -1,6 +1,6 @@
 import { useRef } from "react"
 import { createRoot, Root } from "react-dom/client"
-import { ActionResponse, NostoClient, Recommendation } from "../types"
+import { ActionResponse, Recommendation } from "../types"
 import { useNostoContext } from "./useNostoContext"
 import React from "react"
 import { RecommendationComponent } from "../context"
@@ -16,8 +16,10 @@ function RecommendationComponentWrapper(props: {
   })
 }
 
-function injectCampaigns(data: ActionResponse, api: NostoClient) {
-  api.placements.injectCampaigns(data.recommendations)
+function injectCampaigns(data: ActionResponse) {
+  window.nostojs(api => {
+    api.placements.injectCampaigns(data.recommendations)
+  })
 }
 
 export function useRenderCampaigns() {

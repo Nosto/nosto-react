@@ -34,7 +34,7 @@ export default function NostoOrder(props: {
         .addOrder(snakeize(order))
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     },
     [order],
     { deep: true }

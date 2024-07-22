@@ -28,7 +28,7 @@ export default function NostoOther(props: { placements?: string[] }) {
         .viewOther()
         .setPlacements(props.placements || api.placements.getPlacements())
         .load()
-      renderCampaigns(data, api)
+      renderCampaigns(data)
     })
   return null
 }

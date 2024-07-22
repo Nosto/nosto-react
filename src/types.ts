@@ -28,12 +28,83 @@ export interface NostoClient {
  */
 export interface Recommendation {
   result_id: string
-  products: Product[]
+  products: PushedProduct[]
   result_type: string
   title: string
   div_id: string
   source_product_ids: string[]
   params: unknown
+}
+
+export interface PushedProduct {
+  age_group?: string
+  alternate_image_urls: string[]
+  availability: string
+  brand?: string
+  category: string[]
+  category_id: string[]
+  condition?: string
+  custom_fields: { [index: string]: string }
+  date_published?: Date
+  description?: string
+  gender?: string
+  google_category?: string
+  gtin?: string
+  image_url?: string
+  inventory_level?: number
+  list_price?: number
+  name: string
+  parent_category_id: string[]
+  price: number
+  price_currency_code: string
+  product_id: string
+  rating_value?: number
+  review_count?: number
+  skus: PushedProductSKU[]
+  source_updated?: Date
+  supplier_cost?: number
+  tags1: string[]
+  tags2: string[]
+  tags3: string[]
+  thumb_url?: string
+  unit_pricing_base_measure?: number
+  unit_pricing_measure?: number
+  unit_pricing_unit?: string
+  update_received?: Date
+  url: string
+  variation_id?: string
+  variations: { [index: string]: PushedVariation }
+}
+
+export interface PushedProductSKU extends NostoSku { }
+
+export interface PushedVariation extends NostoVariant { }
+
+
+export interface NostoSku extends Sku {
+  inventory_level?: number
+}
+
+export interface NostoVariant {
+  availability: string
+  available: boolean
+  discounted: boolean
+  list_price?: number
+  price: number
+  price_currency_code: string
+  price_text?: string
+}
+
+export interface Sku {
+  availability: string
+  custom_fields: { [index: string]: string }
+  gtin?: string
+  id: string
+  image_url?: string
+  list_price?: number
+  name: string
+  price: number
+  url?: string
 }
 
 // copied from client script d.ts export

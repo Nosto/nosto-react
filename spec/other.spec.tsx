@@ -11,13 +11,11 @@ test("Other page render", async () => {
       account="shopify-11368366139"
       recommendationComponent={<RecommendationComponent />}
     >
-      <>
-        <NostoPlacement id="cartpage-nosto-1" />
-        <NostoPlacement id="categorypage-nosto-1" />
-        <NostoPlacement id="productpage-nosto-1" />
-        <NostoPlacement id="productpage-nosto-2" />
-        <NostoOther />
-      </>
+      <NostoPlacement id="cartpage-nosto-1" />
+      <NostoPlacement id="categorypage-nosto-1" />
+      <NostoPlacement id="productpage-nosto-1" />
+      <NostoPlacement id="productpage-nosto-2" />
+      <NostoOther />
     </NostoProvider>
   )
 

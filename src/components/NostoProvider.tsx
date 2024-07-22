@@ -18,7 +18,10 @@ export interface NostoProviderProps {
    * Indicates an url of a server
    */
   host?: string
-  children: React.ReactElement
+  /**
+   * children
+   */
+  children: React.ReactElement | React.ReactElement[]
   /**
    * Indicates if merchant uses multiple currencies
    */

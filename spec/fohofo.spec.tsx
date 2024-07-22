@@ -11,11 +11,9 @@ test("404 page render", async () => {
       account="shopify-11368366139"
       recommendationComponent={<RecommendationComponent />}
     >
-      <>
-        <NostoPlacement id="notfound-nosto-1" />
-        <NostoPlacement id="notfound-nosto-2" />
-        <Nosto404 />
-      </>
+      <NostoPlacement id="notfound-nosto-1" />
+      <NostoPlacement id="notfound-nosto-2" />
+      <Nosto404 />
     </NostoProvider>
   )
 

@@ -3,7 +3,7 @@ import { NostoCategory, NostoHome, NostoPlacement, NostoProduct, NostoProvider }
 import RecommendationComponent from "./renderer"
 import { Link, BrowserRouter, Route, Routes, useParams } from "react-router-dom"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { WAIT_FOR_TIMEOUT } from "./utils"
+import { listenTo, WAIT_FOR_TIMEOUT } from "./utils"
 import { categoryEvent, frontEvent, productEvent } from "./events"
 
 function HomePage() {
@@ -62,8 +62,7 @@ test("navigation events", async () => {
     expect(screen.getAllByTestId("recommendation")).toHaveLength(3)
   }, { timeout: WAIT_FOR_TIMEOUT })
 
-  const requests: unknown[] = []
-  window.nostojs(api => api.listen("prerequest", req => requests.push(req)))
+  const requests = listenTo("prerequest")
 
   function verifyEvents(given: unknown[]) {
     expect(requests).toEqual(given)

@@ -17,6 +17,9 @@ function RecommendationComponentWrapper(props: {
 }
 
 function injectCampaigns(data: ActionResponse) {
+  if (!window.nostojs) {
+    throw new Error("Nosto has not yet been initialized")
+  }
   window.nostojs(api => {
     api.placements.injectCampaigns(data.recommendations)
   })

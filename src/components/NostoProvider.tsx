@@ -67,7 +67,7 @@ export default function NostoProvider(props: NostoProviderProps) {
     host,
     children,
     recommendationComponent,
-    shopifyMarkets,
+    shopifyMarkets
   } = props
   const [clientScriptLoadedState, setClientScriptLoadedState] = React.useState(false)
   const clientScriptLoaded = React.useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])

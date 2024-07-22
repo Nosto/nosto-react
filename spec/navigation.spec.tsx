@@ -1,7 +1,7 @@
 import React from "react"
 import { NostoCategory, NostoHome, NostoPlacement, NostoProduct, NostoProvider } from "../src"
 import RecommendationComponent from "./renderer"
-import { Link, MemoryRouter, Route, Routes, useParams } from "react-router-dom"
+import { Link, BrowserRouter, Route, Routes, useParams } from "react-router-dom"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { WAIT_FOR_TIMEOUT } from "./utils"
 import { categoryEvent, frontEvent, productEvent } from "./events"
@@ -45,13 +45,13 @@ function Main() {
   return <NostoProvider
     account="shopify-11368366139"
     recommendationComponent={<RecommendationComponent />}> 
-    <MemoryRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/collections/:category" element={<CategoryPage />} />
         <Route path="/products/:product" element={<ProductPage />} />
         <Route path="/" element={<HomePage />} />
       </Routes>    
-    </MemoryRouter>
+    </BrowserRouter>
   </NostoProvider>  
 }
 

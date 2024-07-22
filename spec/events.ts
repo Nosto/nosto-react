@@ -27,7 +27,8 @@ export function categoryEvent(category: string) {
       "categorypage-nosto-2",
     ],
     page_type: "category",
-    categories: [category]
+    categories: [category],
+    url: `http://localhost/collections/${category}`
   })
 }
 
@@ -41,6 +42,7 @@ export function productEvent(product: string) {
     events: [
       ["vp", product],
     ],
-    page_type: "product"
+    page_type: "product",
+    url: `http://localhost/products/${product}`
   })
 }

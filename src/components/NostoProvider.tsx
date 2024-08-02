@@ -38,6 +38,10 @@ export interface NostoProviderProps {
     language?: string
     marketId?: string | number
   }
+  /**
+   * Load nosto script (should be false if loading the script outside of nosto-react)
+   */
+  loadScript?: boolean
 }
 
 /**
@@ -65,6 +69,7 @@ export default function NostoProvider(props: NostoProviderProps) {
   const {
     account,
     multiCurrency = false,
+    loadScript = true,
     host,
     children,
     recommendationComponent,
@@ -87,7 +92,7 @@ export default function NostoProvider(props: NostoProviderProps) {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (!isNostoLoaded() && !shopifyMarkets) {
+    if (!isNostoLoaded() && !shopifyMarkets && loadScript) {
       const script = document.createElement("script")
       script.type = "text/javascript"
       script.src = "//" + (host || "connect.nosto.com") + "/include/" + account
@@ -106,7 +111,7 @@ export default function NostoProvider(props: NostoProviderProps) {
     }
 
     // Enable Shopify markets functionality:
-    if (shopifyMarkets) {
+    if (shopifyMarkets && loadScript) {
       const existingScript = document.querySelector("[nosto-client-script]")
       const nostoSandbox = document.querySelector("#nosto-sandbox")
 

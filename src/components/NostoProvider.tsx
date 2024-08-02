@@ -151,6 +151,12 @@ export default function NostoProvider(props: NostoProviderProps) {
         document.body.appendChild(script)
       }
     }
+    if(!loadScript) {
+        window.nosto?.reload({
+          site: "localhost",
+        })
+      setClientScriptLoadedState(true)
+    }
   }, [clientScriptLoadedState, shopifyMarkets])
 
   return (

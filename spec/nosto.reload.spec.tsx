@@ -1,7 +1,7 @@
 import React from "react"
+import { test, expect } from "vitest"
 import { render } from "@testing-library/react"
 import { NostoProvider, NostoHome } from "../src/index"
-import "@testing-library/jest-dom"
 
 test("verify Nosto is not loaded twice", async () => {
   // @ts-expect-error dummy placeholder for Nosto iframe window scope  

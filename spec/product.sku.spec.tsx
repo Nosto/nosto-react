@@ -1,8 +1,8 @@
 import React, { useState } from "react"
+import { test, expect } from "vitest"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"
 import RecommendationComponent from "./renderer"
-import "@testing-library/jest-dom"
 import { listenTo, WAIT_FOR_TIMEOUT } from "./utils"
 
 function ProductPage() {

@@ -15,3 +15,17 @@ test("verify Nosto is not loaded twice", async () => {
 
   expect(document.querySelector("[nosto-client-script]")).not.toBeInTheDocument()  
 })
+
+test("load Shopify markets script", async () => {
+  render(
+    <NostoProvider account="shopify-11368366139" shopifyMarkets={{ language: "en", marketId: 1 }}>
+      <NostoHome />
+    </NostoProvider>
+  )
+
+  expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
+  expect(document.querySelector("[nosto-client-script]")?.getAttribute("nosto-language")).toBe("en")
+  expect(document.querySelector("[nosto-client-script]")?.getAttribute("nosto-market-id")).toBe("1")
+})
+
+// TODO: Add more tests

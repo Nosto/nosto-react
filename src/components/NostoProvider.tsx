@@ -95,7 +95,7 @@ export default function NostoProvider(props: NostoProviderProps) {
       script.setAttribute("nosto-client-script", "")
 
       script.onload = () => {
-        if (typeof jest !== "undefined") {
+        if ("nostoReactTest" in window) {
           window.nosto?.reload({
             site: "localhost",
           })
@@ -136,7 +136,7 @@ export default function NostoProvider(props: NostoProviderProps) {
         script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
 
         script.onload = () => {
-          if (typeof jest !== "undefined") {
+          if ("nostoReactTest" in window) {
             window.nosto?.reload({
               site: "localhost",
             })

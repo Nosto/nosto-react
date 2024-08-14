@@ -73,10 +73,8 @@
   "homepage": "https://github.com/Nosto/nosto-react#readme",
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "jsdom",
-    "testEnvironmentOptions": {
-      "resources": "usable",
-      "runScripts": "dangerously"
-    }
+    "setupFiles": [
+      "./spec/setup.js"
+    ]
   }
 }

@@ -1,7 +1,7 @@
-import { useMemo, useEffect, isValidElement, useState } from "react"
+import { isValidElement } from "react"
 import type { ReactElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
-import { loadNostoClientScripts, loadShopifyMarketsScripts } from "./helpers"
+import { useCustomHook } from "../hooks/useCustomHook"
 
 /**
  * @group Components
@@ -69,33 +69,17 @@ export default function NostoProvider(props: NostoProviderProps) {
   const {
     account,
     multiCurrency = false,
-    loadScript = true,
-    host,
     children,
     recommendationComponent,
-    shopifyMarkets
   } = props
-  // TODO: Try to extract this to a custom hook
-  const [ clientScriptLoadedState, setClientScriptLoadedState ] = useState(false)
-  const clientScriptLoaded = useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
+
+  const { clientScriptLoaded } = useCustomHook(props)
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
 
   // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
-
-  useEffect(() => {
-    if(!loadScript) {
-        window.nosto?.reload({
-          site: "localhost",
-        })
-      setClientScriptLoadedState(true)
-    } else {
-      loadNostoClientScripts({ host, account, shopifyMarkets, loadScript, setClientScriptLoadedState })
-      loadShopifyMarketsScripts({ host, account, shopifyMarkets, loadScript, setClientScriptLoadedState, clientScriptLoadedState })
-    }
-  }, [clientScriptLoadedState, shopifyMarkets])
 
   return (
     <NostoContext.Provider

@@ -18,6 +18,16 @@ describe("Nosto client script loading", () => {
     expect(document.querySelector("[nosto-client-script]")).not.toBeInTheDocument()
   })
 
+  it("is loaded", async () => {  
+    render(
+      <NostoProvider account="shopify-11368366139">
+        <NostoHome />
+      </NostoProvider>
+    )
+
+    expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
+  })
+
   it("Shopify markets script", async () => {
     render(
       <NostoProvider account="shopify-11368366139" shopifyMarkets={{ language: "en", marketId: "123" }}>
@@ -28,15 +38,5 @@ describe("Nosto client script loading", () => {
     expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
     expect(document.querySelector("[nosto-client-script]")?.getAttribute("nosto-language")).toBe("en")
     expect(document.querySelector("[nosto-client-script]")?.getAttribute("nosto-market-id")).toBe("123")
-  })
-
-  it("is loaded", async () => {  
-    render(
-      <NostoProvider account="shopify-11368366139">
-        <NostoHome />
-      </NostoProvider>
-    )
-
-    expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
   })
 })

@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/vitest"
 import { JSDOM } from "jsdom"
+import { afterEach } from "vitest"
 
 const { window } = new JSDOM("<html></html>", { 
     url: "http://localhost", 
@@ -13,3 +14,9 @@ global.navigator = window.navigator
 
 // test mode flag
 global.window.nostoReactTest = true
+
+afterEach(() => {
+    window.nosto = undefined
+    document.head.innerHTML = ""
+    document.body.innerHTML = ""
+})

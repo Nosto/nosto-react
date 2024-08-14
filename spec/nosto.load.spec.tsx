@@ -18,7 +18,7 @@ describe("Nosto client script loading", () => {
     expect(document.querySelector("[nosto-client-script]")).not.toBeInTheDocument()
   })
 
-  it("is loaded", async () => {  
+  it("is loaded", () => {  
     render(
       <NostoProvider account="shopify-11368366139">
         <NostoHome />
@@ -28,7 +28,7 @@ describe("Nosto client script loading", () => {
     expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
   })
 
-  it("Shopify markets script", async () => {
+  it("Shopify markets script", () => {
     render(
       <NostoProvider account="shopify-11368366139" shopifyMarkets={{ language: "en", marketId: "123" }}>
         <NostoHome />

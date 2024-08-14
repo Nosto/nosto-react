@@ -26,10 +26,10 @@ export function useClientScriptLoad(props: NostoScriptProps) {
 				script.setAttribute("nosto-client-script", "")
 
 				script.onload = () => {
-				if (typeof "nostoReactTest" !== "undefined") {
-						window.nosto?.reload({
-						site: "localhost",
-						})
+					if (typeof "nostoReactTest" in window) {
+							window.nosto?.reload({
+							site: "localhost"
+					})
 				}
 					setClientScriptLoadedState(true)
 				}
@@ -67,10 +67,10 @@ export function useClientScriptLoad(props: NostoScriptProps) {
 					script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
 	
 					script.onload = () => {
-						if (typeof "nostoReactTest" !== "undefined") {
-						window.nosto?.reload({
+						if (typeof "nostoReactTest" in window) {
+							window.nosto?.reload({
 								site: "localhost",
-						})
+							})
 						}
 						setClientScriptLoadedState(true)
 					}

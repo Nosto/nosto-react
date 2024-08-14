@@ -28,4 +28,10 @@ export default defineConfig({
       },
     },
   },
+  test: {
+    include: ["*.spec.*"],
+    dir: "spec",
+    setupFiles: ['./spec/setup.js'],
+    silent: true    
+  },
 })

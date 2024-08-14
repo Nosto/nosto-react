@@ -1,4 +1,4 @@
-import { useMemo, useEffect, isValidElement, useState } from "react"
+import { isValidElement } from "react"
 import type { ReactElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
 import { useClientScriptLoad } from "../hooks"

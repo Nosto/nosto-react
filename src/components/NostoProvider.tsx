@@ -1,7 +1,7 @@
-import React, { useEffect, isValidElement } from "react"
+import { useMemo, useEffect, isValidElement, useState } from "react"
+import type { ReactElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
-import { useClientScriptLoaded } from "../hooks/useClientScriptLoaded"
-import { loadNostoScripts } from "./nostoScriptLoad"
+import { loadNostoClientScripts, loadShopifyMarketsScripts } from "./helpers"
 
 /**
  * @group Components
@@ -22,7 +22,7 @@ export interface NostoProviderProps {
   /**
    * children
    */
-  children: React.ReactElement | React.ReactElement[]
+  children: ReactElement | ReactElement[]
   /**
    * Indicates if merchant uses multiple currencies
    */
@@ -75,8 +75,9 @@ export default function NostoProvider(props: NostoProviderProps) {
     recommendationComponent,
     shopifyMarkets
   } = props
-  const { clientScriptLoadedState } = useClientScriptLoaded()
-  const clientScriptLoaded = React.useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
+  // TODO: Try to extract this to a custom hook
+  const [ clientScriptLoadedState, setClientScriptLoadedState ] = useState(false)
+  const clientScriptLoaded = useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
@@ -85,7 +86,15 @@ export default function NostoProvider(props: NostoProviderProps) {
   const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
 
   useEffect(() => {
-    loadNostoScripts({ shopifyMarkets, loadScript, account, host })
+    if(!loadScript) {
+        window.nosto?.reload({
+          site: "localhost",
+        })
+      setClientScriptLoadedState(true)
+    } else {
+      loadNostoClientScripts({ host, account, shopifyMarkets, loadScript, setClientScriptLoadedState })
+      loadShopifyMarketsScripts({ host, account, shopifyMarkets, loadScript, setClientScriptLoadedState, clientScriptLoadedState })
+    }
   }, [clientScriptLoadedState, shopifyMarkets])
 
   return (

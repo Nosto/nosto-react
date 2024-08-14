@@ -1,9 +1,8 @@
+import { test, expect } from "vitest"
 import * as imports from "../src/index"
 
 test("module structure is stable", () => {
-  expect(Object.keys(imports)).toEqual([
-    "NostoContext",
-    "useNostoContext",
+  expect(Object.keys(imports)).toEqual([    
     "Nosto404",
     "NostoOther",
     "NostoCheckout",
@@ -14,6 +13,8 @@ test("module structure is stable", () => {
     "NostoHome",
     "NostoPlacement",
     "NostoProvider",
-    "NostoSession"
+    "NostoSession",
+    "NostoContext",
+    "useNostoContext"
   ])    
 })

@@ -1,4 +1,5 @@
-const { JSDOM } = require("jsdom")
+import "@testing-library/jest-dom/vitest"
+import { JSDOM } from "jsdom"
 
 const { window } = new JSDOM("<html></html>", { 
     url: "http://localhost", 

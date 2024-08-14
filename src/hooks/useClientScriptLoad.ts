@@ -5,7 +5,8 @@ import type { NostoProviderProps } from "../components/NostoProvider"
 
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript">
 
-export function useClientScriptLoad({host, account, shopifyMarkets, loadScript}: NostoScriptProps) {
+export function useClientScriptLoad(props: NostoScriptProps) {
+		const { host, account, shopifyMarkets, loadScript } = props
     const [ clientScriptLoadedState, setClientScriptLoadedState ] = useState(false)
     const clientScriptLoaded = useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
     
@@ -25,7 +26,7 @@ export function useClientScriptLoad({host, account, shopifyMarkets, loadScript}:
 				script.setAttribute("nosto-client-script", "")
 
 				script.onload = () => {
-				if (typeof jest !== "undefined") {
+				if (typeof "nostoReactTest" !== "undefined") {
 						window.nosto?.reload({
 						site: "localhost",
 						})
@@ -66,7 +67,7 @@ export function useClientScriptLoad({host, account, shopifyMarkets, loadScript}:
 					script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
 	
 					script.onload = () => {
-						if (typeof jest !== "undefined") {
+						if (typeof "nostoReactTest" !== "undefined") {
 						window.nosto?.reload({
 								site: "localhost",
 						})

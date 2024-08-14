@@ -82,7 +82,7 @@ export default function NostoProvider(props: NostoProviderProps) {
   // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
 
-  const { clientScriptLoaded } = useClientScriptLoad({host, account, shopifyMarkets, loadScript})
+  const { clientScriptLoaded } = useClientScriptLoad(props)
 
   return (
     <NostoContext.Provider

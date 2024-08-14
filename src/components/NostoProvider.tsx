@@ -69,11 +69,8 @@ export default function NostoProvider(props: NostoProviderProps) {
   const {
     account,
     multiCurrency = false,
-    loadScript = true,
-    host,
     children,
     recommendationComponent,
-    shopifyMarkets
   } = props
 
   // Pass currentVariation as empty string if multiCurrency is disabled

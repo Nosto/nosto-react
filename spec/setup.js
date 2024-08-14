@@ -11,4 +11,4 @@ global.localStorage = window.localStorage
 global.navigator = window.navigator
 
 // test mode flag
-global.nostoReactTest = true
+global.window.nostoReactTest = true

@@ -1,7 +1,7 @@
-import React, { useEffect, isValidElement } from "react"
+import { isValidElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
-import { NostoClient } from "../types"
-import { isNostoLoaded } from "./helpers"
+import { useClientScriptLoad } from "../hooks"
+import type { ReactElement } from "react"
 
 /**
  * @group Components
@@ -22,7 +22,7 @@ export interface NostoProviderProps {
   /**
    * children
    */
-  children: React.ReactElement | React.ReactElement[]
+  children: ReactElement | ReactElement[]
   /**
    * Indicates if merchant uses multiple currencies
    */
@@ -65,13 +65,9 @@ export default function NostoProvider(props: NostoProviderProps) {
   const {
     account,
     multiCurrency = false,
-    host,
     children,
     recommendationComponent,
-    shopifyMarkets
   } = props
-  const [clientScriptLoadedState, setClientScriptLoadedState] = React.useState(false)
-  const clientScriptLoaded = React.useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
@@ -79,74 +75,7 @@ export default function NostoProvider(props: NostoProviderProps) {
   // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
 
-  useEffect(() => {
-    if (!window.nostojs) {
-      window.nostojs = (cb: (api: NostoClient) => void) => {
-        (window.nostojs.q = window.nostojs.q || []).push(cb)
-      }
-      window.nostojs(api => api.setAutoLoad(false))
-    }
-
-    if (!isNostoLoaded() && !shopifyMarkets) {
-      const script = document.createElement("script")
-      script.type = "text/javascript"
-      script.src = "//" + (host || "connect.nosto.com") + "/include/" + account
-      script.async = true
-      script.setAttribute("nosto-client-script", "")
-
-      script.onload = () => {
-        if ("nostoReactTest" in window) {
-          window.nosto?.reload({
-            site: "localhost",
-          })
-        }
-        setClientScriptLoadedState(true)
-      }
-      document.body.appendChild(script)
-    }
-
-    // Enable Shopify markets functionality:
-    if (shopifyMarkets) {
-      const existingScript = document.querySelector("[nosto-client-script]")
-      const nostoSandbox = document.querySelector("#nosto-sandbox")
-
-      if (
-        !existingScript ||
-        existingScript?.getAttribute("nosto-language") !== shopifyMarkets?.language ||
-        existingScript?.getAttribute("nosto-market-id") !== shopifyMarkets?.marketId
-      ) {
-        if (clientScriptLoadedState) {
-          setClientScriptLoadedState(false)
-        }
-
-        existingScript?.parentNode?.removeChild(existingScript)
-        nostoSandbox?.parentNode?.removeChild(nostoSandbox)
-
-        const script = document.createElement("script")
-        script.type = "text/javascript"
-        script.src =
-          "//" +
-          (host || "connect.nosto.com") +
-          `/script/shopify/market/nosto.js?merchant=${account}&market=${
-            shopifyMarkets.marketId || ""
-          }&locale=${shopifyMarkets?.language?.toLowerCase() || ""}`
-        script.async = true
-        script.setAttribute("nosto-client-script", "")
-        script.setAttribute("nosto-language", shopifyMarkets?.language || "")
-        script.setAttribute("nosto-market-id", String(shopifyMarkets?.marketId))
-
-        script.onload = () => {
-          if ("nostoReactTest" in window) {
-            window.nosto?.reload({
-              site: "localhost",
-            })
-          }
-          setClientScriptLoadedState(true)
-        }
-        document.body.appendChild(script)
-      }
-    }
-  }, [clientScriptLoadedState, shopifyMarkets])
+  const { clientScriptLoaded } = useClientScriptLoad(props)
 
   return (
     <NostoContext.Provider

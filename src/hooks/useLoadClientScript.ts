@@ -5,7 +5,7 @@ import type { NostoProviderProps } from "../components/NostoProvider"
 
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets">
 
-export function useClientScriptLoad(props: NostoScriptProps) {
+export function useLoadClientScript(props: NostoScriptProps) {
   const { host, account, shopifyMarkets } = props
   const [clientScriptLoadedState, setClientScriptLoadedState] = useState(false)
   const clientScriptLoaded = useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])

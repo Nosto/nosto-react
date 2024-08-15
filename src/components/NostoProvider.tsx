@@ -1,6 +1,6 @@
 import { isValidElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
-import { useClientScriptLoad } from "../hooks"
+import { useLoadClientScript } from "../hooks"
 import type { ReactElement } from "react"
 
 /**
@@ -75,7 +75,7 @@ export default function NostoProvider(props: NostoProviderProps) {
   // Set responseMode for loading campaigns:
   const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
 
-  const { clientScriptLoaded } = useClientScriptLoad(props)
+  const { clientScriptLoaded } = useLoadClientScript(props)
 
   return (
     <NostoContext.Provider

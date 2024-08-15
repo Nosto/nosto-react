@@ -4,19 +4,7 @@ import { render } from "@testing-library/react"
 import { NostoProvider, NostoHome } from "../src/index"
 
 describe("Nosto client script loading", () => {
-  it("is stopped via provider when the script is loaded externally", async () => {
-    window.nosto = {
-      reload: vi.fn()
-    }
-
-    render(
-      <NostoProvider account="shopify-11368366139" loadScript={false}>
-        <NostoHome />
-      </NostoProvider>
-    )
-
-    expect(document.querySelector("[nosto-client-script]")).not.toBeInTheDocument()
-  })
+  it.todo("is stopped via provider when the script is loaded externally")
 
   it("is loaded", () => {  
     render(

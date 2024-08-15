@@ -3,15 +3,16 @@ import { isNostoLoaded } from "../components/helpers"
 import type { NostoClient } from "../types"
 import type { NostoProviderProps } from "../components/NostoProvider"
 
-type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets">
+type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript">
 
 export function useLoadClientScript(props: NostoScriptProps) {
-  const { host, account, shopifyMarkets } = props
+  const { host, account, shopifyMarkets, loadScript = true } = props
   const [clientScriptLoadedState, setClientScriptLoadedState] = useState(false)
   const clientScriptLoaded = useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
 
   useEffect(() => {
     const scriptOnload = () => {
+      // Override for production scripts to work in unit tests
       if ("nostoReactTest" in window) {
         window.nosto?.reload({
           site: "localhost"
@@ -38,6 +39,11 @@ export function useLoadClientScript(props: NostoScriptProps) {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
+    if (!loadScript) {
+      scriptOnload()
+      return
+    }
+
     // Load Nosto client script if not already loaded externally
     if (!isNostoLoaded() && !shopifyMarkets) {
       const urlPartial = `/include/${account}`
@@ -53,8 +59,8 @@ export function useLoadClientScript(props: NostoScriptProps) {
       const language = shopifyMarkets?.language || ""
 
       const existingScriptAttributes =
-      existingScript?.getAttribute("nosto-language") !== language ||
-      existingScript?.getAttribute("nosto-market-id") !== marketId
+        existingScript?.getAttribute("nosto-language") !== language ||
+        existingScript?.getAttribute("nosto-market-id") !== marketId
 
       if (!existingScript || existingScriptAttributes) {
         if (clientScriptLoadedState) {
@@ -67,7 +73,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
         nostoSandbox?.parentNode?.removeChild(nostoSandbox)
 
         const urlPartial =
-        `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
+          `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
         const script = createScriptElement(urlPartial)
         script.setAttribute("nosto-language", language)
         script.setAttribute("nosto-market-id", marketId)
@@ -75,7 +81,6 @@ export function useLoadClientScript(props: NostoScriptProps) {
         document.body.appendChild(script)
       }
     }
-
   }, [clientScriptLoadedState, shopifyMarkets])
 
   return { clientScriptLoaded }

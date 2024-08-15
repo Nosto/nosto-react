@@ -4,8 +4,8 @@ import "@testing-library/jest-dom/vitest"
 import { NostoProvider, NostoHome } from "../src/index"
 import RecommendationComponent from "./renderer"
 
-describe("Nosto client script loading", () => {
-  it("verify Nosto is not loaded twice", () => {
+describe("Nosto client script", () => {
+  it("verify is not loaded twice", () => {
     // @ts-expect-error dummy placeholder for Nosto iframe window scope  
     window.nosto = {}
 

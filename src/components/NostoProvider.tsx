@@ -38,6 +38,10 @@ export interface NostoProviderProps {
     language?: string
     marketId?: string | number
   }
+  /**
+   * Load nosto script (should be false if loading the script outside of nosto-react)
+   */
+  loadScript?: boolean
 }
 
 /**

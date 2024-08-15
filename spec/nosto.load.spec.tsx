@@ -4,9 +4,20 @@ import { render } from "@testing-library/react"
 import { NostoProvider, NostoHome } from "../src/index"
 
 describe("Nosto client script loading", () => {
-  it.todo("is stopped via provider when the script is loaded externally")
+  it("verify Nosto is not loaded twice", () => {
+    // @ts-expect-error dummy placeholder for Nosto iframe window scope  
+    window.nosto = {}
 
-  it("is loaded", () => {  
+    render(
+      <NostoProvider account="shopify-11368366139">
+        <NostoHome />
+      </NostoProvider>
+    )
+
+    expect(document.querySelector("[nosto-client-script]")).not.toBeInTheDocument()
+  })
+
+  it("is loaded", () => {
     render(
       <NostoProvider account="shopify-11368366139">
         <NostoHome />

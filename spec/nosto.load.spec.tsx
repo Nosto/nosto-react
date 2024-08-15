@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest"
 import { render } from "@testing-library/react"
 import "@testing-library/jest-dom/vitest"
 import { NostoProvider, NostoHome } from "../src/index"
+import RecommendationComponent from "./renderer"
 
 describe("Nosto client script loading", () => {
   it("verify Nosto is not loaded twice", () => {
@@ -39,7 +40,7 @@ describe("Nosto client script loading", () => {
 
   it("access valid React elements in recommendationComponent", () => {
     render(
-      <NostoProvider account="shopify-11368366139" recommendationComponent={<NostoHome />}>
+      <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />}>
         <NostoHome />
       </NostoProvider>
     )

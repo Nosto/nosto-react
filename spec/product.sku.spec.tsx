@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { test, expect } from "vitest"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"

@@ -1,4 +1,3 @@
-import React from "react"
 import { test, expect } from "vitest"
 import { render, screen, waitFor } from "@testing-library/react"
 import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"

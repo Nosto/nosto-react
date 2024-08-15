@@ -1,6 +1,6 @@
-import React from "react"
-import { vi, describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest"
 import { render } from "@testing-library/react"
+import "@testing-library/jest-dom/vitest"
 import { NostoProvider, NostoHome } from "../src/index"
 
 describe("Nosto client script loading", () => {

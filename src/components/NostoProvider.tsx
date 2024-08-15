@@ -72,8 +72,14 @@ export default function NostoProvider(props: NostoProviderProps) {
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
 
+  if (recommendationComponent && !isValidElement(recommendationComponent)) {
+    throw new Error(
+      "The recommendationComponent prop must be a valid React element. Please provide a valid React element."
+    )
+  }
+
   // Set responseMode for loading campaigns:
-  const responseMode = isValidElement(recommendationComponent) ? "JSON_ORIGINAL" : "HTML"
+  const responseMode = recommendationComponent ? "JSON_ORIGINAL" : "HTML"
 
   const { clientScriptLoaded } = useLoadClientScript(props)
 

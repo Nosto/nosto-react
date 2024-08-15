@@ -27,6 +27,26 @@ describe("Nosto client script loading", () => {
     expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
   })
 
+  it("throws error on invalid recommendationComponent", () => {
+    expect(() => {
+      render(
+        <NostoProvider account="shopify-11368366139" recommendationComponent={true as unknown as React.ReactElement}>
+          <NostoHome />
+        </NostoProvider>
+      )
+    }).toThrowError()
+  })
+
+  it("access valid React elements in recommendationComponent", () => {
+    render(
+      <NostoProvider account="shopify-11368366139" recommendationComponent={<NostoHome />}>
+        <NostoHome />
+      </NostoProvider>
+    )
+
+    expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
+  })
+
   it("Shopify markets script", () => {
     render(
       <NostoProvider account="shopify-11368366139" shopifyMarkets={{ language: "en", marketId: "123" }}>

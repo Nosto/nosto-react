@@ -7,12 +7,6 @@ import { NostoContext, NostoContextType } from "../context"
  * @group Essential Functions
  */
 export function useNostoContext(): NostoContextType {
-    const context = useContext(NostoContext)
-  
-    if (!context) {
-      throw new Error("No nosto context found")
-    }
-  
-    return context
+    return useContext(NostoContext)
   }
   

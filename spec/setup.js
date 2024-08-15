@@ -16,6 +16,8 @@ global.window.nostoReactTest = true
 
 afterEach(() => {
     window.nosto = undefined
+    window.nostojs = undefined
+    window.Nosto = undefined
     document.head.innerHTML = ""
     document.body.innerHTML = ""
 })

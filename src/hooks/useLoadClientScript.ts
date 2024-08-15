@@ -38,7 +38,9 @@ export function useLoadClientScript(props: NostoScriptProps) {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (loadScript) {
+    if (!loadScript) {
+      setClientScriptLoadedState(true)
+    } else {
       // Load Nosto client script if not already loaded externally
       if (!isNostoLoaded() && !shopifyMarkets) {
         const urlPartial = `/include/${account}`
@@ -76,11 +78,6 @@ export function useLoadClientScript(props: NostoScriptProps) {
           document.body.appendChild(script)
         }
       }
-    } else {
-      window.nosto?.reload({
-        site: "localhost",
-      })
-      setClientScriptLoadedState(true)
     }
   }, [clientScriptLoadedState, shopifyMarkets])
 

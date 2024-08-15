@@ -12,6 +12,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
 
   useEffect(() => {
     const scriptOnload = () => {
+      // Override for production scripts to work in unit tests
       if ("nostoReactTest" in window) {
         window.nosto?.reload({
           site: "localhost"

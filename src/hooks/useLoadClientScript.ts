@@ -40,7 +40,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
     }
 
     if (!loadScript) {
-      scriptOnload()
+      window.nosto ? scriptOnload() : window.nostojs(scriptOnload)
       return
     }
 

@@ -20,40 +20,21 @@ export function useLoadClientScript(props: NostoScriptProps) {
       setClientScriptLoaded(true)
     }
 
-    // Create script element
-    function createScriptElement(urlPartial: string) {
+    // Create and append script element
+    function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
       const scriptEl = document.createElement("script")
       scriptEl.type = "text/javascript"
       scriptEl.src = `//${host}${urlPartial}`
       scriptEl.async = true
       scriptEl.setAttribute("nosto-client-script", "")
-      return scriptEl
+      scriptEl.onload = scriptOnload
+      Object.entries(extraAttributes).forEach(([k, v]) => scriptEl.setAttribute(k, v))
+      document.body.appendChild(scriptEl)
     }
 
-    // Load Nosto API stub
-    if (!window.nostojs) {
-      window.nostojs = (cb: (api: NostoClient) => void) => {
-        (window.nostojs.q = window.nostojs.q || []).push(cb)
-      }
-      window.nostojs(api => api.setAutoLoad(false))
-    }
-
-    if (!loadScript) {
-      window.nosto ? scriptOnload() : window.nostojs(scriptOnload)
-      return
-    }
-
-    // Load Nosto client script if not already loaded externally
-    if (!isNostoLoaded() && !shopifyMarkets) {
-      const urlPartial = `/include/${account}`
-      const script = createScriptElement(urlPartial)
-      script.onload = scriptOnload
-      document.body.appendChild(script)
-    }
-
-    // Load Shopify Markets scripts
-    if (shopifyMarkets) {
+    function prepareShopifyMarketsScript() {
       const existingScript = document.querySelector("[nosto-client-script]")
+
       const marketId = String(shopifyMarkets?.marketId || "")
       const language = shopifyMarkets?.language || ""
 
@@ -73,12 +54,32 @@ export function useLoadClientScript(props: NostoScriptProps) {
 
         const urlPartial =
           `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
-        const script = createScriptElement(urlPartial)
-        script.setAttribute("nosto-language", language)
-        script.setAttribute("nosto-market-id", marketId)
-        script.onload = scriptOnload
-        document.body.appendChild(script)
+        injectScriptElement(urlPartial, { "nosto-language": language, "nosto-market-id": marketId })
       }
+    }
+
+    // Load Nosto API stub
+    if (!window.nostojs) {
+      window.nostojs = (cb: (api: NostoClient) => void) => {
+        (window.nostojs.q = window.nostojs.q || []).push(cb)
+      }
+      window.nostojs(api => api.setAutoLoad(false))
+    }
+
+    if (!loadScript) {
+      window.nosto ? scriptOnload() : window.nostojs(scriptOnload)
+      return
+    }
+
+    // Load Nosto client script if not already loaded externally
+    if (!isNostoLoaded() && !shopifyMarkets) {
+      const urlPartial = `/include/${account}`
+      injectScriptElement(urlPartial)
+    }
+
+    // Load Shopify Markets scripts
+    if (shopifyMarkets) {
+      prepareShopifyMarketsScript()
     }
   }, [shopifyMarkets?.marketId, shopifyMarkets?.language])
 

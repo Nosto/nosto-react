@@ -6,7 +6,7 @@ import "@testing-library/jest-dom/vitest"
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
   script.setAttribute("nosto-client-script", "")
-  script.src = `https://connect.nosto.com/include/${merchant}`
+  script.src = `http://connect.nosto.com/include/${merchant}`
   script.type = "text/javascript"
   script.async = true
   const promise = new Promise<void>(resolve => {
@@ -19,6 +19,10 @@ function loadClientScript(merchant: string) {
   return promise
 }
 
+function getScriptSources() {
+  return Array.from(document.querySelectorAll("script")).map(script => script.src)
+}
+
 describe("useLoadClientScript", () => {
 
   it("loads client script", async () => {
@@ -28,6 +32,7 @@ describe("useLoadClientScript", () => {
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
     expect(window.nosto).toBeDefined()
+    expect(getScriptSources()).toEqual(["http://connect.nosto.com/include/shopify-11368366139"])
   })
 
   it("set loaded state to true when client is loaded externally after", async () => {
@@ -39,6 +44,7 @@ describe("useLoadClientScript", () => {
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
+    expect(getScriptSources()).toEqual(["http://connect.nosto.com/include/shopify-11368366139"])
   })
 
   it("set loaded state to true when client is loaded externally before", async () => {
@@ -47,6 +53,7 @@ describe("useLoadClientScript", () => {
 
     const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: "shopify-11368366139" }))
     expect(hook.result.current.clientScriptLoaded).toBe(true)
+    expect(getScriptSources()).toEqual(["http://connect.nosto.com/include/shopify-11368366139"])
   })
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {
@@ -62,5 +69,8 @@ describe("useLoadClientScript", () => {
 
     expect(document.body.contains(existingScript)).toBe(false)
     expect(document.body.contains(nostoSandbox)).toBe(false)
+    expect(getScriptSources()).toEqual([
+      "http://connect.nosto.com/script/shopify/market/nosto.js?merchant=shopify-11368366139&market=123&locale=en"
+    ])
   })
 })

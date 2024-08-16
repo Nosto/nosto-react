@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { isNostoLoaded } from "../components/helpers"
 import type { NostoClient } from "../types"
 import type { NostoProviderProps } from "../components/NostoProvider"
@@ -6,26 +6,25 @@ import type { NostoProviderProps } from "../components/NostoProvider"
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript">
 
 export function useLoadClientScript(props: NostoScriptProps) {
-  const { host, account, shopifyMarkets, loadScript = true } = props
-  const [clientScriptLoadedState, setClientScriptLoadedState] = useState(false)
-  const clientScriptLoaded = useMemo(() => clientScriptLoadedState, [clientScriptLoadedState])
+  const { host = "connect.nosto.com", account, shopifyMarkets, loadScript = true } = props
+  const [clientScriptLoaded, setClientScriptLoaded] = useState(false)
 
   useEffect(() => {
-    const scriptOnload = () => {
+    function scriptOnload() {
       // Override for production scripts to work in unit tests
       if ("nostoReactTest" in window) {
         window.nosto?.reload({
           site: "localhost"
         })
       }
-      setClientScriptLoadedState(true)
+      setClientScriptLoaded(true)
     }
 
     // Create script element
     function createScriptElement(urlPartial: string) {
       const scriptEl = document.createElement("script")
       scriptEl.type = "text/javascript"
-      scriptEl.src = `//${(host || "connect.nosto.com")}${urlPartial}`
+      scriptEl.src = `//${host}${urlPartial}`
       scriptEl.async = true
       scriptEl.setAttribute("nosto-client-script", "")
       return scriptEl
@@ -63,8 +62,8 @@ export function useLoadClientScript(props: NostoScriptProps) {
         existingScript?.getAttribute("nosto-market-id") !== marketId
 
       if (!existingScript || existingScriptAttributes) {
-        if (clientScriptLoadedState) {
-          setClientScriptLoadedState(false)
+        if (clientScriptLoaded) {
+          setClientScriptLoaded(false)
         }
 
         const nostoSandbox = document.querySelector("#nosto-sandbox")
@@ -81,7 +80,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
         document.body.appendChild(script)
       }
     }
-  }, [clientScriptLoadedState, shopifyMarkets])
+  }, [clientScriptLoaded, shopifyMarkets])
 
   return { clientScriptLoaded }
 }

@@ -22,18 +22,14 @@ export function useLoadClientScript(props: NostoScriptProps) {
     }
   
     // Create and append script element
-    function injectScriptElement(urlPartial: string, extraAttributes?: Record<string, string>) {
+    function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
       const scriptEl = document.createElement("script")
       scriptEl.type = "text/javascript"
       scriptEl.src = `//${host}${urlPartial}`
       scriptEl.async = true
       scriptEl.setAttribute("nosto-client-script", "")
       scriptEl.onload = scriptOnload
-      if (extraAttributes) {
-        const { language, marketId } = extraAttributes
-        scriptEl.setAttribute("nosto-language", language)
-        scriptEl.setAttribute("nosto-market-id", marketId)
-      }
+      Object.entries(extraAttributes).forEach(([k,v]) => scriptEl.setAttribute(k,v))
       document.body.appendChild(scriptEl)
     }
   
@@ -59,7 +55,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
   
         const urlPartial =
           `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
-        injectScriptElement(urlPartial, { language, marketId })
+        injectScriptElement(urlPartial, { "nosto-language": language, "nosto-market-id": marketId })
       }
     }
 

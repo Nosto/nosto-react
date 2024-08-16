@@ -80,7 +80,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
         document.body.appendChild(script)
       }
     }
-  }, [clientScriptLoaded, shopifyMarkets])
+  }, [shopifyMarkets])
 
   return { clientScriptLoaded }
 }

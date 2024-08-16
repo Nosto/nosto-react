@@ -1,4 +1,3 @@
-import React from "react"
 import { test, expect } from "vitest"
 import { NostoCategory, NostoHome, NostoPlacement, NostoProduct, NostoProvider } from "../src"
 import RecommendationComponent from "./renderer"

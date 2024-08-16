@@ -1,9 +1,9 @@
-import { createContext } from "react"
+import { createContext, ReactElement } from "react"
 import { Recommendation, RenderMode } from "./types"
 
 type AnyFunction = (...args: unknown[]) => unknown
 
-export type RecommendationComponent = React.ReactElement<{
+export type RecommendationComponent = ReactElement<{
   nostoRecommendation: Recommendation
 }>
 

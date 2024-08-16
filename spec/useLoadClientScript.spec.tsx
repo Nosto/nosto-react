@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks"
 import "@testing-library/jest-dom/vitest"
@@ -56,6 +56,17 @@ describe("useLoadClientScript", () => {
     const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(result.current.clientScriptLoaded).toBe(true)
     expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
+  })
+
+  it("reloads client script once with loadScript=false", async () => {
+    await loadClientScript(testAccount)
+    const reloadSpy = vi.spyOn(window.nosto!, "reload")
+
+    const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
+    expect(reloadSpy).toHaveBeenCalledTimes(1)
+
+    hook.rerender()
+    expect(reloadSpy).toHaveBeenCalledTimes(1)
   })
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {

@@ -25,35 +25,37 @@ function getScriptSources() {
 
 describe("useLoadClientScript", () => {
 
+  const testAccount = "shopify-11368366139"
+
   it("loads client script", async () => {
-    const hook = renderHook(() => useLoadClientScript({ account: "shopify-11368366139" }))
+    const hook = renderHook(() => useLoadClientScript({ account: testAccount }))
     await new Promise(window.nostojs)
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
     expect(window.nosto).toBeDefined()
-    expect(getScriptSources()).toEqual(["http://connect.nosto.com/include/shopify-11368366139"])
+    expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
   })
 
   it("set loaded state to true when client is loaded externally after", async () => {
-    const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: "shopify-11368366139" }))
+    const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(hook.result.current.clientScriptLoaded).toBe(false)
 
-    await loadClientScript("shopify-11368366139")
+    await loadClientScript(testAccount)
     expect(window.nosto).toBeDefined()
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
-    expect(getScriptSources()).toEqual(["http://connect.nosto.com/include/shopify-11368366139"])
+    expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
   })
 
   it("set loaded state to true when client is loaded externally before", async () => {
-    await loadClientScript("shopify-11368366139")
+    await loadClientScript(testAccount)
     expect(window.nosto).toBeDefined()
 
-    const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: "shopify-11368366139" }))
+    const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(result.current.clientScriptLoaded).toBe(true)
-    expect(getScriptSources()).toEqual(["http://connect.nosto.com/include/shopify-11368366139"])
+    expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
   })
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {
@@ -65,12 +67,12 @@ describe("useLoadClientScript", () => {
     nostoSandbox.id = "nosto-sandbox"
     document.body.appendChild(nostoSandbox)
 
-    renderHook(() => useLoadClientScript({ account: "shopify-11368366139", shopifyMarkets: { marketId: "123", language: "en" } }))
+    renderHook(() => useLoadClientScript({ account: testAccount, shopifyMarkets: { marketId: "123", language: "en" } }))
 
     expect(document.body.contains(existingScript)).toBe(false)
     expect(document.body.contains(nostoSandbox)).toBe(false)
     expect(getScriptSources()).toEqual([
-      "http://connect.nosto.com/script/shopify/market/nosto.js?merchant=shopify-11368366139&market=123&locale=en"
+      `http://connect.nosto.com/script/shopify/market/nosto.js?merchant=${testAccount}&market=123&locale=en`
     ])
   })
 })

@@ -1,11 +1,11 @@
-import { useEffect } from "react"
+import { DependencyList, useEffect } from "react"
 import { useNostoContext } from "./useNostoContext"
 import { NostoClient } from "../types"
 import { useDeepCompareEffect } from "./useDeepCompareEffect"
 
 export function useNostoApi(
   cb: (api: NostoClient) => void,
-  deps?: React.DependencyList,
+  deps?: DependencyList,
   flags?: { deep?: boolean }
 ): void {
   const { clientScriptLoaded, currentVariation, responseMode } = useNostoContext()

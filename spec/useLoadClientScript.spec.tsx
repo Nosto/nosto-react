@@ -70,8 +70,8 @@ describe("useLoadClientScript", () => {
   })
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {
-    const initialProps = { account: testAccount, shopifyMarkets: { marketId: "123", language: "en" } }
-    const hook = renderHook(props => useLoadClientScript(props), { initialProps })    
+    const props = { account: testAccount, shopifyMarkets: { marketId: "123", language: "en" } }
+    const hook = renderHook(props => useLoadClientScript(props), { initialProps: props })    
     expect(getScriptSources()).toEqual([
       `http://connect.nosto.com/script/shopify/market/nosto.js?merchant=${testAccount}&market=123&locale=en`
     ])
@@ -79,7 +79,9 @@ describe("useLoadClientScript", () => {
     const existingScript = document.querySelector("[nosto-client-script]") 
     const nostoSandbox = document.querySelector("#nosto-sandbox")
 
-    hook.rerender({ account: testAccount, shopifyMarkets: { marketId: "234", language: "fr" } })
+    Object.assign(props.shopifyMarkets, { marketId: "234", language: "fr" })
+
+    hook.rerender(props)
     expect(document.body.contains(existingScript)).toBe(false)
     expect(document.body.contains(nostoSandbox)).toBe(false)
     expect(getScriptSources()).toEqual([

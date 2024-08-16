@@ -70,20 +70,20 @@ describe("useLoadClientScript", () => {
   })
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {
-    const existingScript = document.createElement("script")
-    existingScript.setAttribute("nosto-client-script", "")
-    document.body.appendChild(existingScript)
+    const initialProps = { account: testAccount, shopifyMarkets: { marketId: "123", language: "en" } }
+    const hook = renderHook(props => useLoadClientScript(props), { initialProps })    
+    expect(getScriptSources()).toEqual([
+      `http://connect.nosto.com/script/shopify/market/nosto.js?merchant=${testAccount}&market=123&locale=en`
+    ])
 
-    const nostoSandbox = document.createElement("div")
-    nostoSandbox.id = "nosto-sandbox"
-    document.body.appendChild(nostoSandbox)
+    const existingScript = document.querySelector("[nosto-client-script]") 
+    const nostoSandbox = document.querySelector("#nosto-sandbox")
 
-    renderHook(() => useLoadClientScript({ account: testAccount, shopifyMarkets: { marketId: "123", language: "en" } }))
-
+    hook.rerender({ account: testAccount, shopifyMarkets: { marketId: "234", language: "fr" } })
     expect(document.body.contains(existingScript)).toBe(false)
     expect(document.body.contains(nostoSandbox)).toBe(false)
     expect(getScriptSources()).toEqual([
-      `http://connect.nosto.com/script/shopify/market/nosto.js?merchant=${testAccount}&market=123&locale=en`
+      `http://connect.nosto.com/script/shopify/market/nosto.js?merchant=${testAccount}&market=234&locale=fr`
     ])
   })
 })

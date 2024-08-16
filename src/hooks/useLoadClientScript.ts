@@ -57,11 +57,11 @@ export function useLoadClientScript(props: NostoScriptProps) {
       const marketId = String(shopifyMarkets?.marketId || "")
       const language = shopifyMarkets?.language || ""
 
-      const existingScriptAttributes =
+      const attributeMismatch =
         existingScript?.getAttribute("nosto-language") !== language ||
         existingScript?.getAttribute("nosto-market-id") !== marketId
 
-      if (!existingScript || existingScriptAttributes) {
+      if (!existingScript || attributeMismatch) {
         if (clientScriptLoaded) {
           setClientScriptLoaded(false)
         }

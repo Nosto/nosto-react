@@ -51,8 +51,8 @@ describe("useLoadClientScript", () => {
     await loadClientScript("shopify-11368366139")
     expect(window.nosto).toBeDefined()
 
-    const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: "shopify-11368366139" }))
-    expect(hook.result.current.clientScriptLoaded).toBe(true)
+    const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: "shopify-11368366139" }))
+    expect(result.current.clientScriptLoaded).toBe(true)
     expect(getScriptSources()).toEqual(["http://connect.nosto.com/include/shopify-11368366139"])
   })
 

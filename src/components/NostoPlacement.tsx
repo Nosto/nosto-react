@@ -1,5 +1,3 @@
-import React from "react"
-
 /**
  * Nosto React has a special component called NostoPlacement.
  * The component is a simply a hidden `<div>` placeholder into which Nosto injects recommendations or personalises the content between the tags.

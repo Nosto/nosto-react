@@ -10,7 +10,6 @@ export function useLoadClientScript(props: NostoScriptProps) {
   const [clientScriptLoaded, setClientScriptLoaded] = useState(false)
 
   useEffect(() => {
-
     function scriptOnload() {
       // Override for production scripts to work in unit tests
       if ("nostoReactTest" in window) {
@@ -20,7 +19,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
       }
       setClientScriptLoaded(true)
     }
-  
+
     // Create and append script element
     function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
       const scriptEl = document.createElement("script")
@@ -29,30 +28,30 @@ export function useLoadClientScript(props: NostoScriptProps) {
       scriptEl.async = true
       scriptEl.setAttribute("nosto-client-script", "")
       scriptEl.onload = scriptOnload
-      Object.entries(extraAttributes).forEach(([k,v]) => scriptEl.setAttribute(k,v))
+      Object.entries(extraAttributes).forEach(([k, v]) => scriptEl.setAttribute(k, v))
       document.body.appendChild(scriptEl)
     }
-  
+
     function prepareShopifyMarketsScript() {
       const existingScript = document.querySelector("[nosto-client-script]")
-  
+
       const marketId = String(shopifyMarkets?.marketId || "")
       const language = shopifyMarkets?.language || ""
-  
+
       const attributeMismatch =
         existingScript?.getAttribute("nosto-language") !== language ||
         existingScript?.getAttribute("nosto-market-id") !== marketId
-  
+
       if (!existingScript || attributeMismatch) {
         if (clientScriptLoaded) {
           setClientScriptLoaded(false)
         }
-  
+
         const nostoSandbox = document.querySelector("#nosto-sandbox")
-  
+
         existingScript?.parentNode?.removeChild(existingScript)
         nostoSandbox?.parentNode?.removeChild(nostoSandbox)
-  
+
         const urlPartial =
           `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
         injectScriptElement(urlPartial, { "nosto-language": language, "nosto-market-id": marketId })

@@ -1,8 +1,7 @@
-import { useRef } from "react"
+import { cloneElement, useRef } from "react"
 import { createRoot, Root } from "react-dom/client"
 import { ActionResponse, Recommendation } from "../types"
 import { useNostoContext } from "./useNostoContext"
-import React from "react"
 import { RecommendationComponent } from "../context"
 
 // RecommendationComponent for client-side rendering:
@@ -10,7 +9,7 @@ function RecommendationComponentWrapper(props: {
     recommendationComponent: RecommendationComponent,
     nostoRecommendation: Recommendation }) {
 
-  return React.cloneElement(props.recommendationComponent, {
+  return cloneElement(props.recommendationComponent, {
     // eslint-disable-next-line react/prop-types
     nostoRecommendation: props.nostoRecommendation,
   })

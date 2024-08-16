@@ -15,8 +15,11 @@ global.navigator = window.navigator
 global.window.nostoReactTest = true
 
 afterEach(() => {
+    // clearing Nosto iframe window handle
     window.nosto = undefined
+    // clearing nostojs stub
     window.nostojs = undefined
+    // clearing Shopify specific Nosto namespace
     window.Nosto = undefined
     document.head.innerHTML = ""
     document.body.innerHTML = ""

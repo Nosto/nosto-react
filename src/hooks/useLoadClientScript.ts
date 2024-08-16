@@ -9,27 +9,58 @@ export function useLoadClientScript(props: NostoScriptProps) {
   const { host = "connect.nosto.com", account, shopifyMarkets, loadScript = true } = props
   const [clientScriptLoaded, setClientScriptLoaded] = useState(false)
 
-  useEffect(() => {
-    function scriptOnload() {
-      // Override for production scripts to work in unit tests
-      if ("nostoReactTest" in window) {
-        window.nosto?.reload({
-          site: "localhost"
-        })
+  function scriptOnload() {
+    // Override for production scripts to work in unit tests
+    if ("nostoReactTest" in window) {
+      window.nosto?.reload({
+        site: "localhost"
+      })
+    }
+    setClientScriptLoaded(true)
+  }
+
+  // Create and append script element
+  function createScriptElement(urlPartial: string, language?: string, marketId?: string) {
+    const scriptEl = document.createElement("script")
+    scriptEl.type = "text/javascript"
+    scriptEl.src = `//${host}${urlPartial}`
+    scriptEl.async = true
+    scriptEl.setAttribute("nosto-client-script", "")
+    scriptEl.onload = scriptOnload
+    if (language && marketId) {
+      scriptEl.setAttribute("nosto-language", language)
+      scriptEl.setAttribute("nosto-market-id", marketId)
+    }
+    document.body.appendChild(scriptEl)
+  }
+
+  function prepareShopifyMarketsScript() {
+    const existingScript = document.querySelector("[nosto-client-script]")
+
+    const marketId = String(shopifyMarkets?.marketId || "")
+    const language = shopifyMarkets?.language || ""
+
+    const attributeMismatch =
+      existingScript?.getAttribute("nosto-language") !== language ||
+      existingScript?.getAttribute("nosto-market-id") !== marketId
+
+    if (!existingScript || attributeMismatch) {
+      if (clientScriptLoaded) {
+        setClientScriptLoaded(false)
       }
-      setClientScriptLoaded(true)
-    }
 
-    // Create script element
-    function createScriptElement(urlPartial: string) {
-      const scriptEl = document.createElement("script")
-      scriptEl.type = "text/javascript"
-      scriptEl.src = `//${host}${urlPartial}`
-      scriptEl.async = true
-      scriptEl.setAttribute("nosto-client-script", "")
-      return scriptEl
-    }
+      const nostoSandbox = document.querySelector("#nosto-sandbox")
 
+      existingScript?.parentNode?.removeChild(existingScript)
+      nostoSandbox?.parentNode?.removeChild(nostoSandbox)
+
+      const urlPartial =
+        `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
+      createScriptElement(urlPartial, language, marketId)
+    }
+  }
+
+  useEffect(() => {
     // Load Nosto API stub
     if (!window.nostojs) {
       window.nostojs = (cb: (api: NostoClient) => void) => {
@@ -46,41 +77,14 @@ export function useLoadClientScript(props: NostoScriptProps) {
     // Load Nosto client script if not already loaded externally
     if (!isNostoLoaded() && !shopifyMarkets) {
       const urlPartial = `/include/${account}`
-      const script = createScriptElement(urlPartial)
-      script.onload = scriptOnload
-      document.body.appendChild(script)
+      createScriptElement(urlPartial)
     }
 
     // Load Shopify Markets scripts
     if (shopifyMarkets) {
-      const existingScript = document.querySelector("[nosto-client-script]")
-      const marketId = String(shopifyMarkets?.marketId || "")
-      const language = shopifyMarkets?.language || ""
-
-      const existingScriptAttributes =
-        existingScript?.getAttribute("nosto-language") !== language ||
-        existingScript?.getAttribute("nosto-market-id") !== marketId
-
-      if (!existingScript || existingScriptAttributes) {
-        if (clientScriptLoaded) {
-          setClientScriptLoaded(false)
-        }
-
-        const nostoSandbox = document.querySelector("#nosto-sandbox")
-
-        existingScript?.parentNode?.removeChild(existingScript)
-        nostoSandbox?.parentNode?.removeChild(nostoSandbox)
-
-        const urlPartial =
-          `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
-        const script = createScriptElement(urlPartial)
-        script.setAttribute("nosto-language", language)
-        script.setAttribute("nosto-market-id", marketId)
-        script.onload = scriptOnload
-        document.body.appendChild(script)
-      }
+      prepareShopifyMarketsScript()
     }
-  }, [shopifyMarkets])
+  }, [shopifyMarkets?.marketId, shopifyMarkets?.language])
 
   return { clientScriptLoaded }
 }

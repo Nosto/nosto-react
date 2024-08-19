@@ -18,12 +18,13 @@ export default function scriptLoader(scriptSrc: string, options?: ScriptLoadOpti
 /**
  * @group Types
  */
-export type ScriptLoader = typeof scriptLoader
-
-/**
- * @group Types
- */
 export type ScriptLoadOptions = {
+  /**
+   * Indicates the position of the script, default is "body"
+   */
   position?: "head" | "body"
+  /**
+   * Indicates the attributes of the script element
+   */
   attributes?: Record<string, string>    
 }  

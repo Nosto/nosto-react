@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest"
 import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks"
+import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
 
 function loadClientScript(merchant: string) {
@@ -35,6 +36,16 @@ describe("useLoadClientScript", () => {
     expect(hook.result.current.clientScriptLoaded).toBe(true)
     expect(window.nosto).toBeDefined()
     expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
+  })
+
+  it("support custom script loaders", async () => {
+    const customScriptLoader = vi.fn(scriptLoader)
+    const hook = renderHook(() => useLoadClientScript({ account: testAccount, scriptLoader: customScriptLoader }))
+    await new Promise(window.nostojs)
+
+    hook.rerender()
+    expect(customScriptLoader).toHaveBeenLastCalledWith(
+      `//connect.nosto.com/include/${testAccount}`, { attributes: {"nosto-client-script": ""}})
   })
 
   it("set loaded state to true when client is loaded externally after", async () => {

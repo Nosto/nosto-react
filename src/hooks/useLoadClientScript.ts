@@ -2,11 +2,12 @@ import { useState, useEffect } from "react"
 import { isNostoLoaded } from "../components/helpers"
 import type { NostoClient } from "../types"
 import type { NostoProviderProps } from "../components/NostoProvider"
+import scriptLoaderFn from "./scriptLoader"
 
-type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript">
+type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript" | "scriptLoader">
 
 export function useLoadClientScript(props: NostoScriptProps) {
-  const { host = "connect.nosto.com", account, shopifyMarkets, loadScript = true } = props
+  const { host = "connect.nosto.com", scriptLoader = scriptLoaderFn, account, shopifyMarkets, loadScript = true } = props
   const [clientScriptLoaded, setClientScriptLoaded] = useState(false)
 
   useEffect(() => {
@@ -21,15 +22,11 @@ export function useLoadClientScript(props: NostoScriptProps) {
     }
 
     // Create and append script element
-    function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
-      const scriptEl = document.createElement("script")
-      scriptEl.type = "text/javascript"
-      scriptEl.src = `//${host}${urlPartial}`
-      scriptEl.async = true
-      scriptEl.setAttribute("nosto-client-script", "")
-      scriptEl.onload = scriptOnload
-      Object.entries(extraAttributes).forEach(([k, v]) => scriptEl.setAttribute(k, v))
-      document.body.appendChild(scriptEl)
+    async function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
+      const scriptSrc = `//${host}${urlPartial}`
+      const attributes = { "nosto-client-script": "", ...extraAttributes }
+      await scriptLoader(scriptSrc, { attributes })
+      scriptOnload()
     }
 
     function prepareShopifyMarketsScript() {

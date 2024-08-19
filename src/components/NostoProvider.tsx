@@ -2,7 +2,7 @@ import { isValidElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
 import { useLoadClientScript } from "../hooks"
 import type { ReactElement } from "react"
-import { ScriptLoader } from "../hooks/scriptLoader"
+import { ScriptLoadOptions } from "../hooks/scriptLoader"
 
 /**
  * @group Components
@@ -46,7 +46,7 @@ export interface NostoProviderProps {
   /**
    * Custom script loader
    */
-  scriptLoader?: ScriptLoader
+  scriptLoader?: (scriptSrc: string, options?: ScriptLoadOptions) => Promise<void>
 }
 
 /**

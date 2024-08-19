@@ -1,8 +1,3 @@
-
-
-/**
- * @group Essential functions
- */
 export default function scriptLoader(scriptSrc: string, options?: ScriptLoadOptions): Promise<void> {
   return new Promise((resolve, reject) => {
     const script = document.createElement("script")
@@ -28,7 +23,7 @@ export type ScriptLoader = typeof scriptLoader
 /**
  * @group Types
  */
-type ScriptLoadOptions = {
+export type ScriptLoadOptions = {
   position?: "head" | "body"
   attributes?: Record<string, string>    
 }  

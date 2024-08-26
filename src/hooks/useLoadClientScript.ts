@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { isNostoLoaded } from "../components/helpers"
 import type { NostoClient } from "../types"
 import type { NostoProviderProps } from "../components/NostoProvider"
@@ -7,7 +7,13 @@ import scriptLoaderFn from "./scriptLoader"
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript" | "scriptLoader">
 
 export function useLoadClientScript(props: NostoScriptProps) {
-  const { host = "connect.nosto.com", scriptLoader = scriptLoaderFn, account, shopifyMarkets, loadScript = true } = props
+  const {
+    host = "connect.nosto.com",
+    scriptLoader = scriptLoaderFn,
+    account,
+    shopifyMarkets,
+    loadScript = true,
+  } = props
   const [clientScriptLoaded, setClientScriptLoaded] = useState(false)
 
   useEffect(() => {
@@ -15,7 +21,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
       // Override for production scripts to work in unit tests
       if ("nostoReactTest" in window) {
         window.nosto?.reload({
-          site: "localhost"
+          site: "localhost",
         })
       }
       setClientScriptLoaded(true)
@@ -30,6 +36,9 @@ export function useLoadClientScript(props: NostoScriptProps) {
     }
 
     function prepareShopifyMarketsScript() {
+      if (!loadScript) {
+        return
+      }
       const existingScript = document.querySelector("[nosto-client-script]")
 
       const marketId = String(shopifyMarkets?.marketId || "")

@@ -29,6 +29,9 @@ export function useLoadClientScript(props: NostoScriptProps) {
 
     // Create and append script element
     async function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
+      if (!loadScript) {
+        return
+      }
       const scriptSrc = `//${host}${urlPartial}`
       const attributes = { "nosto-client-script": "", ...extraAttributes }
       await scriptLoader(scriptSrc, { attributes })

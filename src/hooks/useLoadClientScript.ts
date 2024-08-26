@@ -75,7 +75,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (!loadScript) {
+    if (loadScript) {
       window.nosto ? scriptOnload() : window.nostojs(scriptOnload)
       return
     }

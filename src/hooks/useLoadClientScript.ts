@@ -29,9 +29,6 @@ export function useLoadClientScript(props: NostoScriptProps) {
 
     // Create and append script element
     async function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
-      if (!loadScript) {
-        return
-      }
       const scriptSrc = `//${host}${urlPartial}`
       const attributes = { "nosto-client-script": "", ...extraAttributes }
       await scriptLoader(scriptSrc, { attributes })
@@ -39,9 +36,6 @@ export function useLoadClientScript(props: NostoScriptProps) {
     }
 
     function prepareShopifyMarketsScript() {
-      if (!loadScript) {
-        return
-      }
       const existingScript = document.querySelector("[nosto-client-script]")
 
       const marketId = String(shopifyMarkets?.marketId || "")
@@ -75,7 +69,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
       window.nostojs(api => api.setAutoLoad(false))
     }
 
-    if (loadScript) {
+    if (!loadScript) {
       window.nosto ? scriptOnload() : window.nostojs(scriptOnload)
       return
     }

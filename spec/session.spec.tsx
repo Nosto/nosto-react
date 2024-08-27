@@ -8,8 +8,8 @@ test("Session render", async () => {
   const requests = listenTo("prerequest")
 
   const customer = {
-    first_name: "John",
-    last_name: "Doe",
+    firstName: "John",
+    lastName: "Doe",
     email: "john.doe@acme.com"
   }
 

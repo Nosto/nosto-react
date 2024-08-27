@@ -28,7 +28,7 @@ export default function NostoSession(props?: { cart?: Cart; customer?: Customer 
           .setCart(currentCart)
           .setCustomer(currentCustomer)
           .viewOther()
-          .load()
+          .load({ skipEvents: true, skipPageViews: true })
       })
     }
   }, [clientScriptLoaded, cart, customer])

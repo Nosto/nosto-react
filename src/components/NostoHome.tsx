@@ -1,6 +1,11 @@
 import { useRenderCampaigns, useNostoApi } from "../hooks"
 
 /**
+ * @group Components
+ */
+export type NostoHomeProps = { placements?: string[] }
+
+/**
  * The `NostoHome` component must be used to personalise the home page. The component does not require any props.
  *
  * By default, your account, when created, has four front-page placements named `frontpage-nosto-1`, `frontpage-nosto-2`, `frontpage-nosto-3` and `frontpage-nosto-4`.
@@ -23,7 +28,7 @@ import { useRenderCampaigns, useNostoApi } from "../hooks"
  *
  * @group Components
  */
-export default function NostoHome(props: { placements?: string[] }) {
+export default function NostoHome(props: NostoHomeProps) {
   useNostoHome(props)
   return null
 }
@@ -33,7 +38,7 @@ export default function NostoHome(props: { placements?: string[] }) {
  * 
  * @group Hooks
  */
-export function useNostoHome(props?: { placements?: string[] }) {
+export function useNostoHome(props?: NostoHomeProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(

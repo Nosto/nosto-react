@@ -1,6 +1,14 @@
 import { useNostoApi, useRenderCampaigns } from "../hooks"
 
 /**
+ * @group Components
+ */
+export type NostoCategoryProps = {
+  category: string
+  placements?: string[]
+}
+
+/**
  * You can personalise your category and collection pages by using the NostoCategory component.
  * The component requires that you provide it the the slash-delimited slug representation of the current category.
  *
@@ -22,7 +30,7 @@ import { useNostoApi, useRenderCampaigns } from "../hooks"
  *
  * @group Components
  */
-export default function NostoCategory(props: { category: string; placements?: string[] }) {
+export default function NostoCategory(props: NostoCategoryProps) {
   useNostoCategory(props)
   return null
 }
@@ -32,7 +40,7 @@ export default function NostoCategory(props: { category: string; placements?: st
  * 
  * @group Hooks
  */
-export function useNostoCategory(props: { category: string; placements?: string[] }) {
+export function useNostoCategory(props: NostoCategoryProps) {
   const { category, placements } = props
   const { renderCampaigns } = useRenderCampaigns()
 

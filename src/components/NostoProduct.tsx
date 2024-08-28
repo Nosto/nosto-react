@@ -2,6 +2,15 @@ import { useRenderCampaigns, useNostoApi } from "../hooks"
 import { Product } from "../types"
 
 /**
+ * @group Components
+ */
+export type NostoProductProps = {
+  product: string
+  tagging?: Product
+  placements?: string[]
+}
+
+/**
  * The NostoProduct component must be used to personalise the product page.
  * The component requires that you provide it the identifier of the current product being viewed.
  *
@@ -25,11 +34,7 @@ import { Product } from "../types"
  *
  * @group Components
  */
-export default function NostoProduct(props: {
-  product: string
-  tagging?: Product
-  placements?: string[]
-}) {
+export default function NostoProduct(props: NostoProductProps) {
   useNostoProduct(props)
   return null
 }
@@ -39,11 +44,7 @@ export default function NostoProduct(props: {
  * 
  * @group Hooks
  */
-export function useNostoProduct(props: {
-  product: string
-  tagging?: Product
-  placements?: string[]
-}) {
+export function useNostoProduct(props: NostoProductProps) {
   const { product, tagging, placements } = props
   const { renderCampaigns } = useRenderCampaigns()
 

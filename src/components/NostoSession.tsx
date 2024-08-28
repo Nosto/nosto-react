@@ -3,6 +3,14 @@ import { Cart, Customer } from "../types"
 import { snakeize } from "../utils/snakeize"
 
 /**
+ * @group Components
+ */
+export type NostoSessionProps = {
+  cart?: Cart
+  customer?: Customer
+}
+
+/**
  * Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change.
  * This makes it easier to add attribution.
  *
@@ -10,9 +18,9 @@ import { snakeize } from "../utils/snakeize"
  *
  * The cart prop requires a value that adheres to the type `Cart`, while the customer prop requires a value that adheres to the type `Customer`.
  *
- * @group Essential Functions
+ * @group Components
  */
-export default function NostoSession(props?: { cart?: Cart; customer?: Customer }) {
+export default function NostoSession(props?: NostoSessionProps) {
   useNostoSession(props)
   return null
 }
@@ -22,7 +30,7 @@ export default function NostoSession(props?: { cart?: Cart; customer?: Customer 
  * 
  * @group Hooks
  */
-export function useNostoSession(props?: { cart?: Cart; customer?: Customer }) {
+export function useNostoSession(props?: NostoSessionProps) {
   const { cart, customer } = props ?? {}
   const { clientScriptLoaded } = useNostoContext()
 

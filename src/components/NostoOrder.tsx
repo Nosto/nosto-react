@@ -39,8 +39,7 @@ export default function NostoOrder(props: NostoOrderProps) {
  * 
  * @group Hooks
  */
-export function useNostoOrder(props: NostoOrderProps) {
-  const { order, placements } = props
+export function useNostoOrder({ order, placements }: NostoOrderProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(

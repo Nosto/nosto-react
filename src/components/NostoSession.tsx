@@ -30,8 +30,7 @@ export default function NostoSession(props?: NostoSessionProps) {
  * 
  * @group Hooks
  */
-export function useNostoSession(props?: NostoSessionProps) {
-  const { cart, customer } = props ?? {}
+export function useNostoSession({ cart, customer }: NostoSessionProps = {}) {
   const { clientScriptLoaded } = useNostoContext()
 
   useDeepCompareEffect(() => {

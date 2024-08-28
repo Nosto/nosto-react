@@ -44,8 +44,7 @@ export default function NostoProduct(props: NostoProductProps) {
  * 
  * @group Hooks
  */
-export function useNostoProduct(props: NostoProductProps) {
-  const { product, tagging, placements } = props
+export function useNostoProduct({ product, tagging, placements }: NostoProductProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(

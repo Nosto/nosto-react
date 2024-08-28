@@ -40,8 +40,7 @@ export default function NostoCategory(props: NostoCategoryProps) {
  * 
  * @group Hooks
  */
-export function useNostoCategory(props: NostoCategoryProps) {
-  const { category, placements } = props
+export function useNostoCategory({ category, placements }: NostoCategoryProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(

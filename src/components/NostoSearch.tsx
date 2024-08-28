@@ -41,8 +41,7 @@ export default function NostoSearch(props: NostoSearchProps) {
  * 
  * @group Hooks
  */
-export function useNostoSearch(props: NostoSearchProps) {
-  const { query, placements } = props
+export function useNostoSearch({ query, placements }: NostoSearchProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(

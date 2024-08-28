@@ -16,7 +16,6 @@ export type NostoPlacementProps = { id: string; pageType?: string }
  *
  * @group Components
  */
-export default function NostoPlacement(props: NostoPlacementProps) {
-  const { id, pageType } = props
+export default function NostoPlacement({ id, pageType }: NostoPlacementProps) {
   return <div className="nosto_element" id={id} key={id + (pageType || "")} />
 }

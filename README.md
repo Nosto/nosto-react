@@ -264,6 +264,19 @@ import {
 </div>;
 ```
 
+### Hook alternatives
+
+For all the page type specific components hooks are also provided with the same props
+
+- useNosto404
+- useNostoOther
+- useNostoCheckout
+- useNostoProduct
+- useNostoCategory
+- useNostoSearch
+- useNostOrder
+- useNostoHome
+
 ### Detailed technical documentation
 Find our latest technical specs and documentation hosted [here](https://nosto.github.io/nosto-react).
 

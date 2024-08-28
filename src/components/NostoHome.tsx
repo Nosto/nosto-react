@@ -33,14 +33,14 @@ export default function NostoHome(props: { placements?: string[] }) {
  * 
  * @group Hooks
  */
-export function useNostoHome(props: { placements?: string[] }) {
+export function useNostoHome(props?: { placements?: string[] }) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
         .viewFrontPage()
-        .setPlacements(props.placements || api.placements.getPlacements())
+        .setPlacements(props?.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data)
     }

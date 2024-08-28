@@ -1,6 +1,10 @@
 import { useNostoContext, useDeepCompareEffect } from "../hooks"
-import { Cart, Customer } from "../types"
+import { Cart as CartSnakeCase, Customer as CustomerSnakeCase } from "../types"
 import { snakeize } from "../utils/snakeize"
+import { ToCamelCase } from "../utils/types"
+
+type Cart = CartSnakeCase | ToCamelCase<CartSnakeCase>
+type Customer = CustomerSnakeCase | ToCamelCase<CustomerSnakeCase>
 
 /**
  * @group Components

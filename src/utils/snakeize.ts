@@ -1,4 +1,8 @@
-export function snakeize<T>(obj: T): T {
+import { ToSnakeCase } from "./types"
+
+// signature override
+export function snakeize<T>(obj: T): ToSnakeCase<T>
+export function snakeize<T>(obj: T): unknown {
   if (!obj || typeof obj !== "object") {
     return obj
   }

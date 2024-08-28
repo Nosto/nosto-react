@@ -30,14 +30,14 @@ export default function Nosto404(props: { placements?: string[] }) {
  * 
  * @group Hooks
  */
-export function useNosto404(props: { placements?: string[] }) {
+export function useNosto404(props?: { placements?: string[] }) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
         .viewNotFound()
-        .setPlacements(props.placements || api.placements.getPlacements())
+        .setPlacements(props?.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data)
     })

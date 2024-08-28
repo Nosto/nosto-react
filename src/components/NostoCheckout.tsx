@@ -29,14 +29,14 @@ export default function NostoCheckout(props: { placements?: string[] }) {
  * 
  * @group Hooks
  */
-export function useNostoCheckout(props: { placements?: string[] }) {
+export function useNostoCheckout(props?: { placements?: string[] }) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
         .viewCart()
-        .setPlacements(props.placements || api.placements.getPlacements())
+        .setPlacements(props?.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data)
     })

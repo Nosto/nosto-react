@@ -29,14 +29,14 @@ export default function NostoOther(props: { placements?: string[] }) {
  * 
  * @group Hooks
  */
-export function useNostoOther(props: { placements?: string[] }) {
+export function useNostoOther(props?: { placements?: string[] }) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
         .viewOther()
-        .setPlacements(props.placements || api.placements.getPlacements())
+        .setPlacements(props?.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data)
     })

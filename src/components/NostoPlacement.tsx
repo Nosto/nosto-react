@@ -1,4 +1,9 @@
 /**
+ * @group Components
+ */
+export type NostoPlacementProps = { id: string; pageType?: string }
+
+/**
  * Nosto React has a special component called NostoPlacement.
  * The component is a simply a hidden `<div>` placeholder into which Nosto injects recommendations or personalises the content between the tags.
  *
@@ -11,7 +16,6 @@
  *
  * @group Components
  */
-export default function NostoPlacement(props: { id: string; pageType?: string }) {
-  const { id, pageType } = props
+export default function NostoPlacement({ id, pageType }: NostoPlacementProps) {
   return <div className="nosto_element" id={id} key={id + (pageType || "")} />
 }

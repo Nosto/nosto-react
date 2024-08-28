@@ -1,6 +1,11 @@
 import { useRenderCampaigns, useNostoApi } from "../hooks"
 
 /**
+ * @group Components
+ */
+export type NostoOtherProps = { placements?: string[] }
+
+/**
  * You can personalise your miscellaneous pages by using the NostoOther component.
  * The component does not require any props.
  *
@@ -19,16 +24,25 @@ import { useRenderCampaigns, useNostoApi } from "../hooks"
  *
  * @group Components
  */
-export default function NostoOther(props: { placements?: string[] }) {
+export default function NostoOther(props: NostoOtherProps) {
+  useNostoOther(props)
+  return null
+}
+
+/**
+ * You can personalise your miscellaneous pages by using the useNostoOther hook.
+ * 
+ * @group Hooks
+ */
+export function useNostoOther(props?: NostoOtherProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
         .viewOther()
-        .setPlacements(props.placements || api.placements.getPlacements())
+        .setPlacements(props?.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data)
     })
-  return null
 }

@@ -1,6 +1,11 @@
 import { useNostoApi, useRenderCampaigns } from "../hooks"
 
 /**
+ * @group Components
+ */
+export type Nosto404Props = { placements?: string[] }
+
+/**
  * You can personalise your cart and checkout pages by using the `Nosto404` component.
  * The component does not require any props.
  *
@@ -20,16 +25,25 @@ import { useNostoApi, useRenderCampaigns } from "../hooks"
  *
  * @group Components
  */
-export default function Nosto404(props: { placements?: string[] }) {
+export default function Nosto404(props: Nosto404Props) {
+  useNosto404(props)
+  return null
+}
+
+/**
+ * You can personalise your cart and checkout pages by using the `useNosto404` hook.
+ * 
+ * @group Hooks
+ */
+export function useNosto404(props?: Nosto404Props) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
     async (api) => {
       const data = await api.defaultSession()
         .viewNotFound()
-        .setPlacements(props.placements || api.placements.getPlacements())
+        .setPlacements(props?.placements || api.placements.getPlacements())
         .load()
       renderCampaigns(data)
     })
-  return null
 }

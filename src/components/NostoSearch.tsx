@@ -1,6 +1,14 @@
 import { useRenderCampaigns, useNostoApi } from "../hooks"
 
 /**
+ * @group Components
+ */
+export type NostoSearchProps = {
+  query: string
+  placements?: string[]
+}
+
+/**
  * You can personalise your search pages by using the NostoSearch component.
  * The component requires that you provide it the current search term.
  *
@@ -23,8 +31,17 @@ import { useRenderCampaigns, useNostoApi } from "../hooks"
  *
  * @group Components
  */
-export default function NostoSearch(props: { query: string; placements?: string[] }) {
-  const { query, placements } = props
+export default function NostoSearch(props: NostoSearchProps) {
+  useNostoSearch(props)
+  return null
+}
+
+/**
+ * You can personalise your search pages by using the useNostoSearch hook.
+ * 
+ * @group Hooks
+ */
+export function useNostoSearch({ query, placements }: NostoSearchProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
@@ -37,5 +54,4 @@ export default function NostoSearch(props: { query: string; placements?: string[
     },
     [query]
   )
-  return null
 }

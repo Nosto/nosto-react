@@ -20,6 +20,14 @@ import { useNostoApi, useRenderCampaigns } from "../hooks"
  * @group Components
  */
 export default function NostoCheckout(props: { placements?: string[] }) {
+  useNostoCheckout(props)
+  return null
+}
+
+/**
+ * @group Hooks
+ */
+export function useNostoCheckout(props: { placements?: string[] }) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
@@ -30,5 +38,4 @@ export default function NostoCheckout(props: { placements?: string[] }) {
         .load()
       renderCampaigns(data)
     })
-  return null
 }

@@ -21,10 +21,15 @@ import { snakeize } from "../utils/snakeize"
  *
  * @group Components
  */
-export default function NostoOrder(props: {
-  order: Order,
-  placements?: string[]
-}) {
+export default function NostoOrder(props: { order: Order, placements?: string[] }) {
+  useNostoOrder(props)
+  return null
+}
+
+/**
+ * @group Hooks
+ */
+export function useNostoOrder(props: { order: Order, placements?: string[] }) {
   const { order, placements } = props
   const { renderCampaigns } = useRenderCampaigns()
 
@@ -39,5 +44,4 @@ export default function NostoOrder(props: {
     [order],
     { deep: true }
   )
-  return null
 }

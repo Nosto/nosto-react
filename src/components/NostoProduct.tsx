@@ -30,6 +30,18 @@ export default function NostoProduct(props: {
   tagging?: Product
   placements?: string[]
 }) {
+  useNostoProduct(props)
+  return null
+}
+
+/**
+ * @group Hooks
+ */
+export function useNostoProduct(props: {
+  product: string
+  tagging?: Product
+  placements?: string[]
+}) {
   const { product, tagging, placements } = props
   const { renderCampaigns } = useRenderCampaigns()
 
@@ -43,5 +55,4 @@ export default function NostoProduct(props: {
     },
     [product, tagging?.selected_sku_id]
   )
-  return null
 }

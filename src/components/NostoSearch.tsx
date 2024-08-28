@@ -24,6 +24,14 @@ import { useRenderCampaigns, useNostoApi } from "../hooks"
  * @group Components
  */
 export default function NostoSearch(props: { query: string; placements?: string[] }) {
+  useNostoSearch(props)
+  return null
+}
+
+/**
+ * @group Hooks
+ */
+export function useNostoSearch(props: { query: string; placements?: string[] }) {
   const { query, placements } = props
   const { renderCampaigns } = useRenderCampaigns()
 
@@ -37,5 +45,4 @@ export default function NostoSearch(props: { query: string; placements?: string[
     },
     [query]
   )
-  return null
 }

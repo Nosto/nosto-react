@@ -13,6 +13,14 @@ import { snakeize } from "../utils/snakeize"
  * @group Essential Functions
  */
 export default function NostoSession(props?: { cart?: Cart; customer?: Customer }) {
+  useNostoSession(props)
+  return null
+}
+
+/**
+ * @group Hooks
+ */
+export function useNostoSession(props?: { cart?: Cart; customer?: Customer }) {
   const { cart, customer } = props ?? {}
   const { clientScriptLoaded } = useNostoContext()
 
@@ -33,5 +41,4 @@ export default function NostoSession(props?: { cart?: Cart; customer?: Customer 
     }
   }, [clientScriptLoaded, cart, customer])
 
-  return <></>
 }

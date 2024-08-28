@@ -20,6 +20,14 @@ import { useRenderCampaigns, useNostoApi } from "../hooks"
  * @group Components
  */
 export default function NostoOther(props: { placements?: string[] }) {
+  useNostoOther(props)
+  return null
+}
+
+/**
+ * @group Hooks
+ */
+export function useNostoOther(props: { placements?: string[] }) {
   const { renderCampaigns } = useRenderCampaigns()
 
   useNostoApi(
@@ -30,5 +38,4 @@ export default function NostoOther(props: { placements?: string[] }) {
         .load()
       renderCampaigns(data)
     })
-  return null
 }

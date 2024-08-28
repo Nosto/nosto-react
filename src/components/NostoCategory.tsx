@@ -23,6 +23,14 @@ import { useNostoApi, useRenderCampaigns } from "../hooks"
  * @group Components
  */
 export default function NostoCategory(props: { category: string; placements?: string[] }) {
+  useNostoCategory(props)
+  return null
+}
+
+/**
+ * @group Hooks
+ */
+export function useNostoCategory(props: { category: string; placements?: string[] }) {
   const { category, placements } = props
   const { renderCampaigns } = useRenderCampaigns()
 
@@ -36,5 +44,4 @@ export default function NostoCategory(props: { category: string; placements?: st
     },
     [category]
   )
-  return null
 }

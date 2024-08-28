@@ -28,6 +28,8 @@ export default function NostoCategory(props: { category: string; placements?: st
 }
 
 /**
+ * You can personalise your category and collection pages by using the useNostoCategory hook.
+ * 
  * @group Hooks
  */
 export function useNostoCategory(props: { category: string; placements?: string[] }) {

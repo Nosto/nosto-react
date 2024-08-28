@@ -25,6 +25,8 @@ export default function NostoCheckout(props: { placements?: string[] }) {
 }
 
 /**
+ * You can personalise your cart and checkout pages by using the useNostoCheckout hook.
+ * 
  * @group Hooks
  */
 export function useNostoCheckout(props: { placements?: string[] }) {

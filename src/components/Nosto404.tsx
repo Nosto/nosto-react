@@ -26,6 +26,8 @@ export default function Nosto404(props: { placements?: string[] }) {
 }
 
 /**
+ * You can personalise your cart and checkout pages by using the `useNosto404` hook.
+ * 
  * @group Hooks
  */
 export function useNosto404(props: { placements?: string[] }) {

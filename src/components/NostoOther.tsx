@@ -25,6 +25,8 @@ export default function NostoOther(props: { placements?: string[] }) {
 }
 
 /**
+ * You can personalise your miscellaneous pages by using the useNostoOther hook.
+ * 
  * @group Hooks
  */
 export function useNostoOther(props: { placements?: string[] }) {

@@ -27,6 +27,8 @@ export default function NostoOrder(props: { order: Order, placements?: string[] 
 }
 
 /**
+ * You can personalise your order-confirmation/thank-you page by using the `useNostoOrder` hook.
+ * 
  * @group Hooks
  */
 export function useNostoOrder(props: { order: Order, placements?: string[] }) {

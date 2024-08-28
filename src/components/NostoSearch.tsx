@@ -29,6 +29,8 @@ export default function NostoSearch(props: { query: string; placements?: string[
 }
 
 /**
+ * You can personalise your search pages by using the useNostoSearch hook.
+ * 
  * @group Hooks
  */
 export function useNostoSearch(props: { query: string; placements?: string[] }) {

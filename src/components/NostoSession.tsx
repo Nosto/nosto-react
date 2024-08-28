@@ -18,6 +18,8 @@ export default function NostoSession(props?: { cart?: Cart; customer?: Customer 
 }
 
 /**
+ * Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change.
+ * 
  * @group Hooks
  */
 export function useNostoSession(props?: { cart?: Cart; customer?: Customer }) {

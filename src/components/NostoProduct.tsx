@@ -35,6 +35,8 @@ export default function NostoProduct(props: {
 }
 
 /**
+ * You can personalise your product pages by using the useNostoProduct hook.
+ * 
  * @group Hooks
  */
 export function useNostoProduct(props: {

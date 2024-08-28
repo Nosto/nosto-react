@@ -29,6 +29,8 @@ export default function NostoHome(props: { placements?: string[] }) {
 }
 
 /**
+ * You can personalise your home page by using the useNostoHome hook.
+ * 
  * @group Hooks
  */
 export function useNostoHome(props: { placements?: string[] }) {

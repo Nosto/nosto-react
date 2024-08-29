@@ -1,16 +1,16 @@
-import { useEffect, useRef, useMemo } from "react"
+import { useEffect, useRef, useMemo, type EffectCallback, type DependencyList } from "react"
 import { deepCompare } from "../utils/compare"
 
 export function useDeepCompareEffect(
-  callback: Parameters<typeof useEffect>[0],
-  dependencies: Parameters<typeof useEffect>[1]
-): ReturnType<typeof useEffect> {
+  callback: EffectCallback,
+  dependencies: DependencyList
+) {
   return useEffect(callback, useDeepCompareMemoize(dependencies))
 }
 
 function useDeepCompareMemoize<T>(value: T) {
-  const ref = useRef<T>(value);
-  const signalRef = useRef<number>(0)
+  const ref = useRef<T>(value)
+  const signalRef = useRef(0)
 
   if (!deepCompare(value, ref.current)) {
     ref.current = value

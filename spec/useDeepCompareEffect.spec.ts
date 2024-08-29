@@ -6,7 +6,7 @@ describe("useDeepCompareEffect", () => {
   it("should retrigger on changes", () => {
     const callback = vi.fn()
     const { rerender } = renderHook(
-      ({ value }) => useDeepCompareEffect(callback, [value]),
+      props => useDeepCompareEffect(callback, [props]),
       { initialProps: { value: 1 } }
     )
 

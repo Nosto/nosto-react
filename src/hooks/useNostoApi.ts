@@ -8,15 +8,12 @@ export function useNostoApi(
   deps?: DependencyList,
   flags?: { deep?: boolean }
 ): void {
-  const { clientScriptLoaded, currentVariation, responseMode } = useNostoContext()
+  const { clientScriptLoaded } = useNostoContext()
   const useEffectFn = flags?.deep ? useDeepCompareEffect : useEffect
 
   useEffectFn(() => {
     if (clientScriptLoaded) {
-      window.nostojs(api => {
-        api.defaultSession().setVariation(currentVariation!).setResponseMode(responseMode)
-        cb(api)
-      })
+      window.nostojs(cb)
     }
-  }, [clientScriptLoaded, currentVariation, responseMode, ...(deps ?? [])])
+  }, [clientScriptLoaded, ...(deps ?? [])])
 }

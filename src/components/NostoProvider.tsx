@@ -92,6 +92,12 @@ export default function NostoProvider(props: NostoProviderProps) {
 
   const { clientScriptLoaded } = useLoadClientScript(props)
 
+  if (clientScriptLoaded) {
+    window.nostojs(api => {
+      api.defaultSession().setVariation(currentVariation!).setResponseMode(responseMode)
+    })
+  }
+
   return (
     <NostoContext.Provider
       value={{

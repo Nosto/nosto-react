@@ -3,7 +3,6 @@ import { useRenderCampaigns } from "../src/hooks/useRenderCampaigns"
 import { renderHook } from "@testing-library/react"
 import { describe, beforeEach, it, expect, vi } from "vitest"
 import RecommendationComponent from "./renderer"
-import { ActionResponse } from "../src/types"
 import { ReactNode } from "react"
 import { NostoContext } from "../src/context"
 
@@ -31,7 +30,6 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns(), { wrapper: Wrapper })
 
     act(() => {
-      // @ts-expect-error type mismatch of partial
       result.current.renderCampaigns(jsonMockData())
     })
 
@@ -43,8 +41,7 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns())
 
     expect(() => {
-      // @ts-expect-error type mismatch of partial
-      result.current.renderCampaigns(htmlMockData)
+      result.current.renderCampaigns(htmlMockData())
     }).toThrow("Nosto has not yet been initialized")
   })
 
@@ -72,13 +69,20 @@ describe("useRenderCampaigns", () => {
     window.nostojs = cb => cb(mockApi)
 
     act(() => {
-      // @ts-expect-error type mismatch of partial
       result.current.renderCampaigns(htmlMockData())
     })
 
     expect(mockApi.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockData().recommendations)
   })
 })
+
+const baseResponse = {
+  campaigns: {
+    recommendations: {},
+    content: {}
+  },
+  recommendations: {}
+}
 
 function jsonCampaign(num: number) {
   return {
@@ -89,6 +93,7 @@ function jsonCampaign(num: number) {
 
 function jsonMockData() {
   return {
+    ...baseResponse,
     campaigns: {
       recommendations: {
         "frontpage-nosto-1": jsonCampaign(1),
@@ -96,14 +101,15 @@ function jsonMockData() {
       },
       content: {}
     }
-  } satisfies Partial<ActionResponse>
+  }
 }
 
 function htmlMockData() {
   return {
+    ...baseResponse,
     recommendations: {
       "frontpage-nosto-1": "<div>Campaign 1</div>",
       "frontpage-nosto-2": "<div>Campaign 2</div>",
     }
-  } satisfies Partial<ActionResponse>
+  }
 }

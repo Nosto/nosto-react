@@ -1,5 +1,5 @@
 import { test, expect } from "vitest"
-import { NostoCategory, NostoHome, NostoPlacement, NostoProduct, NostoProvider } from "../src"
+import { NostoPlacement, NostoProvider, useNostoCategory, useNostoHome, useNostoProduct } from "../src"
 import RecommendationComponent from "./renderer"
 import { Link, BrowserRouter, Route, Routes, useParams } from "react-router-dom"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
@@ -7,21 +7,21 @@ import { listenTo, WAIT_FOR_TIMEOUT } from "./utils"
 import { categoryEvent, frontEvent, productEvent } from "./events"
 
 function HomePage() {
+  useNostoHome()  
   return <>
     <NostoPlacement id="frontpage-nosto-1" />
     <NostoPlacement id="frontpage-nosto-3" />
     <NostoPlacement id="frontpage-nosto-4" />
-    <NostoHome />
     <Link to="/collections/hoodies">Hoodies</Link>
   </>    
 }
 
 function CategoryPage() {
   const { category } = useParams()
+  useNostoCategory({ category: category! })
   return <>
     <NostoPlacement id="categorypage-nosto-1" />
     <NostoPlacement id="categorypage-nosto-2" />
-    <NostoCategory category={category!} />
     <Link to="/products/123">Product 123</Link>
     <Link to="/products/234">Product 234</Link>
     <Link to="/">Home</Link>
@@ -30,11 +30,11 @@ function CategoryPage() {
 
 function ProductPage() {
   const { product } = useParams()
+  useNostoProduct({ product: product! })
   return <>
     <NostoPlacement id="productpage-nosto-1" />
     <NostoPlacement id="productpage-nosto-2" />
     <NostoPlacement id="productpage-nosto-3" />
-    <NostoProduct product={product!} />
     <Link to="/products/234">Product 234</Link>
     <Link to="/collections/hoodies">Hoodies</Link>
     <Link to="/">Home</Link>

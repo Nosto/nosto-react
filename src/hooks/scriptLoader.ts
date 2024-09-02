@@ -8,9 +8,9 @@ export default function scriptLoader(scriptSrc: string, options?: ScriptLoadOpti
     script.onerror = () => reject()
     Object.entries(options?.attributes ?? {}).forEach(([k, v]) => script.setAttribute(k, v))
     if (options?.position === "head") {
-      document.head.appendChild(script)    
+      document.head.appendChild(script)
     } else {
-      document.body.appendChild(script)    
+      document.body.appendChild(script)
     }
   })
 }
@@ -26,5 +26,5 @@ export type ScriptLoadOptions = {
   /**
    * Indicates the attributes of the script element
    */
-  attributes?: Record<string, string>    
-}  
+  attributes?: Record<string, string>
+}

@@ -6,7 +6,7 @@ import RecommendationComponent from "./renderer"
 
 describe("Nosto client script", () => {
   it("verify is not loaded twice", () => {
-    // @ts-expect-error dummy placeholder for Nosto iframe window scope  
+    // @ts-expect-error dummy placeholder for Nosto iframe window scope
     window.nosto = {}
 
     render(

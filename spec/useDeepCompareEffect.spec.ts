@@ -1,14 +1,13 @@
 import { describe, it, expect, vi } from "vitest"
 import { renderHook } from "@testing-library/react"
-import { useDeepCompareEffect } from "../src/hooks"
+import { useDeepCompareEffect } from "../src/hooks/useDeepCompareEffect"
 
 describe("useDeepCompareEffect", () => {
   it("should retrigger on changes", () => {
     const callback = vi.fn()
-    const { rerender } = renderHook(
-      props => useDeepCompareEffect(callback, [props]),
-      { initialProps: { value: 1 } }
-    )
+    const { rerender } = renderHook(props => useDeepCompareEffect(callback, [props]), {
+      initialProps: { value: 1 }
+    })
 
     expect(callback).toHaveBeenCalledTimes(1)
 

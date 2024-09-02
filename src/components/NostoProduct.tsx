@@ -1,14 +1,4 @@
-import { useRenderCampaigns, useNostoApi } from "../hooks"
-import { Product } from "../types"
-
-/**
- * @group Components
- */
-export type NostoProductProps = {
-  product: string
-  tagging?: Product
-  placements?: string[]
-}
+import { NostoProductProps, useNostoProduct } from "../hooks/useNostoProduct"
 
 /**
  * The NostoProduct component must be used to personalise the product page.
@@ -34,27 +24,7 @@ export type NostoProductProps = {
  *
  * @group Components
  */
-export default function NostoProduct(props: NostoProductProps) {
+export function NostoProduct(props: NostoProductProps) {
   useNostoProduct(props)
   return null
-}
-
-/**
- * You can personalise your product pages by using the useNostoProduct hook.
- * 
- * @group Hooks
- */
-export function useNostoProduct({ product, tagging, placements }: NostoProductProps) {
-  const { renderCampaigns } = useRenderCampaigns()
-
-  useNostoApi(
-    async (api) => {
-      const data = await api.defaultSession()
-        .viewProduct(tagging ?? product)
-        .setPlacements(placements || api.placements.getPlacements())
-        .load()
-      renderCampaigns(data)
-    },
-    [product, tagging?.selected_sku_id]
-  )
 }

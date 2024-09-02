@@ -21,21 +21,14 @@ function createEvent(event: Event): Event {
 
 export function frontEvent() {
   return createEvent({
-    elements: [
-      "frontpage-nosto-1",
-      "frontpage-nosto-3",
-      "frontpage-nosto-4",
-    ],
+    elements: ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"],
     page_type: "front"
   })
 }
 
 export function categoryEvent(category: string) {
   return createEvent({
-    elements: [
-      "categorypage-nosto-1",
-      "categorypage-nosto-2",
-    ],
+    elements: ["categorypage-nosto-1", "categorypage-nosto-2"],
     page_type: "category",
     categories: [category],
     url: `http://localhost/collections/${category}`
@@ -44,14 +37,8 @@ export function categoryEvent(category: string) {
 
 export function productEvent(product: string) {
   return createEvent({
-    elements: [
-      "productpage-nosto-1",
-      "productpage-nosto-2",
-      "productpage-nosto-3",
-    ],
-    events: [
-      ["vp", product],
-    ],
+    elements: ["productpage-nosto-1", "productpage-nosto-2", "productpage-nosto-3"],
+    events: [["vp", product]],
     page_type: "product",
     url: `http://localhost/products/${product}`
   })

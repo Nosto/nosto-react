@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest"
 import { renderHook } from "@testing-library/react"
-import { useLoadClientScript } from "../src/hooks"
+import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
 
@@ -25,7 +25,6 @@ function getScriptSources() {
 }
 
 describe("useLoadClientScript", () => {
-
   const testAccount = "shopify-11368366139"
 
   it("loads client script", async () => {
@@ -44,8 +43,9 @@ describe("useLoadClientScript", () => {
     await new Promise(window.nostojs)
 
     hook.rerender()
-    expect(customScriptLoader).toHaveBeenLastCalledWith(
-      `//connect.nosto.com/include/${testAccount}`, { attributes: {"nosto-client-script": ""}})
+    expect(customScriptLoader).toHaveBeenLastCalledWith(`//connect.nosto.com/include/${testAccount}`, {
+      attributes: { "nosto-client-script": "" }
+    })
   })
 
   it("set loaded state to true when client is loaded externally after", async () => {
@@ -82,12 +82,12 @@ describe("useLoadClientScript", () => {
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {
     const props = { account: testAccount, shopifyMarkets: { marketId: "123", language: "en" } }
-    const hook = renderHook(props => useLoadClientScript(props), { initialProps: props })    
+    const hook = renderHook(props => useLoadClientScript(props), { initialProps: props })
     expect(getScriptSources()).toEqual([
       `http://connect.nosto.com/script/shopify/market/nosto.js?merchant=${testAccount}&market=123&locale=en`
     ])
 
-    const existingScript = document.querySelector("[nosto-client-script]") 
+    const existingScript = document.querySelector("[nosto-client-script]")
     const nostoSandbox = document.querySelector("#nosto-sandbox")
 
     Object.assign(props.shopifyMarkets, { marketId: "234", language: "fr" })

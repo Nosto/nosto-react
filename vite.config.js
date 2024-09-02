@@ -19,11 +19,12 @@ export default defineConfig({
       fileName: format => `index.${format}.js`,
     },
     rollupOptions: {
-      external: ["react", "react-dom", "snakize", "react-dom/client"],
+      external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
         globals: {
           react: "React",
-          "react-dom/client": "ReactDOM",
+          "react/jsx-runtime": "react/jsx-runtime",
+          "react-dom": "ReactDOM"
         },
       },
     },

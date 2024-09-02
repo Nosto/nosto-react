@@ -1,7 +1,7 @@
 import { isValidElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
 import { useLoadClientScript } from "../hooks"
-import type { ReactElement } from "react"
+import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
 
 /**
@@ -23,7 +23,7 @@ export interface NostoProviderProps {
   /**
    * children
    */
-  children: ReactElement | ReactElement[]
+  children: ReactNode | ReactNode[]
   /**
    * Indicates if merchant uses multiple currencies
    */

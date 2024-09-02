@@ -4,6 +4,8 @@ import { ActionResponse, Recommendation } from "../types"
 import { useNostoContext } from "./useNostoContext"
 import { RecommendationComponent } from "../context"
 
+type CampaignData = Pick<ActionResponse, "campaigns" | "recommendations">
+
 // RecommendationComponent for client-side rendering:
 function RecommendationComponentWrapper(props: { 
     recommendationComponent: RecommendationComponent,
@@ -15,7 +17,7 @@ function RecommendationComponentWrapper(props: {
   })
 }
 
-function injectCampaigns(data: ActionResponse) {
+function injectCampaigns(data: CampaignData) {
   if (!window.nostojs) {
     throw new Error("Nosto has not yet been initialized")
   }
@@ -32,7 +34,7 @@ export function useRenderCampaigns() {
     return { renderCampaigns: injectCampaigns }
   }
 
-  function renderCampaigns(data: ActionResponse) {
+  function renderCampaigns(data: CampaignData) {
     // render recommendation component into placements:
     const recommendations = data.campaigns?.recommendations ?? {}
     for (const key in recommendations) {

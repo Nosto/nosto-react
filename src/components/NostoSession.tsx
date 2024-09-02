@@ -45,7 +45,6 @@ export function useNostoSession({ cart, customer }: NostoSessionProps = {}) {
       window.nostojs(api => {
         api
           .defaultSession()
-          .setResponseMode("HTML")
           .setCart(currentCart)
           .setCustomer(currentCustomer)
           .viewOther()

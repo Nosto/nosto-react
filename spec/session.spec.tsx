@@ -40,7 +40,7 @@ test("Session render", async () => {
         type: "loggedin"
       },
       events: [],
-      response_mode: "HTML",
+      response_mode: "JSON_ORIGINAL",
       url: "http://localhost/"
     },
     {

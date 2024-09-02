@@ -1,3 +1,5 @@
+import { ReactNode } from "react"
+import { NostoContext, NostoContextType } from "../src/context"
 import { NostoClient } from "../src/types"
 
 export const WAIT_FOR_TIMEOUT = 2000
@@ -11,4 +13,13 @@ export function listenTo(event: string) {
   }
   window.nostojs(api => api.listen(event, req => requests.push(req)))
   return requests
+}
+
+export function createWrapper(nostoContext: NostoContextType) {
+  return function Wrapper({ children }: { children: ReactNode }) {
+    return (
+      <NostoContext.Provider value={nostoContext}>
+        { children }
+    </NostoContext.Provider>)
+  }
 }

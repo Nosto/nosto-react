@@ -3,8 +3,7 @@ import { useRenderCampaigns } from "../src/hooks/useRenderCampaigns"
 import { renderHook } from "@testing-library/react"
 import { describe, beforeEach, it, expect, vi } from "vitest"
 import RecommendationComponent from "./renderer"
-import { ReactNode } from "react"
-import { NostoContext } from "../src/context"
+import { createWrapper } from "./utils"
 
 describe("useRenderCampaigns", () => {
 
@@ -15,19 +14,13 @@ describe("useRenderCampaigns", () => {
   })
 
   it("supports component rendering", async () => {
-    function Wrapper({ children }: { children: ReactNode }) {
-      return (
-        <NostoContext.Provider value={{
-            account: "dummy",
-            clientScriptLoaded: true, 
-            responseMode: "JSON_ORIGINAL", 
-            recommendationComponent: <RecommendationComponent /> 
-          }}>
-          { children }
-      </NostoContext.Provider>)
-    }
-
-    const { result } = renderHook(() => useRenderCampaigns(), { wrapper: Wrapper })
+    const wrapper = createWrapper({
+      account: "dummy",
+      clientScriptLoaded: true, 
+      responseMode: "JSON_ORIGINAL", 
+      recommendationComponent: <RecommendationComponent /> 
+    })
+    const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
     act(() => {
       result.current.renderCampaigns(jsonMockData())
@@ -46,19 +39,12 @@ describe("useRenderCampaigns", () => {
   })
 
   it("supports placement injection", async () => {
-    function Wrapper({ children }: { children: ReactNode }) {
-      return (
-        <NostoContext.Provider value={{
-          account: "dummy",
-          clientScriptLoaded: true,
-          responseMode: "HTML"
-        }}>
-          { children }
-        </NostoContext.Provider>
-      )
-    }
-
-    const { result } = renderHook(() => useRenderCampaigns(), { wrapper: Wrapper })
+    const wrapper = createWrapper({
+      account: "dummy",
+      clientScriptLoaded: true,
+      responseMode: "HTML"
+    })
+    const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
     const mockApi = {
       placements: {

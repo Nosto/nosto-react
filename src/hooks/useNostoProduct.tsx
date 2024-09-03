@@ -19,6 +19,10 @@ export type NostoProductProps = {
 export function useNostoProduct({ product, tagging, placements }: NostoProductProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
+  if (tagging && !tagging.product_id) {
+    throw new Error("The product object must contain a product_id property")
+  }
+
   useNostoApi(
     async api => {
       const data = await api

@@ -1,6 +1,6 @@
 import { test, expect } from "vitest"
-import { render, screen } from "@testing-library/react"
-import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"
+import { render, renderHook, screen } from "@testing-library/react"
+import { NostoProvider, NostoPlacement, NostoProduct, useNostoProduct } from "../src/index"
 import RecommendationComponent from "./renderer"
 import { waitForRecommendations } from "./utils"
 
@@ -21,4 +21,14 @@ test("Product page render", async () => {
   screen.getAllByTestId("recommendation-product-name").forEach(el => {
     expect(el.textContent?.trim().length).toBeGreaterThan(5)
   })
+})
+
+
+test("useNostoProduct validation", async () => {
+
+  const product = "7078777258043"
+  const tagging = {} as { product_id: string }
+
+  expect(() => renderHook(() => useNostoProduct({ product, tagging })))
+    .toThrowError("The product object must contain a product_id property")
 })

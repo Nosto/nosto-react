@@ -25,9 +25,7 @@ export function createWrapper(nostoContext: NostoContextType) {
 
 export async function waitForRecommendations(num: number) {
   await waitFor(
-    () => {
-      expect(screen.getAllByTestId("recommendation")).toHaveLength(num)
-    },
+    () => expect(screen.getAllByTestId("recommendation")).toHaveLength(num),
     { timeout: WAIT_FOR_TIMEOUT }
   )
 }

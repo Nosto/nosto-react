@@ -4,7 +4,7 @@ import { NostoClient } from "../src/types"
 import { screen, waitFor } from "@testing-library/react"
 import { expect } from "vitest"
 
-export const WAIT_FOR_TIMEOUT = 2000
+const WAIT_FOR_TIMEOUT = 2000
 
 export function listenTo(event: string) {
   const requests: unknown[] = []

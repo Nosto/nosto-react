@@ -2,12 +2,13 @@ import { snakeize } from "../utils/snakeize"
 import { Order } from "../types"
 import { useRenderCampaigns } from "./useRenderCampaigns"
 import { useNostoApi } from "./useNostoApi"
+import { ToCamelCase } from "../utils/types"
 
 /**
  * @group Hooks
  */
 export type NostoOrderProps = {
-  order: Order
+  order: Order | ToCamelCase<Order>
   placements?: string[]
 }
 

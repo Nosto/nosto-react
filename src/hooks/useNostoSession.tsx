@@ -4,15 +4,12 @@ import { ToCamelCase } from "../utils/types"
 import { useNostoContext } from "./useNostoContext"
 import { useDeepCompareEffect } from "./useDeepCompareEffect"
 
-type Cart = CartSnakeCase | ToCamelCase<CartSnakeCase>
-type Customer = CustomerSnakeCase | ToCamelCase<CustomerSnakeCase>
-
 /**
  * @group Hooks
  */
 export type NostoSessionProps = {
-  cart?: Cart
-  customer?: Customer
+  cart?: CartSnakeCase | ToCamelCase<CartSnakeCase>
+  customer?: CustomerSnakeCase | ToCamelCase<CustomerSnakeCase>
 }
 
 /**

@@ -3,7 +3,7 @@ import { test, expect } from "vitest"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"
 import RecommendationComponent from "./renderer"
-import { listenTo, WAIT_FOR_TIMEOUT } from "./utils"
+import { expectRecommendations, listenTo, waitForOptions } from "./utils"
 
 function ProductPage() {
   const productId = "7078777258043"
@@ -49,10 +49,8 @@ test("Product page with SKU id", async () => {
   )
 
   await waitFor(
-    () => {
-      expect(screen.getAllByTestId("recommendation")).toHaveLength(1)
-    },
-    { timeout: WAIT_FOR_TIMEOUT }
+    () => expectRecommendations(1),
+    waitForOptions
   )
 
   const requests = listenTo("prerequest")

@@ -2,7 +2,7 @@ import { test, expect } from "vitest"
 import { render, screen, waitFor } from "@testing-library/react"
 import { NostoProvider, Nosto404, NostoPlacement } from "../src/index"
 import RecommendationComponent from "./renderer"
-import { WAIT_FOR_TIMEOUT } from "./utils"
+import { expectRecommendations, waitForOptions } from "./utils"
 
 test("404 page render", async () => {
   render(
@@ -14,10 +14,8 @@ test("404 page render", async () => {
   )
 
   await waitFor(
-    () => {
-      expect(screen.getAllByTestId("recommendation")).toHaveLength(2)
-    },
-    { timeout: WAIT_FOR_TIMEOUT }
+    () => expectRecommendations(2),
+    waitForOptions
   )
 
   expect(screen.getAllByTestId("recommendation-product").length).toBeGreaterThanOrEqual(3)

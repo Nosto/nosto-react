@@ -6,7 +6,6 @@ import RecommendationComponent from "./renderer"
 import { createWrapper } from "./utils"
 
 describe("useRenderCampaigns", () => {
-
   beforeEach(() => {
     document.body.innerHTML = `
       <div id="frontpage-nosto-1"></div>
@@ -16,9 +15,9 @@ describe("useRenderCampaigns", () => {
   it("supports component rendering", async () => {
     const wrapper = createWrapper({
       account: "dummy",
-      clientScriptLoaded: true, 
-      responseMode: "JSON_ORIGINAL", 
-      recommendationComponent: <RecommendationComponent /> 
+      clientScriptLoaded: true,
+      responseMode: "JSON_ORIGINAL",
+      recommendationComponent: <RecommendationComponent />
     })
     const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
@@ -73,7 +72,7 @@ const baseResponse = {
 function jsonCampaign(num: number) {
   return {
     title: `Campaign ${num}`,
-    products: [ { name: `Product ${num}-1` }, { name: `Product ${num}-2` } ]
+    products: [{ name: `Product ${num}-1` }, { name: `Product ${num}-2` }]
   }
 }
 
@@ -95,7 +94,7 @@ function htmlMockData() {
     ...baseResponse,
     recommendations: {
       "frontpage-nosto-1": "<div>Campaign 1</div>",
-      "frontpage-nosto-2": "<div>Campaign 2</div>",
+      "frontpage-nosto-2": "<div>Campaign 2</div>"
     }
   }
 }

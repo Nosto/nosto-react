@@ -6,10 +6,7 @@ import { WAIT_FOR_TIMEOUT } from "./utils"
 
 test("Home page render", async () => {
   render(
-    <NostoProvider
-      account="shopify-11368366139"
-      recommendationComponent={<RecommendationComponent />}
-    >
+    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />}>
       <NostoPlacement id="frontpage-nosto-1" />
       <NostoPlacement id="frontpage-nosto-3" />
       <NostoPlacement id="frontpage-nosto-4" />
@@ -17,9 +14,12 @@ test("Home page render", async () => {
     </NostoProvider>
   )
 
-  await waitFor(() => {
-    expect(screen.getAllByTestId("recommendation")).toHaveLength(3)
-  }, { timeout: WAIT_FOR_TIMEOUT })
+  await waitFor(
+    () => {
+      expect(screen.getAllByTestId("recommendation")).toHaveLength(3)
+    },
+    { timeout: WAIT_FOR_TIMEOUT }
+  )
 
   expect(screen.getAllByTestId("recommendation-product").length).toBeGreaterThanOrEqual(3)
 

@@ -1,14 +1,4 @@
-import { Order } from "../types"
-import { useRenderCampaigns, useNostoApi } from "../hooks"
-import { snakeize } from "../utils/snakeize"
-
-/**
- * @group Components
- */
-export type NostoOrderProps = { 
-  order: Order
-  placements?: string[]
-}
+import { NostoOrderProps, useNostoOrder } from "../hooks/useNostoOrder"
 
 /**
  * You can personalise your order-confirmation/thank-you page by using the `NostoOrder` component.
@@ -29,28 +19,7 @@ export type NostoOrderProps = {
  *
  * @group Components
  */
-export default function NostoOrder(props: NostoOrderProps) {
+export function NostoOrder(props: NostoOrderProps) {
   useNostoOrder(props)
   return null
-}
-
-/**
- * You can personalise your order-confirmation/thank-you page by using the `useNostoOrder` hook.
- * 
- * @group Hooks
- */
-export function useNostoOrder({ order, placements }: NostoOrderProps) {
-  const { renderCampaigns } = useRenderCampaigns()
-
-  useNostoApi(
-    async (api) => {
-      const data = await api.defaultSession()
-        .addOrder(snakeize(order))
-        .setPlacements(placements || api.placements.getPlacements())
-        .load()
-      renderCampaigns(data)
-    },
-    [order],
-    { deep: true }
-  )
 }

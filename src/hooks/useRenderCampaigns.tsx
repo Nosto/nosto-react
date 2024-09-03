@@ -7,13 +7,13 @@ import { RecommendationComponent } from "../context"
 type CampaignData = Pick<ActionResponse, "campaigns" | "recommendations">
 
 // RecommendationComponent for client-side rendering:
-function RecommendationComponentWrapper(props: { 
-    recommendationComponent: RecommendationComponent,
-    nostoRecommendation: Recommendation }) {
-
+function RecommendationComponentWrapper(props: {
+  recommendationComponent: RecommendationComponent
+  nostoRecommendation: Recommendation
+}) {
   return cloneElement(props.recommendationComponent, {
     // eslint-disable-next-line react/prop-types
-    nostoRecommendation: props.nostoRecommendation,
+    nostoRecommendation: props.nostoRecommendation
   })
 }
 

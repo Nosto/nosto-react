@@ -7,7 +7,13 @@ import scriptLoaderFn from "./scriptLoader"
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript" | "scriptLoader">
 
 export function useLoadClientScript(props: NostoScriptProps) {
-  const { host = "connect.nosto.com", scriptLoader = scriptLoaderFn, account, shopifyMarkets, loadScript = true } = props
+  const {
+    host = "connect.nosto.com",
+    scriptLoader = scriptLoaderFn,
+    account,
+    shopifyMarkets,
+    loadScript = true
+  } = props
   const [clientScriptLoaded, setClientScriptLoaded] = useState(false)
 
   useEffect(() => {
@@ -49,8 +55,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
         existingScript?.parentNode?.removeChild(existingScript)
         nostoSandbox?.parentNode?.removeChild(nostoSandbox)
 
-        const urlPartial =
-          `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
+        const urlPartial = `/script/shopify/market/nosto.js?merchant=${account}&market=${marketId}&locale=${language.toLowerCase()}`
         injectScriptElement(urlPartial, { "nosto-language": language, "nosto-market-id": marketId })
       }
     }

@@ -1,9 +1,4 @@
-import { useNostoApi, useRenderCampaigns } from "../hooks"
-
-/**
- * @group Components
- */
-export type NostoCheckoutProps = { placements?: string[] }
+import { NostoCheckoutProps, useNostoCheckout } from "../hooks/useNostoCheckout"
 
 /**
  * You can personalise your cart and checkout pages by using the NostoCheckout component.
@@ -24,25 +19,7 @@ export type NostoCheckoutProps = { placements?: string[] }
  *
  * @group Components
  */
-export default function NostoCheckout(props: NostoCheckoutProps) {
+export function NostoCheckout(props: NostoCheckoutProps) {
   useNostoCheckout(props)
   return null
-}
-
-/**
- * You can personalise your cart and checkout pages by using the useNostoCheckout hook.
- * 
- * @group Hooks
- */
-export function useNostoCheckout(props?: NostoCheckoutProps) {
-  const { renderCampaigns } = useRenderCampaigns()
-
-  useNostoApi(
-    async (api) => {
-      const data = await api.defaultSession()
-        .viewCart()
-        .setPlacements(props?.placements || api.placements.getPlacements())
-        .load()
-      renderCampaigns(data)
-    })
 }

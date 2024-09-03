@@ -2,28 +2,28 @@ import { test, expect } from "vitest"
 import * as imports from "../src/index"
 
 test("module structure is stable", () => {
-  expect(Object.keys(imports)).toEqual([    
+  expect(Object.keys(imports).sort()).toEqual([
     "Nosto404",
-    "useNosto404",
-    "NostoOther",
-    "useNostoOther",
-    "NostoCheckout",
-    "useNostoCheckout",
-    "NostoProduct",
-    "useNostoProduct",
     "NostoCategory",
-    "useNostoCategory",
-    "NostoSearch",
-    "useNostoSearch",
-    "NostoOrder",
-    "useNostoOrder",
-    "NostoHome",
-    "useNostoHome",
-    "NostoPlacement",
-    "NostoProvider",
-    "NostoSession",
-    "useNostoSession",
+    "NostoCheckout",
     "NostoContext",
-    "useNostoContext"
-  ])    
+    "NostoHome",
+    "NostoOrder",
+    "NostoOther",
+    "NostoPlacement",
+    "NostoProduct",
+    "NostoProvider",
+    "NostoSearch",
+    "NostoSession",
+    "useNosto404",
+    "useNostoCategory",
+    "useNostoCheckout",
+    "useNostoContext",
+    "useNostoHome",
+    "useNostoOrder",
+    "useNostoOther",
+    "useNostoProduct",
+    "useNostoSearch",
+    "useNostoSession"
+  ])
 })

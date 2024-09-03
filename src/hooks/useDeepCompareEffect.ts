@@ -1,10 +1,7 @@
 import { useEffect, useRef, useMemo, type EffectCallback, type DependencyList } from "react"
 import { deepCompare } from "../utils/compare"
 
-export function useDeepCompareEffect(
-  callback: EffectCallback,
-  dependencies: DependencyList
-) {
+export function useDeepCompareEffect(callback: EffectCallback, dependencies: DependencyList) {
   return useEffect(callback, useDeepCompareMemoize(dependencies))
 }
 

@@ -1,12 +1,4 @@
-import { useRenderCampaigns, useNostoApi } from "../hooks"
-
-/**
- * @group Components
- */
-export type NostoSearchProps = {
-  query: string
-  placements?: string[]
-}
+import { NostoSearchProps, useNostoSearch } from "../hooks/useNostoSearch"
 
 /**
  * You can personalise your search pages by using the NostoSearch component.
@@ -31,27 +23,7 @@ export type NostoSearchProps = {
  *
  * @group Components
  */
-export default function NostoSearch(props: NostoSearchProps) {
+export function NostoSearch(props: NostoSearchProps) {
   useNostoSearch(props)
   return null
-}
-
-/**
- * You can personalise your search pages by using the useNostoSearch hook.
- * 
- * @group Hooks
- */
-export function useNostoSearch({ query, placements }: NostoSearchProps) {
-  const { renderCampaigns } = useRenderCampaigns()
-
-  useNostoApi(
-    async (api) => {
-      const data = await api.defaultSession()
-        .viewSearch(query)
-        .setPlacements(placements || api.placements.getPlacements())
-        .load()
-      renderCampaigns(data)
-    },
-    [query]
-  )
 }

@@ -1,18 +1,4 @@
-import { useNostoContext, useDeepCompareEffect } from "../hooks"
-import { Cart as CartSnakeCase, Customer as CustomerSnakeCase } from "../types"
-import { snakeize } from "../utils/snakeize"
-import { ToCamelCase } from "../utils/types"
-
-type Cart = CartSnakeCase | ToCamelCase<CartSnakeCase>
-type Customer = CustomerSnakeCase | ToCamelCase<CustomerSnakeCase>
-
-/**
- * @group Components
- */
-export type NostoSessionProps = {
-  cart?: Cart
-  customer?: Customer
-}
+import { NostoSessionProps, useNostoSession } from "../hooks/useNostoSession"
 
 /**
  * Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change.
@@ -24,33 +10,7 @@ export type NostoSessionProps = {
  *
  * @group Components
  */
-export default function NostoSession(props?: NostoSessionProps) {
+export function NostoSession(props?: NostoSessionProps) {
   useNostoSession(props)
   return null
-}
-
-/**
- * Nosto React requires that you pass it the details of current cart contents and the details of the currently logged-in customer, if any, on every route change.
- * 
- * @group Hooks
- */
-export function useNostoSession({ cart, customer }: NostoSessionProps = {}) {
-  const { clientScriptLoaded } = useNostoContext()
-
-  useDeepCompareEffect(() => {
-    const currentCart = cart ? snakeize(cart) : undefined
-    const currentCustomer = customer ? snakeize(customer) : undefined
-
-    if (clientScriptLoaded) {
-      window.nostojs(api => {
-        api
-          .defaultSession()
-          .setCart(currentCart)
-          .setCustomer(currentCustomer)
-          .viewOther()
-          .load({ skipPageViews: true })
-      })
-    }
-  }, [clientScriptLoaded, cart, customer])
-
 }

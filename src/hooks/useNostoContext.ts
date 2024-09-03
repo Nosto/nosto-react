@@ -7,6 +7,5 @@ import { NostoContext, NostoContextType } from "../context"
  * @group Essential Functions
  */
 export function useNostoContext(): NostoContextType {
-    return useContext(NostoContext)
-  }
-  
+  return useContext(NostoContext)
+}

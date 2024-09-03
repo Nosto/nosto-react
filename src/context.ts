@@ -28,4 +28,3 @@ export const NostoContext = createContext<NostoContextType>({
   responseMode: "HTML",
   clientScriptLoaded: false
 })
-

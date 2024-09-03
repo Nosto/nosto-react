@@ -1,8 +1,8 @@
 import { isValidElement } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
-import { useLoadClientScript } from "../hooks"
 import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
+import { useLoadClientScript } from "../hooks/useLoadClientScript"
 
 /**
  * @group Components
@@ -70,13 +70,8 @@ export interface NostoProviderProps {
  *
  * @group Components
  */
-export default function NostoProvider(props: NostoProviderProps) {
-  const {
-    account,
-    multiCurrency = false,
-    children,
-    recommendationComponent,
-  } = props
+export function NostoProvider(props: NostoProviderProps) {
+  const { account, multiCurrency = false, children, recommendationComponent } = props
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""

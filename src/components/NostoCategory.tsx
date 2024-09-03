@@ -1,12 +1,4 @@
-import { useNostoApi, useRenderCampaigns } from "../hooks"
-
-/**
- * @group Components
- */
-export type NostoCategoryProps = {
-  category: string
-  placements?: string[]
-}
+import { NostoCategoryProps, useNostoCategory } from "../hooks/useNostoCategory"
 
 /**
  * You can personalise your category and collection pages by using the NostoCategory component.
@@ -30,27 +22,7 @@ export type NostoCategoryProps = {
  *
  * @group Components
  */
-export default function NostoCategory(props: NostoCategoryProps) {
+export function NostoCategory(props: NostoCategoryProps) {
   useNostoCategory(props)
   return null
-}
-
-/**
- * You can personalise your category and collection pages by using the useNostoCategory hook.
- * 
- * @group Hooks
- */
-export function useNostoCategory({ category, placements }: NostoCategoryProps) {
-  const { renderCampaigns } = useRenderCampaigns()
-
-  useNostoApi(
-    async (api) => {
-      const data = await api.defaultSession()
-        .viewCategory(category)
-        .setPlacements(placements || api.placements.getPlacements())
-        .load()
-      renderCampaigns(data)
-    },
-    [category]
-  )
 }

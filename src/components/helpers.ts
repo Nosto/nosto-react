@@ -1,3 +1,3 @@
 export function isNostoLoaded() {
-  return typeof window.nosto !== "undefined"    
+  return typeof window.nosto !== "undefined"
 }

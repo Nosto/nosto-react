@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { test, expect } from "vitest"
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"
 import RecommendationComponent from "./renderer"
-import { listenTo, WAIT_FOR_TIMEOUT } from "./utils"
+import { listenTo, waitForRecommendations } from "./utils"
 
 function ProductPage() {
   const productId = "7078777258043"
@@ -48,13 +48,8 @@ test("Product page with SKU id", async () => {
     </NostoProvider>
   )
 
-  await waitFor(
-    () => {
-      expect(screen.getAllByTestId("recommendation")).toHaveLength(1)
-    },
-    { timeout: WAIT_FOR_TIMEOUT }
-  )
-
+  await waitForRecommendations(1)
+  
   const requests = listenTo("prerequest")
 
   expect(requests).toEqual([

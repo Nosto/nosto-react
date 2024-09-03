@@ -2,8 +2,8 @@ import { test, expect } from "vitest"
 import { NostoPlacement, NostoProvider, useNostoCategory, useNostoHome, useNostoProduct } from "../src"
 import RecommendationComponent from "./renderer"
 import { Link, BrowserRouter, Route, Routes, useParams } from "react-router-dom"
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { listenTo, WAIT_FOR_TIMEOUT } from "./utils"
+import { fireEvent, render, screen } from "@testing-library/react"
+import { listenTo, waitForRecommendations } from "./utils"
 import { categoryEvent, frontEvent, productEvent } from "./events"
 
 function HomePage() {
@@ -64,12 +64,7 @@ function Main() {
 test("navigation events", async () => {
   render(<Main />)
 
-  await waitFor(
-    () => {
-      expect(screen.getAllByTestId("recommendation")).toHaveLength(3)
-    },
-    { timeout: WAIT_FOR_TIMEOUT }
-  )
+  await waitForRecommendations(3)
 
   const requests = listenTo("prerequest")
 

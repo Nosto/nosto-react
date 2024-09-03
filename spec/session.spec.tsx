@@ -1,8 +1,8 @@
 import { test, expect } from "vitest"
-import { render, screen, waitFor } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import { NostoHome, NostoPlacement, NostoProvider, NostoSession } from "../src/index"
 import RecommendationComponent from "./renderer"
-import { listenTo, WAIT_FOR_TIMEOUT } from "./utils"
+import { listenTo, waitForRecommendations } from "./utils"
 
 test("Session render", async () => {
   const requests = listenTo("prerequest")
@@ -23,12 +23,7 @@ test("Session render", async () => {
     </NostoProvider>
   )
 
-  await waitFor(
-    () => {
-      expect(screen.getAllByTestId("recommendation")).toHaveLength(3)
-    },
-    { timeout: WAIT_FOR_TIMEOUT }
-  )
+  await waitForRecommendations(3)
 
   expect(requests).toEqual([
     {

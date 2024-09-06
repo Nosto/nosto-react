@@ -4,6 +4,7 @@ import { renderHook } from "@testing-library/react"
 import { describe, beforeEach, it, expect, vi } from "vitest"
 import RecommendationComponent from "./renderer"
 import { createWrapper } from "./utils"
+import { htmlMockDataForPage, jsonMockDataForPage } from "./mocks"
 
 describe("useRenderCampaigns", () => {
   beforeEach(() => {
@@ -22,7 +23,7 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
     act(() => {
-      result.current.renderCampaigns(jsonMockData())
+      result.current.renderCampaigns(jsonMockDataForPage("front"))
     })
 
     expect(document.getElementById("frontpage-nosto-1")!.innerHTML).not.toBe("")
@@ -33,7 +34,7 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns())
 
     expect(() => {
-      result.current.renderCampaigns(htmlMockData())
+      result.current.renderCampaigns(htmlMockDataForPage("front"))
     }).toThrow("Nosto has not yet been initialized")
   })
 
@@ -54,47 +55,9 @@ describe("useRenderCampaigns", () => {
     window.nostojs = cb => cb(mockApi)
 
     act(() => {
-      result.current.renderCampaigns(htmlMockData())
+      result.current.renderCampaigns(htmlMockDataForPage("front"))
     })
 
-    expect(mockApi.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockData().recommendations)
+    expect(mockApi.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockDataForPage("front").recommendations)
   })
 })
-
-const baseResponse = {
-  campaigns: {
-    recommendations: {},
-    content: {}
-  },
-  recommendations: {}
-}
-
-function jsonCampaign(num: number) {
-  return {
-    title: `Campaign ${num}`,
-    products: [{ name: `Product ${num}-1` }, { name: `Product ${num}-2` }]
-  }
-}
-
-function jsonMockData() {
-  return {
-    ...baseResponse,
-    campaigns: {
-      recommendations: {
-        "frontpage-nosto-1": jsonCampaign(1),
-        "frontpage-nosto-2": jsonCampaign(2)
-      },
-      content: {}
-    }
-  }
-}
-
-function htmlMockData() {
-  return {
-    ...baseResponse,
-    recommendations: {
-      "frontpage-nosto-1": "<div>Campaign 1</div>",
-      "frontpage-nosto-2": "<div>Campaign 2</div>"
-    }
-  }
-}

@@ -4,7 +4,8 @@ import { renderHook } from "@testing-library/react"
 import { describe, beforeEach, it, expect, vi } from "vitest"
 import RecommendationComponent from "./renderer"
 import { createWrapper } from "./utils"
-import { htmlMockDataForPage, jsonMockDataForPage } from "./mocks"
+import { htmlMockDataForPage, jsonMockData } from "./mocks/mock-data"
+import mockApi from "./mocks/mock-api"
 
 describe("useRenderCampaigns", () => {
   beforeEach(() => {
@@ -23,7 +24,7 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
     act(() => {
-      result.current.renderCampaigns(jsonMockDataForPage("front"))
+      result.current.renderCampaigns(jsonMockData(["frontpage-nosto-1", "frontpage-nosto-2"]))
     })
 
     expect(document.getElementById("frontpage-nosto-1")!.innerHTML).not.toBe("")
@@ -34,7 +35,7 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns())
 
     expect(() => {
-      result.current.renderCampaigns(htmlMockDataForPage("front"))
+      result.current.renderCampaigns(htmlMockDataForPage(["frontpage-nosto-1", "frontpage-nosto-2"]))
     }).toThrow("Nosto has not yet been initialized")
   })
 
@@ -46,18 +47,17 @@ describe("useRenderCampaigns", () => {
     })
     const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
-    const mockApi = {
-      placements: {
-        injectCampaigns: vi.fn()
-      }
-    }
+    const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
+
+    const mocked = mockApi("front", placements)
+
     // @ts-expect-error type mismatch of partial
-    window.nostojs = cb => cb(mockApi)
+    window.nostojs = cb => cb(mocked)
 
     act(() => {
-      result.current.renderCampaigns(htmlMockDataForPage("front"))
+      result.current.renderCampaigns(htmlMockDataForPage(placements))
     })
 
-    expect(mockApi.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockDataForPage("front").recommendations)
+    expect(mocked.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockDataForPage(placements).recommendations)
   })
 })

@@ -44,8 +44,7 @@ function ProductPage() {
 
 test("Product page with SKU id", async () => {
   const placements = ["productpage-nosto-1"]
-  const mocked = mockApi("product", placements)
-  // @ts-expect-error type mismatch of partial
+  const mocked = mockApi(placements)
   window.nostojs = cb => cb(mocked)
 
   render(

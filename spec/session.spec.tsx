@@ -2,13 +2,12 @@ import { test, expect } from "vitest"
 import { render } from "@testing-library/react"
 import { NostoHome, NostoPlacement, NostoProvider, NostoSession } from "../src/index"
 import RecommendationComponent from "./renderer"
-import { listenTo, waitForRecommendations } from "./utils"
+import { waitForRecommendations } from "./utils"
 import mockApi from "./mocks/mock-api"
 
 test("Session render", async () => {
   const placements = ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"]
-  const mocked = mockApi("front", placements)
-  // @ts-expect-error type mismatch of partial
+  const mocked = mockApi(placements)
   window.nostojs = cb => cb(mocked)
 
   const customer = {

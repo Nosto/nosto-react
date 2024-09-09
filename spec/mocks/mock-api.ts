@@ -1,128 +1,83 @@
 import { vi } from "vitest"
 import { jsonMockData } from "./mock-data"
 import { Product } from "../../src"
-import { Action, ActionResponse, Cart, Customer, Data, RenderMode } from "../../src/types"
+import { Action, Data, NostoClient, PageType, Session } from "../../src/types"
 
-type LoadAction = {
-  load: () => Promise<Partial<ActionResponse>>
-}
-
-type PlacementAction = {
-  setPlacements: (placements: string[]) => LoadAction
-}
-
-type SessionData = Partial<Data> & { responseMode: RenderMode }
-
-function normaliseProduct(data: Product | string) {
+function normalizeProduct(data: Product | string) {
   return typeof data === "string" ? { product_id: data } : data
 }
 
-function newAction(pageType: string, state: SessionData, placementAction: PlacementAction) {
-  switch (pageType) {
-    case "front": {
-      return {
-        viewFrontPage: () => {
-          state.pageType = "front"
-          return placementAction
-        }
-      }
+let latestActionData: Partial<Data>
+
+function newAction(data: Partial<Data>) {
+  latestActionData = data
+
+  return {
+    setPlacements(placements) {
+      data.elements = placements
+      return this
+    },
+    load() {
+      return Promise.resolve(jsonMockData(data.elements ?? []))
     }
-    case "product": {
-      return {
-        viewProduct: (product: Product | string) => {
-          state.pageType = "product"
-          state.products = [normaliseProduct(product)]
-          return placementAction
-        }
-      }
-    }
-    case "category": {
-      return {
-        viewCategory: (category: string) => {
-          state.pageType = "category"
-          state.categories = [category]
-          return placementAction
-        }
-      }
-    }
-    case "cart": {
-      return {
-        viewCart: () => {
-          state.pageType = "cart"
-          return placementAction
-        }
-      }
-    }
-    case "search": {
-      return {
-        viewSearch: (...searchTerms: string[]) => {
-          state.pageType = "search"
-          state.searchTerms = searchTerms
-          return placementAction
-        }
-      }
-    }
-    case "search": {
-      return {
-        viewSearch: (...searchTerms: string[]) => {
-          state.pageType = "search"
-          state.searchTerms = searchTerms
-          return placementAction
-        }
-      }
-    }
-    case "other": {
-      return {
-        viewOther: () => {
-          return placementAction
-        }
-      }
-    }
-    default: {
-    }
-  }
+  } as Action
 }
 
-export default function (pageType: string, placements: string[]) {
-  const data: SessionData = {
-    responseMode: "HTML"
+function newSession(placements: string[]) {
+  const data: Partial<Data> & { responseMode?: string} = {
+    elements: placements
   }
+
   return {
+    setVariation(variation) {
+      data.variation = variation
+      return this
+    },
+    setResponseMode(mode) {
+      data.responseMode = mode
+      return this
+    },
+    setCart(cart) {
+      data.cart = cart
+      return this
+    },
+    setCustomer(customer) {
+      data.customer = customer
+      return this
+    },
+    viewFrontPage() {
+      return newAction({ ...data, pageType: "front"})
+    },
+    viewProduct(product) {
+      return newAction({ ...data, pageType: "product", products: [normalizeProduct(product)] })
+    },
+    viewCategory(category) {
+      return newAction({ ...data, pageType: "category", categories: [category] })
+    },
+    viewSearch(search) {
+      return newAction({ ...data, pageType: "search", searchTerms: [search] })
+    },
+    viewCart() {
+      return newAction({ ...data, pageType: "cart" })
+    },
+    viewOther() {
+      return newAction({ ...data, pageType: "other" })
+    }
+  } as Session
+
+}
+
+export default function (placements: string[]) {
+  const session = newSession(placements)
+
+  return {
+    setAutoLoad: vi.fn(),
+    listen: vi.fn(),
     placements: {
       injectCampaigns: vi.fn(),
       getPlacements: () => placements
     },
-    defaultSession: () => ({
-      setVariation: (variation: string) => {
-        data.variation = variation
-        return {
-          setResponseMode: (responseMode: RenderMode) => {
-            data.responseMode = responseMode
-          }
-        }
-      },
-      setCart: (cart?: Cart) => {
-        data.cart = cart
-        return {
-          setCustomer: (customer: Customer) => {
-            data.customer = customer
-            return {
-              viewOther: () => ({
-                load: () => Promise.resolve(jsonMockData(placements))
-              })
-            }
-          }
-        }
-      },
-      ...newAction(pageType, data, {
-        setPlacements: (placements: string[]) => {
-          data.elements = placements
-          return {
-            load: () => Promise.resolve(jsonMockData(placements))
-          }
-        }
-      })
-    }),
-    getData: () => data
-  }
+    defaultSession: () => session,
+    getData: () =>  latestActionData,
+  } satisfies NostoClient & { getData: () => Partial<Data> }
 }

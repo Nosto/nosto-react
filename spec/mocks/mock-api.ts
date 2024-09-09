@@ -6,6 +6,13 @@ type ProductTagging = {
   selected_sku_id?: string
 }
 
+type Customer = {
+  email: string
+  first_name: string
+  last_name: string
+  type: string
+}
+
 type Data = {
   elements?: string[]
   responseMode: string
@@ -13,6 +20,9 @@ type Data = {
   pageType?: string
   products: ProductTagging[]
   categories?: string[]
+  cart?: unknown
+  customer?: Customer
+  searchTerms?: string[]
 }
 
 function normaliseProduct(data: ProductTagging | string) {
@@ -70,9 +80,54 @@ function getPageAction(pageType: string, placements: string[], state: Data) {
     }
     case "cart": {
       return {
-        viewCart: (category: string) => {
-          state.pageType = "category"
-          state.categories = [category]
+        viewCart: () => {
+          state.pageType = "cart"
+          return {
+            setPlacements: (placements: string[]) => {
+              state.elements = placements
+              return {
+                load: () => Promise.resolve(jsonMockData(placements))
+              }
+            }
+          }
+        }
+      }
+    }
+    case "search": {
+      return {
+        viewSearch: (...searchTerms: string[]) => {
+          state.pageType = "search"
+          state.searchTerms = searchTerms
+          return {
+            setPlacements: (placements: string[]) => {
+              state.elements = placements
+              return {
+                load: () => Promise.resolve(jsonMockData(placements))
+              }
+            }
+          }
+        }
+      }
+    }
+    case "search": {
+      return {
+        viewSearch: (...searchTerms: string[]) => {
+          state.pageType = "search"
+          state.searchTerms = searchTerms
+          return {
+            setPlacements: (placements: string[]) => {
+              state.elements = placements
+              return {
+                load: () => Promise.resolve(jsonMockData(placements))
+              }
+            }
+          }
+        }
+      }
+    }
+    case "other": {
+      return {
+        viewOther: () => {
           return {
             setPlacements: (placements: string[]) => {
               state.elements = placements
@@ -105,6 +160,19 @@ export default function (pageType: string, placements: string[]) {
         return {
           setResponseMode: (responseMode: string) => {
             data.responseMode = responseMode
+          }
+        }
+      },
+      setCart: (cart: unknown) => {
+        data.cart = cart
+        return {
+          setCustomer: (customer: Customer) => {
+            data.customer = customer
+            return {
+              viewOther: () => ({
+                load: () => Promise.resolve(jsonMockData(placements))
+              })
+            }
           }
         }
       },

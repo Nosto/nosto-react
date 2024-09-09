@@ -10,6 +10,7 @@ test("Category page render", async () => {
   const mocked = mockApi("category", placements)
   // @ts-expect-error type mismatch of partial
   window.nostojs = cb => cb(mocked)
+
   render(
     <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>
       <NostoPlacement id="categorypage-nosto-1" />
@@ -20,7 +21,7 @@ test("Category page render", async () => {
 
   await waitForRecommendations(2)
 
-  expect(screen.getAllByTestId("recommendation-product").length).toBeGreaterThanOrEqual(4)
+  expect(screen.getAllByTestId("recommendation-product").length).toBe(4)
 
   const productIds = screen.getAllByTestId("recommendation-product-name").map(el => el.textContent?.trim())
 

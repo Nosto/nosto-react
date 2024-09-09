@@ -21,7 +21,7 @@ test("Product page render", async () => {
 
   await waitForRecommendations(2)
 
-  expect(screen.getAllByTestId("recommendation-product").length).toEqual(4)
+  expect(screen.getAllByTestId("recommendation-product").length).toBe(4)
 
   const productIds = screen.getAllByTestId("recommendation-product-name").map(el => el.textContent?.trim())
 

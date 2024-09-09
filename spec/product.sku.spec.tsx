@@ -3,7 +3,7 @@ import { test, expect } from "vitest"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"
 import RecommendationComponent from "./renderer"
-import { listenTo, waitForRecommendations } from "./utils"
+import { waitForRecommendations } from "./utils"
 import mockApi from "./mocks/mock-api"
 
 function ProductPage() {

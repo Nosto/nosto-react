@@ -22,9 +22,8 @@ test("Category page render", async () => {
 
   expect(screen.getAllByTestId("recommendation-product").length).toBe(4)
 
-  const productIds = screen.getAllByTestId("recommendation-product-name").map(el => el.textContent?.trim())
-
-  expect(productIds).toEqual(["Product 1-1", "Product 1-2", "Product 2-1", "Product 2-2"])
+  const productNames = screen.getAllByTestId("recommendation-product-name").map(el => el.textContent?.trim())
+  expect(productNames).toEqual(["Product 1-1", "Product 1-2", "Product 2-1", "Product 2-2"])
 
   expect(mocked.getData()).toEqual({
     elements: placements,

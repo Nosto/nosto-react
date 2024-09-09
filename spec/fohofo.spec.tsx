@@ -3,10 +3,15 @@ import { render, screen } from "@testing-library/react"
 import { NostoProvider, Nosto404, NostoPlacement } from "../src/index"
 import RecommendationComponent from "./renderer"
 import { waitForRecommendations } from "./utils"
+import mockApi from "./mocks/mock-api"
 
 test("404 page render", async () => {
+  const placements = ["notfound-nosto-1", "notfound-nosto-2"]
+  const mocked = mockApi(placements)
+  window.nostojs = cb => cb(mocked)
+
   render(
-    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />}>
+    <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>
       <NostoPlacement id="notfound-nosto-1" />
       <NostoPlacement id="notfound-nosto-2" />
       <Nosto404 />
@@ -17,7 +22,13 @@ test("404 page render", async () => {
 
   expect(screen.getAllByTestId("recommendation-product").length).toBeGreaterThanOrEqual(3)
 
-  screen.getAllByTestId("recommendation-product-name").forEach(el => {
-    expect(el.textContent?.trim().length).toBeGreaterThan(5)
+  const productNames = screen.getAllByTestId("recommendation-product-name").map(el => el.textContent?.trim())
+  expect(productNames).toEqual(["Product 1-1", "Product 1-2", "Product 2-1", "Product 2-2"])
+
+  expect(mocked.getData()).toEqual({
+    elements: placements,
+    responseMode: "JSON_ORIGINAL",
+    variation: "",
+    pageType: "notfound"
   })
 })

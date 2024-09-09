@@ -1,64 +1,38 @@
 import { vi } from "vitest"
 import { jsonMockData } from "./mock-data"
+import { Product } from "../../src"
+import { Action, ActionResponse, Cart, Customer, Data, RenderMode } from "../../src/types"
 
-type ProductTagging = {
-  product_id: string
-  selected_sku_id?: string
+type LoadAction = {
+  load: () => Promise<Partial<ActionResponse>>
 }
 
-type Customer = {
-  email: string
-  first_name: string
-  last_name: string
-  type: string
+type PlacementAction = {
+  setPlacements: (placements: string[]) => LoadAction
 }
 
-type Data = {
-  elements?: string[]
-  responseMode: string
-  variation?: string
-  pageType?: string
-  products: ProductTagging[]
-  categories?: string[]
-  cart?: unknown
-  customer?: Customer
-  searchTerms?: string[]
-}
+type SessionData = Partial<Data> & { responseMode: RenderMode }
 
-function normaliseProduct(data: ProductTagging | string) {
+function normaliseProduct(data: Product | string) {
   return typeof data === "string" ? { product_id: data } : data
 }
 
-function getPageAction(pageType: string, placements: string[], state: Data) {
+function newAction(pageType: string, state: SessionData, placementAction: PlacementAction) {
   switch (pageType) {
     case "front": {
       return {
         viewFrontPage: () => {
           state.pageType = "front"
-          return {
-            setPlacements: (placements: string[]) => {
-              state.elements = placements
-              return {
-                load: () => Promise.resolve(jsonMockData(placements))
-              }
-            }
-          }
+          return placementAction
         }
       }
     }
     case "product": {
       return {
-        viewProduct: (product: ProductTagging | string) => {
+        viewProduct: (product: Product | string) => {
           state.pageType = "product"
           state.products = [normaliseProduct(product)]
-          return {
-            setPlacements: (placements: string[]) => {
-              state.elements = placements
-              return {
-                load: () => Promise.resolve(jsonMockData(placements))
-              }
-            }
-          }
+          return placementAction
         }
       }
     }
@@ -67,14 +41,7 @@ function getPageAction(pageType: string, placements: string[], state: Data) {
         viewCategory: (category: string) => {
           state.pageType = "category"
           state.categories = [category]
-          return {
-            setPlacements: (placements: string[]) => {
-              state.elements = placements
-              return {
-                load: () => Promise.resolve(jsonMockData(placements))
-              }
-            }
-          }
+          return placementAction
         }
       }
     }
@@ -82,14 +49,7 @@ function getPageAction(pageType: string, placements: string[], state: Data) {
       return {
         viewCart: () => {
           state.pageType = "cart"
-          return {
-            setPlacements: (placements: string[]) => {
-              state.elements = placements
-              return {
-                load: () => Promise.resolve(jsonMockData(placements))
-              }
-            }
-          }
+          return placementAction
         }
       }
     }
@@ -98,14 +58,7 @@ function getPageAction(pageType: string, placements: string[], state: Data) {
         viewSearch: (...searchTerms: string[]) => {
           state.pageType = "search"
           state.searchTerms = searchTerms
-          return {
-            setPlacements: (placements: string[]) => {
-              state.elements = placements
-              return {
-                load: () => Promise.resolve(jsonMockData(placements))
-              }
-            }
-          }
+          return placementAction
         }
       }
     }
@@ -114,28 +67,14 @@ function getPageAction(pageType: string, placements: string[], state: Data) {
         viewSearch: (...searchTerms: string[]) => {
           state.pageType = "search"
           state.searchTerms = searchTerms
-          return {
-            setPlacements: (placements: string[]) => {
-              state.elements = placements
-              return {
-                load: () => Promise.resolve(jsonMockData(placements))
-              }
-            }
-          }
+          return placementAction
         }
       }
     }
     case "other": {
       return {
         viewOther: () => {
-          return {
-            setPlacements: (placements: string[]) => {
-              state.elements = placements
-              return {
-                load: () => Promise.resolve(jsonMockData(placements))
-              }
-            }
-          }
+          return placementAction
         }
       }
     }
@@ -145,9 +84,8 @@ function getPageAction(pageType: string, placements: string[], state: Data) {
 }
 
 export default function (pageType: string, placements: string[]) {
-  const data: Data = {
-    responseMode: "HTML",
-    products: []
+  const data: SessionData = {
+    responseMode: "HTML"
   }
   return {
     placements: {
@@ -158,12 +96,12 @@ export default function (pageType: string, placements: string[]) {
       setVariation: (variation: string) => {
         data.variation = variation
         return {
-          setResponseMode: (responseMode: string) => {
+          setResponseMode: (responseMode: RenderMode) => {
             data.responseMode = responseMode
           }
         }
       },
-      setCart: (cart: unknown) => {
+      setCart: (cart?: Cart) => {
         data.cart = cart
         return {
           setCustomer: (customer: Customer) => {
@@ -176,7 +114,14 @@ export default function (pageType: string, placements: string[]) {
           }
         }
       },
-      ...getPageAction(pageType, placements, data)
+      ...newAction(pageType, data, {
+        setPlacements: (placements: string[]) => {
+          data.elements = placements
+          return {
+            load: () => Promise.resolve(jsonMockData(placements))
+          }
+        }
+      })
     }),
     getData: () => data
   }

@@ -32,7 +32,6 @@ test("Search page render", async () => {
     responseMode: "JSON_ORIGINAL",
     variation: "",
     pageType: "search",
-    searchTerms: [""],
-    products: []
+    searchTerms: [""]
   })
 })

@@ -32,7 +32,6 @@ test("Category page render", async () => {
     responseMode: "JSON_ORIGINAL",
     variation: "",
     pageType: "category",
-    products: [],
     categories: ["Rings"]
   })
 })

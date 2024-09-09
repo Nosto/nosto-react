@@ -36,7 +36,6 @@ test("Checkout page render", async () => {
     elements: placements,
     responseMode: "JSON_ORIGINAL",
     variation: "",
-    pageType: "cart",
-    products: []
+    pageType: "cart"
   })
 })

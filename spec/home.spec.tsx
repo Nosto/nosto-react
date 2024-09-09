@@ -31,7 +31,6 @@ test("Home page render", async () => {
     elements: placements,
     responseMode: "JSON_ORIGINAL",
     variation: "",
-    pageType: "front",
-    products: []
+    pageType: "front"
   })
 })

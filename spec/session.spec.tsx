@@ -39,7 +39,6 @@ test("Session render", async () => {
     elements: ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"],
     pageType: "front",
     variation: "",
-    responseMode: "JSON_ORIGINAL",
-    products: []
+    responseMode: "JSON_ORIGINAL"
   })
 })

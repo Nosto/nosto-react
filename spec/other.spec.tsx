@@ -41,7 +41,6 @@ test("Other page render", async () => {
   expect(mocked.getData()).toEqual({
     elements: placements,
     responseMode: "JSON_ORIGINAL",
-    variation: "",
-    products: []
+    variation: ""
   })
 })

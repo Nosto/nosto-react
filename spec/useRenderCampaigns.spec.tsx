@@ -49,9 +49,7 @@ describe("useRenderCampaigns", () => {
 
     const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
 
-    const mocked = mockApi("front", placements)
-
-    // @ts-expect-error type mismatch of partial
+    const mocked = mockApi(placements)
     window.nostojs = cb => cb(mocked)
 
     act(() => {

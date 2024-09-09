@@ -7,8 +7,7 @@ import mockApi from "./mocks/mock-api"
 
 test("Other page render", async () => {
   const placements = ["cartpage-nosto-1", "categorypage-nosto-1", "productpage-nosto-1", "productpage-nosto-2"]
-  const mocked = mockApi("other", placements)
-  // @ts-expect-error type mismatch of partial
+  const mocked = mockApi(placements)
   window.nostojs = cb => cb(mocked)
 
   render(
@@ -41,6 +40,7 @@ test("Other page render", async () => {
   expect(mocked.getData()).toEqual({
     elements: placements,
     responseMode: "JSON_ORIGINAL",
+    pageType: "other",
     variation: ""
   })
 })

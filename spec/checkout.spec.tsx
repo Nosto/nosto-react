@@ -7,9 +7,8 @@ import mockApi from "./mocks/mock-api"
 
 test("Checkout page render", async () => {
   const placements = ["cartpage-nosto-1", "cartpage-nosto-2", "cartpage-nosto-3"]
-  const mocked = mockApi("cart", placements)
-  // @ts-expect-error type mismatch of partial
-  window.nostojs = cb => cb(mocked)
+  const mocked = mockApi(placements)
+   window.nostojs = cb => cb(mocked)
 
   render(
     <NostoProvider

@@ -4,9 +4,10 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { NostoProvider, NostoPlacement, NostoProduct } from "../src/index"
 import RecommendationComponent from "./renderer"
 import { listenTo, waitForRecommendations } from "./utils"
+import mockApi from "./mocks/mock-api"
 
 function ProductPage() {
-  const productId = "7078777258043"
+  const productId = "dummy-product-id"
 
   // variant data
   const [color, setColor] = useState("red")
@@ -42,54 +43,46 @@ function ProductPage() {
 }
 
 test("Product page with SKU id", async () => {
+  const placements = ["productpage-nosto-1"]
+  const mocked = mockApi("product", placements)
+  // @ts-expect-error type mismatch of partial
+  window.nostojs = cb => cb(mocked)
+
   render(
-    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />}>
+    <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>
       <ProductPage />
     </NostoProvider>
   )
 
   await waitForRecommendations(1)
-  
-  const requests = listenTo("prerequest")
 
-  expect(requests).toEqual([
-    {
-      cart_popup: false,
-      elements: ["productpage-nosto-1"],
-      events: [["vp", "7078777258043", undefined, undefined, "red-M"]],
-      page_type: "product",
-      response_mode: "JSON_ORIGINAL",
-      url: "http://localhost/"
-    }
-  ])
-  requests.length = 0
+  expect(mocked.getData()).toEqual({
+    elements: placements,
+    responseMode: "JSON_ORIGINAL",
+    variation: "",
+    pageType: "product",
+    products: [{ product_id: "dummy-product-id", selected_sku_id: "red-M" }]
+  })
 
   // change color
   fireEvent.change(screen.getByTestId("color"), { target: { value: "blue" } })
 
-  expect(requests).toEqual([
-    {
-      cart_popup: false,
-      elements: ["productpage-nosto-1"],
-      events: [["vp", "7078777258043", undefined, undefined, "blue-M"]],
-      page_type: "product",
-      response_mode: "JSON_ORIGINAL",
-      url: "http://localhost/"
-    }
-  ])
-  requests.length = 0
+  expect(mocked.getData()).toEqual({
+    elements: placements,
+    responseMode: "JSON_ORIGINAL",
+    variation: "",
+    pageType: "product",
+    products: [{ product_id: "dummy-product-id", selected_sku_id: "blue-M" }]
+  })
 
   // change size
   fireEvent.change(screen.getByTestId("size"), { target: { value: "L" } })
 
-  expect(requests).toEqual([
-    {
-      cart_popup: false,
-      elements: ["productpage-nosto-1"],
-      events: [["vp", "7078777258043", undefined, undefined, "blue-L"]],
-      page_type: "product",
-      response_mode: "JSON_ORIGINAL",
-      url: "http://localhost/"
-    }
-  ])
+  expect(mocked.getData()).toEqual({
+    elements: placements,
+    responseMode: "JSON_ORIGINAL",
+    variation: "",
+    pageType: "product",
+    products: [{ product_id: "dummy-product-id", selected_sku_id: "blue-L" }]
+  })
 })

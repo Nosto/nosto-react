@@ -3,9 +3,13 @@ import { render } from "@testing-library/react"
 import { NostoHome, NostoPlacement, NostoProvider, NostoSession } from "../src/index"
 import RecommendationComponent from "./renderer"
 import { listenTo, waitForRecommendations } from "./utils"
+import mockApi from "./mocks/mock-api"
 
 test("Session render", async () => {
-  const requests = listenTo("prerequest")
+  const placements = ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"]
+  const mocked = mockApi("front", placements)
+  // @ts-expect-error type mismatch of partial
+  window.nostojs = cb => cb(mocked)
 
   const customer = {
     firstName: "John",
@@ -14,7 +18,7 @@ test("Session render", async () => {
   }
 
   render(
-    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />}>
+    <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>
       <NostoPlacement id="frontpage-nosto-1" />
       <NostoPlacement id="frontpage-nosto-3" />
       <NostoPlacement id="frontpage-nosto-4" />
@@ -25,32 +29,16 @@ test("Session render", async () => {
 
   await waitForRecommendations(3)
 
-  expect(requests).toEqual([
-    {
-      cart_popup: false,
-      customer: {
-        email: "john.doe@acme.com",
-        first_name: "John",
-        last_name: "Doe",
-        type: "loggedin"
-      },
-      events: [],
-      response_mode: "JSON_ORIGINAL",
-      url: "http://localhost/"
+  expect(mocked.getData()).toEqual({
+    cart: undefined,
+    customer: {
+      email: "john.doe@acme.com",
+      first_name: "John",
+      last_name: "Doe"
     },
-    {
-      cart_popup: false,
-      customer: {
-        email: "john.doe@acme.com",
-        first_name: "John",
-        last_name: "Doe",
-        type: "loggedin"
-      },
-      elements: ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"],
-      events: [],
-      page_type: "front",
-      response_mode: "JSON_ORIGINAL",
-      url: "http://localhost/"
-    }
-  ])
+    elements: ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"],
+    pageType: "front",
+    variation: "",
+    responseMode: "JSON_ORIGINAL"
+  })
 })

@@ -4,6 +4,8 @@ import { renderHook } from "@testing-library/react"
 import { describe, beforeEach, it, expect, vi } from "vitest"
 import RecommendationComponent from "./renderer"
 import { createWrapper } from "./utils"
+import { htmlMockDataForPage, jsonMockData } from "./mocks/mock-data"
+import mockApi from "./mocks/mock-api"
 
 describe("useRenderCampaigns", () => {
   beforeEach(() => {
@@ -22,7 +24,7 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
     act(() => {
-      result.current.renderCampaigns(jsonMockData())
+      result.current.renderCampaigns(jsonMockData(["frontpage-nosto-1", "frontpage-nosto-2"]))
     })
 
     expect(document.getElementById("frontpage-nosto-1")!.innerHTML).not.toBe("")
@@ -33,7 +35,7 @@ describe("useRenderCampaigns", () => {
     const { result } = renderHook(() => useRenderCampaigns())
 
     expect(() => {
-      result.current.renderCampaigns(htmlMockData())
+      result.current.renderCampaigns(htmlMockDataForPage(["frontpage-nosto-1", "frontpage-nosto-2"]))
     }).toThrow("Nosto has not yet been initialized")
   })
 
@@ -45,56 +47,17 @@ describe("useRenderCampaigns", () => {
     })
     const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
 
-    const mockApi = {
-      placements: {
-        injectCampaigns: vi.fn()
-      }
-    }
+    const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
+
+    const mocked = mockApi("front", placements)
+
     // @ts-expect-error type mismatch of partial
-    window.nostojs = cb => cb(mockApi)
+    window.nostojs = cb => cb(mocked)
 
     act(() => {
-      result.current.renderCampaigns(htmlMockData())
+      result.current.renderCampaigns(htmlMockDataForPage(placements))
     })
 
-    expect(mockApi.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockData().recommendations)
+    expect(mocked.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockDataForPage(placements).recommendations)
   })
 })
-
-const baseResponse = {
-  campaigns: {
-    recommendations: {},
-    content: {}
-  },
-  recommendations: {}
-}
-
-function jsonCampaign(num: number) {
-  return {
-    title: `Campaign ${num}`,
-    products: [{ name: `Product ${num}-1` }, { name: `Product ${num}-2` }]
-  }
-}
-
-function jsonMockData() {
-  return {
-    ...baseResponse,
-    campaigns: {
-      recommendations: {
-        "frontpage-nosto-1": jsonCampaign(1),
-        "frontpage-nosto-2": jsonCampaign(2)
-      },
-      content: {}
-    }
-  }
-}
-
-function htmlMockData() {
-  return {
-    ...baseResponse,
-    recommendations: {
-      "frontpage-nosto-1": "<div>Campaign 1</div>",
-      "frontpage-nosto-2": "<div>Campaign 2</div>"
-    }
-  }
-}

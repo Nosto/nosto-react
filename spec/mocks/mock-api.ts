@@ -9,62 +9,42 @@ function normalizeProduct(data: Product | string) {
 
 let latestActionData: Partial<Data>
 
-function newAction(data: Partial<Data>) {
-  latestActionData = data
-
-  return {
-    setPlacements(placements) {
-      data.elements = placements
-      return this
-    },
-    load() {
-      return Promise.resolve(jsonMockData(data.elements ?? []))
-    }
-  } as Action
-}
-
 function newSession(placements: string[]) {
-  const data: Partial<Data> & { responseMode?: string} = {
-    elements: placements
+  const data: Partial<Data> & { responseMode?: string} = {}
+
+  function newAction(pageType: PageType, overrides?: Partial<Data>) {
+    const actionData = { ...data, ...overrides,  pageType }
+    latestActionData = actionData
+  
+    return {
+      setPlacements(elements = placements) {
+        return Object.assign(actionData, { elements }) && this
+      },
+      load: () => Promise.resolve(jsonMockData(actionData.elements ?? []))
+    } as Action
   }
 
   return {
     setVariation(variation) {
-      data.variation = variation
-      return this
+      return Object.assign(data, { variation }) && this
     },
-    setResponseMode(mode) {
-      data.responseMode = mode
-      return this
+    setResponseMode(responseMode) {
+      return Object.assign(data, { responseMode }) && this
     },
     setCart(cart) {
-      data.cart = cart
-      return this
+      return Object.assign(data, { cart }) && this
     },
     setCustomer(customer) {
-      data.customer = customer
-      return this
+      return Object.assign(data, { customer }) && this
     },
-    viewFrontPage() {
-      return newAction({ ...data, pageType: "front"})
-    },
-    viewProduct(product) {
-      return newAction({ ...data, pageType: "product", products: [normalizeProduct(product)] })
-    },
-    viewCategory(category) {
-      return newAction({ ...data, pageType: "category", categories: [category] })
-    },
-    viewSearch(search) {
-      return newAction({ ...data, pageType: "search", searchTerms: [search] })
-    },
-    viewCart() {
-      return newAction({ ...data, pageType: "cart" })
-    },
-    viewOther() {
-      return newAction({ ...data, pageType: "other" })
-    }
+    viewFrontPage: () => newAction("front"),
+    viewProduct: product => newAction("product", { products: [normalizeProduct(product)] }),
+    viewCategory: category => newAction("category", { categories: [category] }),
+    viewSearch: search => newAction("search", { searchTerms: [search] }),
+    viewCart: () => newAction("cart"),
+    viewOther: () => newAction("other"),
+    viewNotFound: () => newAction("notfound")
   } as Session
-
 }
 
 export default function (placements: string[]) {

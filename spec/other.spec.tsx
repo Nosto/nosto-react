@@ -24,9 +24,8 @@ test("Other page render", async () => {
 
   expect(screen.getAllByTestId("recommendation-product").length).toBe(8)
 
-  const productIds = screen.getAllByTestId("recommendation-product-name").map(el => el.textContent?.trim())
-
-  expect(productIds).toEqual([
+  const productNames = screen.getAllByTestId("recommendation-product-name").map(el => el.textContent?.trim())
+  expect(productNames).toEqual([
     "Product 1-1",
     "Product 1-2",
     "Product 2-1",

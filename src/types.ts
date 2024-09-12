@@ -748,7 +748,32 @@ export interface Session {
    *  @return { Object }
    *
    */
-  recordAttribution(type: EventType, target: string, ref: string, refSrc: string): object
+  recordAttribution(type: EventType, target: string, ref: string, refSrc: string): Attribution
+}
+
+declare const refTypes: readonly ["email", "imgrec", "rec", "api", "oc", "cmp", "os"];
+type EventRefType = typeof refTypes[number];
+type EventTuple = [
+    type: EventType,
+    target?: string,
+    ref?: string,
+    refSrc?: string,
+    targetFragment?: string,
+    refType?: EventRefType
+];
+interface Event {
+    type: EventType;
+    target?: string;
+    ref?: string;
+    refSrc?: string;
+    targetFragment?: string;
+    refType?: EventRefType;
+}
+
+interface Attribution {
+  recordAttribution: (event: Event) => Attribution;
+  dumpData: () => EventTuple[];
+  done: () => Promise<void>;
 }
 
 /**

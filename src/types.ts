@@ -751,8 +751,8 @@ export interface Session {
   recordAttribution(type: EventType, target: string, ref: string, refSrc: string): Attribution
 }
 
-declare const refTypes: readonly ["email", "imgrec", "rec", "api", "oc", "cmp", "os"];
-type EventRefType = typeof refTypes[number];
+type EventRefType = "email" | "imgrec" | "rec" | "api" | "oc" | "cmp" | "os"
+
 type EventTuple = [
     type: EventType,
     target?: string,
@@ -760,7 +760,8 @@ type EventTuple = [
     refSrc?: string,
     targetFragment?: string,
     refType?: EventRefType
-];
+]
+
 interface Event {
     type: EventType;
     target?: string;

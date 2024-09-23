@@ -69,7 +69,11 @@ export function useLoadClientScript(props: NostoScriptProps) {
     }
 
     if (!loadScript) {
-      window.nosto ? scriptOnload() : window.nostojs(scriptOnload)
+      if (window.nosto) {
+        scriptOnload()
+      } else {
+        window.nostojs(scriptOnload)
+      }
       return
     }
 

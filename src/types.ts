@@ -76,9 +76,9 @@ export interface PushedProduct {
   variations: { [index: string]: PushedVariation }
 }
 
-export interface PushedProductSKU extends NostoSku {}
+export type PushedProductSKU = NostoSku
 
-export interface PushedVariation extends NostoVariant {}
+export type PushedVariation = NostoVariant
 
 export interface NostoSku extends Sku {
   inventory_level?: number
@@ -106,27 +106,7 @@ export interface Sku {
   url?: string
 }
 
-// copied from client script d.ts export
-declare const eventTypes: readonly [
-  "vp",
-  "lp",
-  "dp",
-  "rp",
-  "bp",
-  "vc",
-  "or",
-  "is",
-  "cp",
-  "ec",
-  "es",
-  "gc",
-  "src",
-  "cpr",
-  "pl",
-  "cc",
-  "con"
-]
-declare type EventType = (typeof eventTypes)[number]
+declare type EventType = "vp" | "lp" | "dp" | "rp" | "bp" | "vc" | "or" | "is" | "cp" | "ec" | "es" | "gc" | "src" | "cpr" | "pl" | "cc" | "con"
 
 /**
  * @group Types

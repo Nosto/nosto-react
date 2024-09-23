@@ -14,11 +14,6 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "react",
-    "promise"
-  ],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "promise/prefer-await-to-then": "error"

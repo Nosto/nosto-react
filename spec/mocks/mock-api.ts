@@ -20,6 +20,9 @@ function newSession(placements: string[]) {
       setPlacements(elements = placements) {
         return Object.assign(actionData, { elements }) && this
       },
+      setRef(productId, reference) {
+        return Object.assign(actionData, { ref: { [productId]: reference } }) && this
+      },
       load: () => Promise.resolve(jsonMockData(actionData.elements ?? []))
     } as Action
   }

@@ -7,6 +7,7 @@ import { useRenderCampaigns } from "./useRenderCampaigns"
  */
 export type NostoProductProps = {
   product: string
+  reference?: string
   tagging?: Product
   placements?: string[]
 }
@@ -16,22 +17,27 @@ export type NostoProductProps = {
  *
  * @group Hooks
  */
-export function useNostoProduct({ product, tagging, placements }: NostoProductProps) {
+export function useNostoProduct({ product, tagging, placements, reference }: NostoProductProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
   if (tagging && !tagging.product_id) {
     throw new Error("The product object must contain a product_id property")
   }
 
+  const productId = tagging?.product_id ?? product
+
   useNostoApi(
     async api => {
-      const data = await api
+      const action = api
         .defaultSession()
         .viewProduct(tagging ?? product)
         .setPlacements(placements || api.placements.getPlacements())
-        .load()
+      if (reference) {
+        action.setRef(productId, reference)
+      }
+      const data = await action.load()
       renderCampaigns(data)
     },
-    [product, tagging?.selected_sku_id]
+    [productId, tagging?.selected_sku_id]
   )
 }

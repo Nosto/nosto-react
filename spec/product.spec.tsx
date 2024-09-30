@@ -42,3 +42,30 @@ test("useNostoProduct validation", async () => {
     "The product object must contain a product_id property"
   )
 })
+
+test("Product Page with ref", async () => {
+  const placements = ["productpage-nosto-1", "productpage-nosto-2"]
+  const mocked = mockApi(placements)
+  window.nostojs = cb => cb(mocked)
+
+  render(
+    <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>
+      <NostoPlacement id="productpage-nosto-1" />
+      <NostoPlacement id="productpage-nosto-2" />
+      <NostoProduct product="dummy-product-id" reference="dummy-ref" />
+    </NostoProvider>
+  )
+
+  await waitForRecommendations(2)
+
+  expect(mocked.getData()).toEqual({
+    elements: placements,
+    responseMode: "JSON_ORIGINAL",
+    variation: "",
+    pageType: "product",
+    ref: {
+      "dummy-product-id": "dummy-ref"
+    },
+    products: [{ product_id: "dummy-product-id" }]
+  })
+})

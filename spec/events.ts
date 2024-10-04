@@ -1,5 +1,7 @@
 interface Event {
   cart_popup?: boolean
+  preview?: boolean
+  skipcache?: boolean
   elements?: string[]
   events?: [string, string][]
   response_mode?: string
@@ -11,6 +13,8 @@ interface Event {
 function createEvent(event: Event): Event {
   return {
     cart_popup: false,
+    preview: false,
+    skipcache: false,
     elements: [],
     events: [],
     response_mode: "JSON_ORIGINAL",

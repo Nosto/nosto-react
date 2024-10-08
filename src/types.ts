@@ -1,3 +1,5 @@
+import type { API } from "nosto-js/client"
+
 declare global {
   interface Window {
     nosto?: {
@@ -13,15 +15,7 @@ declare global {
 /**
  * @group Types
  */
-export interface NostoClient {
-  setAutoLoad(autoload: boolean): void
-  defaultSession(): Session
-  listen(event: string, callback: (data: unknown) => void): void
-  placements: {
-    getPlacements(): string[]
-    injectCampaigns(recommendations: Record<string, unknown>): void
-  }
-}
+export type NostoClient = API
 
 /**
  * @group Types

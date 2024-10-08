@@ -53,14 +53,15 @@ function newSession(placements: string[]) {
 export default function (placements: string[]) {
   const session = newSession(placements)
 
+  // TODO: Fix mock
   return {
     setAutoLoad: vi.fn(),
     listen: vi.fn(),
     placements: {
       injectCampaigns: vi.fn(),
-      getPlacements: () => placements
-    },
+      getPlacements: () => placements,
+    } as unknown as NostoClient["placements"],
     defaultSession: () => session,
     getData: () =>  latestActionData,
-  } satisfies NostoClient & { getData: () => Partial<Data> }
+  } as unknown as NostoClient & { getData: () => Partial<Data> }
 }

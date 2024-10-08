@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { isNostoLoaded } from "../components/helpers"
-import type { NostoClient } from "../types"
 import type { NostoProviderProps } from "../components/NostoProvider"
 import scriptLoaderFn from "./scriptLoader"
+import { init, initNostoStub, nostojs } from "nosto-js"
 
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript" | "scriptLoader">
 
@@ -60,27 +60,26 @@ export function useLoadClientScript(props: NostoScriptProps) {
       }
     }
 
-    // Load Nosto API stub
-    if (!window.nostojs) {
-      window.nostojs = (cb: (api: NostoClient) => void) => {
-        (window.nostojs.q = window.nostojs.q || []).push(cb)
-      }
-      window.nostojs(api => api.setAutoLoad(false))
-    }
+    initNostoStub()
 
     if (!loadScript) {
-      if (window.nosto) {
-        scriptOnload()
-      } else {
-        window.nostojs(scriptOnload)
-      }
+      nostojs(scriptOnload)
       return
+    }
+
+    async function initClientScript() {
+      await init({
+        merchantId: account,
+        options: {
+          attributes: { "nosto-client-script": ""}
+        }
+      })
+      scriptOnload()
     }
 
     // Load Nosto client script if not already loaded externally
     if (!isNostoLoaded() && !shopifyMarkets) {
-      const urlPartial = `/include/${account}`
-      injectScriptElement(urlPartial)
+      initClientScript()
     }
 
     // Load Shopify Markets scripts

@@ -3,6 +3,7 @@ import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
+import { getNostoWindow } from "nosto-js"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
@@ -33,8 +34,8 @@ describe("useLoadClientScript", () => {
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
-    expect(window.nosto).toBeDefined()
-    expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
+    expect(getNostoWindow()).toBeDefined()
+    expect(getScriptSources()).toEqual([`https://connect.nosto.com/include/${testAccount}`])
   })
 
   it("support custom script loaders", async () => {
@@ -53,7 +54,7 @@ describe("useLoadClientScript", () => {
     expect(hook.result.current.clientScriptLoaded).toBe(false)
 
     await loadClientScript(testAccount)
-    expect(window.nosto).toBeDefined()
+    expect(getNostoWindow()).toBeDefined()
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
@@ -71,7 +72,7 @@ describe("useLoadClientScript", () => {
 
   it("reloads client script once with loadScript=false", async () => {
     await loadClientScript(testAccount)
-    const reloadSpy = vi.spyOn(window.nosto!, "reload")
+    const reloadSpy = vi.spyOn(getNostoWindow(), "reload")
 
     const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(reloadSpy).toHaveBeenCalledTimes(1)

@@ -23,6 +23,7 @@
     "prettier": "prettier '{src,spec}/**' --list-different",
     "prettier:fix": "prettier '{src,spec}/**' --write",
     "test": "vitest run --silent",
+    "test-loud": "vitest run",
     "typedoc": "typedoc src/index.ts"
   },
   "files": [

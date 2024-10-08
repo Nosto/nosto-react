@@ -2,6 +2,7 @@ import { DependencyList, useEffect } from "react"
 import { useNostoContext } from "./useNostoContext"
 import { NostoClient } from "../types"
 import { useDeepCompareEffect } from "./useDeepCompareEffect"
+import { nostojs } from "nosto-js"
 
 export function useNostoApi(cb: (api: NostoClient) => void, deps?: DependencyList, flags?: { deep?: boolean }): void {
   const { clientScriptLoaded } = useNostoContext()
@@ -9,7 +10,7 @@ export function useNostoApi(cb: (api: NostoClient) => void, deps?: DependencyLis
 
   useEffectFn(() => {
     if (clientScriptLoaded) {
-      window.nostojs(cb)
+      nostojs(cb)
     }
   }, [clientScriptLoaded, ...(deps ?? [])])
 }

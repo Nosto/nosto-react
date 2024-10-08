@@ -3,6 +3,7 @@ import { NostoContext, RecommendationComponent } from "../context"
 import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
 import { useLoadClientScript } from "../hooks/useLoadClientScript"
+import { nostojs } from "nosto-js"
 
 /**
  * @group Components
@@ -88,7 +89,7 @@ export function NostoProvider(props: NostoProviderProps) {
   const { clientScriptLoaded } = useLoadClientScript(props)
 
   if (clientScriptLoaded) {
-    window.nostojs(api => {
+    nostojs(api => {
       api.defaultSession().setVariation(currentVariation!).setResponseMode(responseMode)
     })
   }

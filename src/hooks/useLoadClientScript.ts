@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import type { NostoProviderProps } from "../components/NostoProvider"
 import scriptLoaderFn from "./scriptLoader"
-import { init, initNostoStub, isNostoLoaded, nostojs, reloadNostoWindow } from "@nosto/nosto-js"
+import { init, initNostoStub, isNostoLoaded, nostojs, reloadNosto } from "@nosto/nosto-js"
 
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript" | "scriptLoader">
 
@@ -19,7 +19,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
     function scriptOnload() {
       // Override for production scripts to work in unit tests
       if ("nostoReactTest" in window) {
-        reloadNostoWindow({
+        reloadNosto({
           site: "localhost"
         })
       }

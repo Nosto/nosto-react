@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
-import { getNostoWindow, isNostoLoaded, reloadNostoWindow } from "@nosto/nosto-js"
+import { getNostoWindow, isNostoLoaded, reloadNosto } from "@nosto/nosto-js"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
@@ -13,7 +13,7 @@ function loadClientScript(merchant: string) {
   script.async = true
   const promise = new Promise<void>(resolve => {
     script.onload = () => {
-      reloadNostoWindow({ site: "localhost" })
+      reloadNosto({ site: "localhost" })
       resolve()
     }
   })

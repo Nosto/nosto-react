@@ -30,6 +30,9 @@
     "dist",
     "src"
   ],
+  "dependencies": {
+    "@nosto/nosto-js": "*"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",

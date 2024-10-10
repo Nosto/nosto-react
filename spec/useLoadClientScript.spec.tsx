@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
-import { getNostoWindow, getNostoWindowOrDefault } from "@nosto/nosto-js"
+import { getNostoWindow, isNostoLoaded, reloadNostoWindow } from "@nosto/nosto-js"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
@@ -13,7 +13,7 @@ function loadClientScript(merchant: string) {
   script.async = true
   const promise = new Promise<void>(resolve => {
     script.onload = () => {
-      getNostoWindowOrDefault()?.reload({ site: "localhost" })
+      reloadNostoWindow({ site: "localhost" })
       resolve()
     }
   })
@@ -34,7 +34,7 @@ describe("useLoadClientScript", () => {
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
-    expect(getNostoWindow()).toBeDefined()
+    expect(isNostoLoaded()).toBeTruthy()
     expect(getScriptSources()).toEqual([`https://connect.nosto.com/include/${testAccount}`])
   })
 
@@ -54,7 +54,7 @@ describe("useLoadClientScript", () => {
     expect(hook.result.current.clientScriptLoaded).toBe(false)
 
     await loadClientScript(testAccount)
-    expect(getNostoWindow()).toBeDefined()
+    expect(isNostoLoaded()).toBeTruthy()
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
@@ -72,7 +72,7 @@ describe("useLoadClientScript", () => {
 
   it("reloads client script once with loadScript=false", async () => {
     await loadClientScript(testAccount)
-    const reloadSpy = vi.spyOn(getNostoWindow(), "reload")
+    const reloadSpy = vi.spyOn(getNostoWindow()!, "reload")
 
     const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(reloadSpy).toHaveBeenCalledTimes(1)

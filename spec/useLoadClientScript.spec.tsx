@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
-import { getNostoWindow } from "nosto-js"
+import { getNostoWindow, getNostoWindowOrDefault } from "@nosto/nosto-js"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
@@ -13,7 +13,7 @@ function loadClientScript(merchant: string) {
   script.async = true
   const promise = new Promise<void>(resolve => {
     script.onload = () => {
-      window.nosto?.reload({ site: "localhost" })
+      getNostoWindowOrDefault()?.reload({ site: "localhost" })
       resolve()
     }
   })
@@ -44,7 +44,7 @@ describe("useLoadClientScript", () => {
     await new Promise(window.nostojs)
 
     hook.rerender()
-    expect(customScriptLoader).toHaveBeenLastCalledWith(`//connect.nosto.com/include/${testAccount}`, {
+    expect(customScriptLoader).toHaveBeenLastCalledWith(`https://connect.nosto.com/include/${testAccount}`, {
       attributes: { "nosto-client-script": "" }
     })
   })

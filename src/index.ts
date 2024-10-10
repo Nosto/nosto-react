@@ -1,4 +1,5 @@
-export type { Cart, Customer, Product, Order, Recommendation } from "./types"
+export type { Product, PushedCustomer as Customer } from "@nosto/nosto-js/client"
+export type { Cart, Order, Recommendation } from "./types"
 export { type ScriptLoadOptions } from "./hooks/scriptLoader"
 export { NostoContext, type NostoContextType } from "./context"
 export { useNostoContext } from "./hooks/useNostoContext"

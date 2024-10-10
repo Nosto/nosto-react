@@ -1,14 +1,15 @@
-import { test, expect, vi } from "vitest"
+import { test, expect } from "vitest"
 import { render, screen } from "@testing-library/react"
 import { NostoProvider, NostoHome, NostoPlacement } from "../src/index"
 import RecommendationComponent from "./renderer"
 import { waitForRecommendations } from "./utils"
 import mockApi from "./mocks/mock-api"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 test("Home page render", async () => {
   const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
   const mocked = mockApi(placements)
-  window.nostojs = cb => cb(mocked)
+  mockNostojs(mocked)
 
   render(
     <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>

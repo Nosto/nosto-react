@@ -1,5 +1,6 @@
 import { JSDOM } from "jsdom"
 import { afterEach } from "vitest"
+import { clearNostoGlobals } from "@nosto/nosto-js/testing"
 
 const { window } = new JSDOM("<html></html>", {
   url: "http://localhost",
@@ -16,12 +17,7 @@ global.navigator = window.navigator
 global.window.nostoReactTest = true
 
 afterEach(() => {
-  // clearing Nosto iframe window handle
-  window.nosto = undefined
-  // clearing nostojs stub
-  window.nostojs = undefined
-  // clearing Shopify specific Nosto namespace
-  window.Nosto = undefined
+  clearNostoGlobals()
   document.head.innerHTML = ""
   document.body.innerHTML = ""
 })

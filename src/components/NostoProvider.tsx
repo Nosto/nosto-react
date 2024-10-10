@@ -3,7 +3,7 @@ import { NostoContext, RecommendationComponent } from "../context"
 import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
 import { useLoadClientScript } from "../hooks/useLoadClientScript"
-import { nostojs } from "nosto-js"
+import { nostojs } from "@nosto/nosto-js"
 
 /**
  * @group Components

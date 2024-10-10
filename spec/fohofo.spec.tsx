@@ -4,11 +4,12 @@ import { NostoProvider, Nosto404, NostoPlacement } from "../src/index"
 import RecommendationComponent from "./renderer"
 import { waitForRecommendations } from "./utils"
 import mockApi from "./mocks/mock-api"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 test("404 page render", async () => {
   const placements = ["notfound-nosto-1", "notfound-nosto-2"]
   const mocked = mockApi(placements)
-  window.nostojs = cb => cb(mocked)
+  mockNostojs(mocked)
 
   render(
     <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>

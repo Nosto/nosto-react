@@ -1,7 +1,7 @@
 import { vi } from "vitest"
 import { jsonMockData } from "./mock-data"
 import { Product } from "../../src"
-import { Action, Data, NostoClient, PageType, Session } from "../../src/types"
+import { API, Session, Action, PageType, Data } from "@nosto/nosto-js/client"
 
 function normalizeProduct(data: Product | string) {
   return typeof data === "string" ? { product_id: data } : data
@@ -60,8 +60,8 @@ export default function (placements: string[]) {
     placements: {
       injectCampaigns: vi.fn(),
       getPlacements: () => placements,
-    } as unknown as NostoClient["placements"],
+    } as unknown as API["placements"],
     defaultSession: () => session,
     getData: () =>  latestActionData,
-  } as unknown as NostoClient & { getData: () => Partial<Data> }
+  }
 }

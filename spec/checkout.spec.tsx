@@ -4,11 +4,12 @@ import { NostoProvider, NostoCheckout, NostoPlacement } from "../src/index"
 import RecommendationComponent from "./renderer"
 import { waitForRecommendations } from "./utils"
 import mockApi from "./mocks/mock-api"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 test("Checkout page render", async () => {
   const placements = ["cartpage-nosto-1", "cartpage-nosto-2", "cartpage-nosto-3"]
   const mocked = mockApi(placements)
-   window.nostojs = cb => cb(mocked)
+  mockNostojs(mocked)
 
   render(
     <NostoProvider

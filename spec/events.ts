@@ -12,9 +12,6 @@ interface Event {
 
 function createEvent(event: Event): Event {
   return {
-    cart_popup: false,
-    preview: false,
-    skipcache: false,
     elements: [],
     events: [],
     response_mode: "JSON_ORIGINAL",

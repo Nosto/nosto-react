@@ -4,11 +4,12 @@ import { NostoProvider, NostoPlacement, NostoProduct, useNostoProduct } from "..
 import RecommendationComponent from "./renderer"
 import { waitForRecommendations } from "./utils"
 import mockApi from "./mocks/mock-api"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 test("Product page render", async () => {
   const placements = ["productpage-nosto-1", "productpage-nosto-2"]
   const mocked = mockApi(placements)
-  window.nostojs = cb => cb(mocked)
+  mockNostojs(mocked)
 
   render(
     <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>
@@ -46,7 +47,7 @@ test("useNostoProduct validation", async () => {
 test("Product Page with ref", async () => {
   const placements = ["productpage-nosto-1", "productpage-nosto-2"]
   const mocked = mockApi(placements)
-  window.nostojs = cb => cb(mocked)
+  mockNostojs(mocked)
 
   render(
     <NostoProvider account="dummy-account" recommendationComponent={<RecommendationComponent />} loadScript={false}>

@@ -23,12 +23,16 @@
     "prettier": "prettier '{src,spec}/**' --list-different",
     "prettier:fix": "prettier '{src,spec}/**' --write",
     "test": "vitest run --silent",
+    "test-loud": "vitest run",
     "typedoc": "typedoc src/index.ts"
   },
   "files": [
     "dist",
     "src"
   ],
+  "dependencies": {
+    "@nosto/nosto-js": "*"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",

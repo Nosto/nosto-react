@@ -1,22 +1,17 @@
-import tsParser from "@typescript-eslint/parser"
-import js from "@eslint/js"
-import { FlatCompat } from "@eslint/eslintrc"
-
-const compat = new FlatCompat({
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all
-})
+import eslint from "@eslint/js"
+import tseslint from "typescript-eslint"
+import pluginPromise from 'eslint-plugin-promise'
+import reactPlugin from 'eslint-plugin-react'
 
 export default [
-  ...compat.extends(
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:promise/recommended",
-    "plugin:react/recommended"
-  ),
+  eslint.configs.recommended,
+  pluginPromise.configs['flat/recommended'],
+  ...tseslint.configs.recommended,
+  reactPlugin.configs.flat.recommended,
+  reactPlugin.configs.flat['jsx-runtime'],
   {
     languageOptions: {
-      parser: tsParser,
+      ...reactPlugin.configs.flat.recommended.languageOptions,
       ecmaVersion: "latest",
       sourceType: "module"
     },

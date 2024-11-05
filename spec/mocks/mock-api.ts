@@ -1,18 +1,18 @@
 import { vi } from "vitest"
 import { jsonMockData } from "./mock-data"
 import { Product } from "../../src"
-import { API, Session, Action, PageType, Data } from "@nosto/nosto-js/client"
+import { API, Session, Action, PageType, TaggingData } from "@nosto/nosto-js/client"
 
 function normalizeProduct(data: Product | string) {
   return typeof data === "string" ? { product_id: data } : data
 }
 
-let latestActionData: Partial<Data>
+let latestActionData: Partial<TaggingData>
 
 function newSession(placements: string[]) {
-  const data: Partial<Data> & { responseMode?: string} = {}
+  const data: Partial<TaggingData> & { responseMode?: string} = {}
 
-  function newAction(pageType: PageType, overrides?: Partial<Data>) {
+  function newAction(pageType: PageType, overrides?: Partial<TaggingData>) {
     const actionData = { ...data, ...overrides,  pageType }
     latestActionData = actionData
   

@@ -31,6 +31,8 @@
     "src"
   ],
   "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "@nosto/nosto-js": "*"
   },
   "devDependencies": {
@@ -47,8 +49,6 @@
     "eslint-plugin-promise": "^7.1.0",
     "eslint-plugin-react": "^7.33.2",
     "prettier": "^3.3.3",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
     "react-router": "^6.25.1",
     "react-router-dom": "^6.25.1",
     "rimraf": "^6.0.1",
@@ -65,8 +65,7 @@
     ".": {
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js"
-    },
-    "./shopify-hydrogen": "./dist/index.es.js"
+    }
   },
   "bugs": {
     "url": "https://github.com/Nosto/nosto-react/issues"

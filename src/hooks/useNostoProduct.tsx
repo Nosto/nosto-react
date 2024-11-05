@@ -1,6 +1,6 @@
-import { Product } from "../types"
 import { useNostoApi } from "./useNostoApi"
 import { useRenderCampaigns } from "./useRenderCampaigns"
+import { Product } from "@nosto/nosto-js/client"
 
 /**
  * @group Hooks

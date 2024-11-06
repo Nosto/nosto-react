@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import type { NostoProviderProps } from "../components/NostoProvider"
 import scriptLoaderFn from "./scriptLoader"
-import { init, initNostoStub, isNostoLoaded, nostojs, reloadNosto } from "@nosto/nosto-js"
+import { init, initNostoStub, isNostoLoaded, nostojs } from "@nosto/nosto-js"
+import { reloadNosto } from "@nosto/nosto-js/testing"
 
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript" | "scriptLoader">
 

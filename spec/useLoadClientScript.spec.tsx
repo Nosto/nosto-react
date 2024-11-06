@@ -3,7 +3,8 @@ import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
-import { getNostoWindow, isNostoLoaded, reloadNosto } from "@nosto/nosto-js"
+import { nostojs, getNostoWindow, isNostoLoaded } from "@nosto/nosto-js"
+import { reloadNosto } from "@nosto/nosto-js/testing"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
@@ -30,7 +31,7 @@ describe("useLoadClientScript", () => {
 
   it("loads client script", async () => {
     const hook = renderHook(() => useLoadClientScript({ account: testAccount }))
-    await new Promise(window.nostojs)
+    await new Promise(nostojs)
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
@@ -41,7 +42,7 @@ describe("useLoadClientScript", () => {
   it("support custom script loaders", async () => {
     const customScriptLoader = vi.fn(scriptLoader)
     const hook = renderHook(() => useLoadClientScript({ account: testAccount, scriptLoader: customScriptLoader }))
-    await new Promise(window.nostojs)
+    await new Promise(nostojs)
 
     hook.rerender()
     expect(customScriptLoader).toHaveBeenLastCalledWith(`https://connect.nosto.com/include/${testAccount}`, {
@@ -63,7 +64,7 @@ describe("useLoadClientScript", () => {
 
   it("set loaded state to true when client is loaded externally before", async () => {
     await loadClientScript(testAccount)
-    expect(window.nosto).toBeDefined()
+    expect(isNostoLoaded()).toBeTruthy()
 
     const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(result.current.clientScriptLoaded).toBe(true)

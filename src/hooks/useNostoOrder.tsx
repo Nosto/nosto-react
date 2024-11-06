@@ -1,8 +1,8 @@
 import { snakeize } from "../utils/snakeize"
-import { Order } from "../types"
 import { useRenderCampaigns } from "./useRenderCampaigns"
 import { useNostoApi } from "./useNostoApi"
 import { ToCamelCase } from "../utils/types"
+import { WebsiteOrder as Order } from "@nosto/nosto-js/client"
 
 /**
  * @group Hooks

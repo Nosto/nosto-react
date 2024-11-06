@@ -20,6 +20,7 @@ function RecommendationComponentWrapper(props: {
 }
 
 function injectCampaigns(data: CampaignData) {
+  // @ts-expect-error not defined
   if (!window.nostojs) {
     throw new Error("Nosto has not yet been initialized")
   }

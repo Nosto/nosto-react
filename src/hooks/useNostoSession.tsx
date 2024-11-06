@@ -1,5 +1,5 @@
 import { snakeize } from "../utils/snakeize"
-import { Cart as CartSnakeCase, Customer as CustomerSnakeCase } from ".."
+import { PushedCustomer as CustomerSnakeCase, Cart as CartSnakeCase } from "@nosto/nosto-js/client"
 import { ToCamelCase } from "../utils/types"
 import { useNostoContext } from "./useNostoContext"
 import { useDeepCompareEffect } from "./useDeepCompareEffect"

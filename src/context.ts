@@ -1,5 +1,6 @@
 import { createContext, ReactElement } from "react"
-import { Recommendation, RenderMode } from "./types"
+import { Recommendation } from "./types"
+import { RenderMode } from "@nosto/nosto-js/client"
 
 type AnyFunction = (...args: unknown[]) => unknown
 

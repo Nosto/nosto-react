@@ -1,8 +1,9 @@
 import { snakeize } from "../utils/snakeize"
-import { Cart as CartSnakeCase, Customer as CustomerSnakeCase } from "../types"
+import { PushedCustomer as CustomerSnakeCase, Cart as CartSnakeCase } from "@nosto/nosto-js/client"
 import { ToCamelCase } from "../utils/types"
 import { useNostoContext } from "./useNostoContext"
 import { useDeepCompareEffect } from "./useDeepCompareEffect"
+import { nostojs } from "@nosto/nosto-js"
 
 /**
  * @group Hooks
@@ -25,7 +26,7 @@ export function useNostoSession({ cart, customer }: NostoSessionProps = {}) {
     const currentCustomer = customer ? snakeize(customer) : undefined
 
     if (clientScriptLoaded) {
-      window.nostojs(api => {
+      nostojs(api => {
         api.defaultSession().setCart(currentCart).setCustomer(currentCustomer).viewOther().load({ skipPageViews: true })
       })
     }

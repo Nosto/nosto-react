@@ -4,11 +4,12 @@ import { NostoHome, NostoPlacement, NostoProvider, NostoSession } from "../src/i
 import RecommendationComponent from "./renderer"
 import { waitForRecommendations } from "./utils"
 import mockApi from "./mocks/mock-api"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 test("Session render", async () => {
   const placements = ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"]
   const mocked = mockApi(placements)
-  window.nostojs = cb => cb(mocked)
+  mockNostojs(mocked)
 
   const customer = {
     firstName: "John",

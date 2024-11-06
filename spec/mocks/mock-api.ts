@@ -1,18 +1,18 @@
 import { vi } from "vitest"
 import { jsonMockData } from "./mock-data"
 import { Product } from "../../src"
-import { Action, Data, NostoClient, PageType, Session } from "../../src/types"
+import { API, Session, Action, PageType, TaggingData } from "@nosto/nosto-js/client"
 
 function normalizeProduct(data: Product | string) {
   return typeof data === "string" ? { product_id: data } : data
 }
 
-let latestActionData: Partial<Data>
+let latestActionData: Partial<TaggingData>
 
 function newSession(placements: string[]) {
-  const data: Partial<Data> & { responseMode?: string} = {}
+  const data: Partial<TaggingData> & { responseMode?: string} = {}
 
-  function newAction(pageType: PageType, overrides?: Partial<Data>) {
+  function newAction(pageType: PageType, overrides?: Partial<TaggingData>) {
     const actionData = { ...data, ...overrides,  pageType }
     latestActionData = actionData
   
@@ -53,14 +53,15 @@ function newSession(placements: string[]) {
 export default function (placements: string[]) {
   const session = newSession(placements)
 
+  // TODO: Fix mock
   return {
     setAutoLoad: vi.fn(),
     listen: vi.fn(),
     placements: {
       injectCampaigns: vi.fn(),
-      getPlacements: () => placements
-    },
+      getPlacements: () => placements,
+    } as unknown as API["placements"],
     defaultSession: () => session,
     getData: () =>  latestActionData,
-  } satisfies NostoClient & { getData: () => Partial<Data> }
+  }
 }

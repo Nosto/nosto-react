@@ -1,8 +1,10 @@
 import { cloneElement, useRef } from "react"
 import { createRoot, Root } from "react-dom/client"
-import { ActionResponse, Recommendation } from "../types"
+import { Recommendation } from "../types"
 import { useNostoContext } from "./useNostoContext"
 import { RecommendationComponent } from "../context"
+import { ActionResponse, API } from "@nosto/nosto-js/client"
+import { nostojs } from "@nosto/nosto-js"
 
 type CampaignData = Pick<ActionResponse, "campaigns" | "recommendations">
 
@@ -18,11 +20,12 @@ function RecommendationComponentWrapper(props: {
 }
 
 function injectCampaigns(data: CampaignData) {
+  // @ts-expect-error not defined
   if (!window.nostojs) {
     throw new Error("Nosto has not yet been initialized")
   }
-  window.nostojs(api => {
-    api.placements.injectCampaigns(data.recommendations)
+  nostojs(api => {
+    api.placements.injectCampaigns(data.recommendations as Parameters<API['placements']['injectCampaigns']>[0])
   })
 }
 

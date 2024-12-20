@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom"
-import { afterEach } from "vitest"
+import { afterEach, vi } from "vitest"
 import { clearNostoGlobals } from "@nosto/nosto-js/testing"
 
 const { window } = new JSDOM("<html></html>", {
@@ -8,6 +8,9 @@ const { window } = new JSDOM("<html></html>", {
   runScripts: "dangerously"
 })
 global.window = window
+global.window.requestAnimationFrame = vi.fn()
+global.window.CSS = { escape: v => v }
+
 global.location = window.location
 global.document = window.document
 global.localStorage = window.localStorage

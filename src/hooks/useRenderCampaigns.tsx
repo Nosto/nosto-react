@@ -4,7 +4,7 @@ import { Recommendation } from "../types"
 import { useNostoContext } from "./useNostoContext"
 import { RecommendationComponent } from "../context"
 import { ActionResponse, API } from "@nosto/nosto-js/client"
-import { nostojs } from "@nosto/nosto-js"
+import { nostojs, isNostoLoaded } from "@nosto/nosto-js"
 
 type CampaignData = Pick<ActionResponse, "campaigns" | "recommendations">
 
@@ -20,8 +20,7 @@ function RecommendationComponentWrapper(props: {
 }
 
 function injectCampaigns(data: CampaignData) {
-  // @ts-expect-error not defined
-  if (!window.nostojs) {
+  if (!isNostoLoaded()) {
     throw new Error("Nosto has not yet been initialized")
   }
   nostojs(api => {

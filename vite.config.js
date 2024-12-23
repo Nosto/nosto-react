@@ -8,30 +8,31 @@ export default defineConfig({
     react(),
     dts({
       rollupTypes: true,
-      exclude: ["spec/*"],
-    }),
+      exclude: ["spec/*"]
+    })
   ],
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "@nosto/nosto-react",
       formats: ["es", "umd"],
-      fileName: format => `index.${format}.js`,
+      fileName: format => `index.${format}.js`
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime"],
+      external: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"],
       output: {
         globals: {
           react: "React",
           "react/jsx-runtime": "react/jsx-runtime",
-          "react-dom": "ReactDOM"
-        },
-      },
-    },
+          "react-dom": "ReactDOM",
+          "react-router-dom": "react-router-dom"
+        }
+      }
+    }
   },
   test: {
     include: ["*.spec.*"],
     dir: "spec",
-    setupFiles: ['./spec/setup.js']
-  },
+    setupFiles: ["./spec/setup.js"]
+  }
 })

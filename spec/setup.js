@@ -14,7 +14,6 @@ global.window.CSS = { escape: v => v }
 global.location = window.location
 global.document = window.document
 global.localStorage = window.localStorage
-global.navigator = window.navigator
 
 // test mode flag
 global.window.nostoReactTest = true

@@ -111,3 +111,5 @@ dist
 # Editors
 .idea
 .vscode
+
+stats.html

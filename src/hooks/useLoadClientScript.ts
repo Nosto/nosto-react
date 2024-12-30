@@ -2,9 +2,10 @@ import { useState, useEffect } from "react"
 import type { NostoProviderProps } from "../components/NostoProvider"
 import scriptLoaderFn from "./scriptLoader"
 import { init, initNostoStub, isNostoLoaded, nostojs } from "@nosto/nosto-js"
-import { reloadNosto } from "@nosto/nosto-js/testing"
 
 type NostoScriptProps = Pick<NostoProviderProps, "account" | "host" | "shopifyMarkets" | "loadScript" | "scriptLoader">
+
+const defaultAttributes = { "nosto-client-script": "" }
 
 export function useLoadClientScript(props: NostoScriptProps) {
   const {
@@ -18,19 +19,13 @@ export function useLoadClientScript(props: NostoScriptProps) {
 
   useEffect(() => {
     function scriptOnload() {
-      // Override for production scripts to work in unit tests
-      if ("nostoReactTest" in window) {
-        reloadNosto({
-          site: "localhost"
-        })
-      }
       setClientScriptLoaded(true)
     }
 
     // Create and append script element
     async function injectScriptElement(urlPartial: string, extraAttributes: Record<string, string> = {}) {
       const scriptSrc = `//${host}${urlPartial}`
-      const attributes = { "nosto-client-script": "", ...extraAttributes }
+      const attributes = { ...defaultAttributes, ...extraAttributes }
       await scriptLoader(scriptSrc, { attributes })
       scriptOnload()
     }
@@ -71,7 +66,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
       await init({
         merchantId: account,
         options: {
-          attributes: { "nosto-client-script": ""}
+          attributes: defaultAttributes
         },
         scriptLoader
       })

@@ -19,14 +19,16 @@ function RecommendationComponentWrapper(props: {
   })
 }
 
+function injectPlacements(data: Record<string, unknown>) {
+  nostojs(api => api.placements.injectCampaigns(data as Parameters<API['placements']['injectCampaigns']>[0]))
+}
+
 function injectCampaigns(data: CampaignData) {
   // @ts-expect-error not defined
   if (!window.nostojs) {
     throw new Error("Nosto has not yet been initialized")
   }
-  nostojs(api => {
-    api.placements.injectCampaigns(data.recommendations as Parameters<API['placements']['injectCampaigns']>[0])
-  })
+  injectPlacements(data.recommendations)
 }
 
 export function useRenderCampaigns() {
@@ -38,6 +40,9 @@ export function useRenderCampaigns() {
   }
 
   function renderCampaigns(data: CampaignData) {
+    // inject Onsite content campaigns directly
+    injectPlacements(data.campaigns?.content ?? {})
+
     // render recommendation component into placements:
     const recommendations = data.campaigns?.recommendations ?? {}
     for (const key in recommendations) {

@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react"
 import { describe, beforeEach, it, expect } from "vitest"
 import RecommendationComponent from "./renderer"
 import { createWrapper } from "./utils"
-import { htmlMockDataForPage, jsonMockData } from "./mocks/mock-data"
+import { htmlMockDataForPage, jsonMockData, mixedMockData } from "./mocks/mock-data"
 import mockApi from "./mocks/mock-api"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 
@@ -58,5 +58,26 @@ describe("useRenderCampaigns", () => {
     })
 
     expect(mocked.placements.injectCampaigns).toHaveBeenCalledWith(htmlMockDataForPage(placements).recommendations)
+  })
+
+  it("supports mixed content and recommendations", async () => {
+    const wrapper = createWrapper({
+      account: "dummy",
+      clientScriptLoaded: true,
+      responseMode: "JSON_ORIGINAL",
+      recommendationComponent: <RecommendationComponent />
+    })
+    const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
+
+    const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
+
+    const mocked = mockApi(placements)
+    mockNostojs(mocked)
+
+    act(() => {
+      result.current.renderCampaigns(mixedMockData(placements))
+    })
+
+    expect(mocked.placements.injectCampaigns).toHaveBeenCalledWith(mixedMockData(placements).campaigns.content)
   })
 })

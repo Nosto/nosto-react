@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest"
 import { render } from "@testing-library/react"
 import "@testing-library/jest-dom/vitest"
-import { NostoProvider, NostoHome } from "../src/index"
+import { NostoProvider, NostoHome, Recommendation } from "../src/index"
 import RecommendationComponent from "./renderer"
 
 describe("Nosto client script", () => {
@@ -29,9 +29,10 @@ describe("Nosto client script", () => {
   })
 
   it("throws error on invalid recommendationComponent", () => {
+    type InvalidComponent = React.ReactElement<{ nostoRecommendation: Recommendation }>
     expect(() => {
       render(
-        <NostoProvider account="shopify-11368366139" recommendationComponent={true as unknown as React.ReactElement}>
+        <NostoProvider account="shopify-11368366139" recommendationComponent={true as unknown as InvalidComponent}>
           <NostoHome />
         </NostoProvider>
       )

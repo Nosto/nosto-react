@@ -30,16 +30,18 @@
     "dist",
     "src"
   ],
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "@nosto/nosto-js": "*"
+  "peerDependencies": {
+    "react": "^18.3.1 || ^19.0.0",
+    "react-dom": "^18.3.1 || ^19.0.0"
   },
   "devDependencies": {
+    "@nosto/nosto-js": "*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/react": "^18.0.0",
+    "@types/react": "^19.0.2",
     "@types/react-dom": "^18.0.0",
     "@types/user-event": "^4.1.1",
     "@vitejs/plugin-react": "^4.3.1",

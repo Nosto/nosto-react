@@ -33,3 +33,24 @@ export function htmlMockDataForPage(placements: string[]) {
     recommendations
   }
 }
+
+export function mixedMockData(placements: string[]) {
+  const recommendations: Record<string, unknown> = {}
+  const content: Record<string, unknown> = {}
+
+  placements.forEach((placement, index) => {
+    if (index % 2 === 0) {
+      recommendations[placement] = jsonCampaign(index + 1)
+    } else {
+      content[placement] = `<div>Campaign ${index + 1}</div>`
+    }
+  })
+
+  return {
+    ...baseResponse,
+    campaigns: {
+      recommendations,
+      content
+    }
+  }
+}

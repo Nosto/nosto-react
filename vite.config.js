@@ -2,10 +2,12 @@ import react from "@vitejs/plugin-react"
 import path from "node:path"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
+import { visualizer } from "rollup-plugin-visualizer"
 
 export default defineConfig({
   plugins: [
     react(),
+    visualizer(),
     dts({
       rollupTypes: true,
       exclude: ["spec/*"]
@@ -19,7 +21,7 @@ export default defineConfig({
       fileName: format => `index.${format}.js`
     },
     rollupOptions: {
-      external: ["react", "react-dom", "react/jsx-runtime", "react-router-dom"],
+      external: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "react-router-dom"],
       output: {
         globals: {
           react: "React",

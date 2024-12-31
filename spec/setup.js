@@ -1,5 +1,5 @@
 import { JSDOM } from "jsdom"
-import { afterEach, vi } from "vitest"
+import { beforeEach, afterEach, vi } from "vitest"
 import { clearNostoGlobals } from "@nosto/nosto-js/testing"
 
 const { window } = new JSDOM("<html></html>", {
@@ -15,8 +15,13 @@ global.location = window.location
 global.document = window.document
 global.localStorage = window.localStorage
 
-// test mode flag
-global.window.nostoReactTest = true
+beforeEach(() => {
+  window.nostoab = {
+    settings: {
+      site: "localhost"
+    }
+  }
+})
 
 afterEach(() => {
   clearNostoGlobals()

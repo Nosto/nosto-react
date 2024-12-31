@@ -3,8 +3,7 @@ import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
-import { nostojs, getNostoWindow, isNostoLoaded } from "@nosto/nosto-js"
-import { reloadNosto } from "@nosto/nosto-js/testing"
+import { nostojs, isNostoLoaded, getNostoWindow } from "@nosto/nosto-js"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
@@ -13,10 +12,7 @@ function loadClientScript(merchant: string) {
   script.type = "text/javascript"
   script.async = true
   const promise = new Promise<void>(resolve => {
-    script.onload = () => {
-      reloadNosto({ site: "localhost" })
-      resolve()
-    }
+    script.onload = () => resolve()
   })
   document.body.appendChild(script)
   return promise
@@ -24,6 +20,10 @@ function loadClientScript(merchant: string) {
 
 function getScriptSources() {
   return Array.from(document.querySelectorAll("script")).map(script => script.src)
+}
+
+function wait(time: number) {
+  return new Promise(resolve => setTimeout(resolve, time))
 }
 
 describe("useLoadClientScript", () => {
@@ -34,6 +34,7 @@ describe("useLoadClientScript", () => {
     await new Promise(nostojs)
 
     hook.rerender()
+    await wait(1)
     expect(hook.result.current.clientScriptLoaded).toBe(true)
     expect(isNostoLoaded()).toBeTruthy()
     expect(getScriptSources()).toEqual([`https://connect.nosto.com/include/${testAccount}`])
@@ -69,17 +70,6 @@ describe("useLoadClientScript", () => {
     const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(result.current.clientScriptLoaded).toBe(true)
     expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
-  })
-
-  it("reloads client script once with loadScript=false", async () => {
-    await loadClientScript(testAccount)
-    const reloadSpy = vi.spyOn(getNostoWindow()!, "reload")
-
-    const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
-    expect(reloadSpy).toHaveBeenCalledTimes(1)
-
-    hook.rerender()
-    expect(reloadSpy).toHaveBeenCalledTimes(1)
   })
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {

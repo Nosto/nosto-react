@@ -24,6 +24,7 @@ test("module structure is stable", () => {
     "useNostoOther",
     "useNostoProduct",
     "useNostoSearch",
-    "useNostoSession"
+    "useNostoSession",
+    "usePersonalization"
   ])
 })

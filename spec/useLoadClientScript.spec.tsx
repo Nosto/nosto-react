@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react"
 import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
-import { nostojs, isNostoLoaded, getNostoWindow } from "@nosto/nosto-js"
+import { nostojs, isNostoLoaded } from "@nosto/nosto-js"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")

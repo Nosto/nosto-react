@@ -37,8 +37,8 @@ export interface NostoProviderProps {
    * Enables Shopify markets with language and market id
    */
   shopifyMarkets?: {
-    language?: string
-    marketId?: string | number
+    language: string
+    marketId: string | number
   }
   /**
    * Load nosto script (should be false if loading the script outside of nosto-react)

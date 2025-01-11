@@ -22,6 +22,7 @@ export function useLoadClientScript(props: NostoScriptProps) {
     }
 
     initNostoStub()
+    nostojs(api => api.setAutoLoad(false))
 
     if (!loadScript) {
       nostojs(scriptOnload)

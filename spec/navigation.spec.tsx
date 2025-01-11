@@ -62,11 +62,11 @@ function Main() {
 }
 
 test("navigation events", async () => {
+  // start collecting prequest events before rendering to make sure to catch all events
+  const requests = listenTo("prerequest")
   render(<Main />)
 
   await waitForRecommendations(3)
-
-  const requests = listenTo("prerequest")
 
   function verifyEvents(given: unknown[]) {
     expect(requests).toEqual(given)

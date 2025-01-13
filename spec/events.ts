@@ -13,7 +13,6 @@ interface Event {
 function createEvent(event: Event): Event {
   return {
     elements: [],
-    events: [],
     response_mode: "JSON_ORIGINAL",
     url: "http://localhost/",
     ...event

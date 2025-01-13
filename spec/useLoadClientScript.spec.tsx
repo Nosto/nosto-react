@@ -4,6 +4,7 @@ import { useLoadClientScript } from "../src/hooks/useLoadClientScript"
 import scriptLoader from "../src/hooks/scriptLoader"
 import "@testing-library/jest-dom/vitest"
 import { nostojs, isNostoLoaded } from "@nosto/nosto-js"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
@@ -38,6 +39,18 @@ describe("useLoadClientScript", () => {
     expect(hook.result.current.clientScriptLoaded).toBe(true)
     expect(isNostoLoaded()).toBeTruthy()
     expect(getScriptSources()).toEqual([`https://connect.nosto.com/include/${testAccount}`])
+  })
+
+  it("sets auto load to false", async () => {
+    const apiMock = {
+      setAutoLoad: vi.fn()
+    }
+    mockNostojs(apiMock)
+    const hook = renderHook(() => useLoadClientScript({ account: testAccount }))
+    await new Promise(nostojs)
+
+    hook.rerender()
+    expect(apiMock.setAutoLoad).toHaveBeenCalled()
   })
 
   it("support custom script loaders", async () => {

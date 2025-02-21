@@ -1,3 +1,4 @@
+import { CampaignData } from "../types"
 import { useNostoApi } from "./useNostoApi"
 import { useRenderCampaigns } from "./useRenderCampaigns"
 import { Product } from "@nosto/nosto-js/client"
@@ -13,17 +14,31 @@ export type NostoProductProps = {
 }
 
 /**
+ * @group Api
+ */
+export type FetchNostoProductProps = NostoProductProps & { cb: (data: CampaignData) => void }
+
+/**
  * You can personalise your product pages by using the useNostoProduct hook.
  *
  * @group Hooks
  */
-export function useNostoProduct({ product, tagging, placements, reference }: NostoProductProps) {
+export function useNostoProduct(props: NostoProductProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
-  if (tagging && !tagging.product_id) {
+  if (props.tagging && !props.tagging.product_id) {
     throw new Error("The product object must contain a product_id property")
   }
 
+  fetchNostoProduct({ ...props, cb: renderCampaigns })
+}
+
+/**
+ * fetch Nosto product recommendations using the nosto-js API
+ *
+ * @group Api
+ */
+export function fetchNostoProduct({ product, tagging, placements, reference, cb }: FetchNostoProductProps) {
   const productId = tagging?.product_id ?? product
 
   useNostoApi(
@@ -36,7 +51,7 @@ export function useNostoProduct({ product, tagging, placements, reference }: Nos
         action.setRef(productId, reference)
       }
       const data = await action.load()
-      renderCampaigns(data)
+      cb(data)
     },
     [productId, tagging?.selected_sku_id]
   )

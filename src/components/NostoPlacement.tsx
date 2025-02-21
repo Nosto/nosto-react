@@ -1,7 +1,7 @@
 /**
  * @group Components
  */
-export type NostoPlacementProps = { id: string; pageType?: string }
+export type NostoPlacementProps = { id: string; pageType?: string; children?: React.ReactNode }
 
 /**
  * Nosto React has a special component called NostoPlacement.
@@ -16,6 +16,10 @@ export type NostoPlacementProps = { id: string; pageType?: string }
  *
  * @group Components
  */
-export function NostoPlacement({ id, pageType }: NostoPlacementProps) {
-  return <div className="nosto_element" id={id} key={id + (pageType || "")} />
+export function NostoPlacement({ id, pageType, children }: NostoPlacementProps) {
+  return (
+    <div className="nosto_element" id={id} key={id + (pageType || "")}>
+      {children}
+    </div>
+  )
 }

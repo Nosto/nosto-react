@@ -4,6 +4,7 @@ import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
 import { useLoadClientScript } from "../hooks/useLoadClientScript"
 import { nostojs } from "@nosto/nosto-js"
+import { RenderMode } from "@nosto/nosto-js/client"
 
 /**
  * @group Components
@@ -33,6 +34,7 @@ export interface NostoProviderProps {
    * Recommendation component which holds nostoRecommendation object
    */
   recommendationComponent?: RecommendationComponent
+  renderMode?: RenderMode
   /**
    * Enables Shopify markets with language and market id
    */
@@ -72,7 +74,7 @@ export interface NostoProviderProps {
  * @group Components
  */
 export function NostoProvider(props: NostoProviderProps) {
-  const { account, multiCurrency = false, children, recommendationComponent } = props
+  const { account, multiCurrency = false, children, recommendationComponent, renderMode } = props
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
@@ -84,7 +86,15 @@ export function NostoProvider(props: NostoProviderProps) {
   }
 
   // Set responseMode for loading campaigns:
-  const responseMode = recommendationComponent ? "JSON_ORIGINAL" : "HTML"
+  const responseMode = (() => {
+    if (recommendationComponent) {
+      return "JSON_ORIGINAL"
+    } else if (renderMode) {
+      return renderMode
+    } else {
+      return "HTML"
+    }
+  })()
 
   const { clientScriptLoaded } = useLoadClientScript(props)
 

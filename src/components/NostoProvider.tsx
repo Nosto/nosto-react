@@ -34,6 +34,9 @@ export interface NostoProviderProps {
    * Recommendation component which holds nostoRecommendation object
    */
   recommendationComponent?: RecommendationComponent
+  /**
+   * Recommendation render mode. See {@link https://nosto.github.io/nosto-js/types/client.RenderMode.html}
+   */
   renderMode?: RenderMode
   /**
    * Enables Shopify markets with language and market id
@@ -86,15 +89,7 @@ export function NostoProvider(props: NostoProviderProps) {
   }
 
   // Set responseMode for loading campaigns:
-  const responseMode = (() => {
-    if (recommendationComponent) {
-      return "JSON_ORIGINAL"
-    } else if (renderMode) {
-      return renderMode
-    } else {
-      return "HTML"
-    }
-  })()
+  const responseMode = renderMode || (recommendationComponent ? "JSON_ORIGINAL" : "HTML")
 
   const { clientScriptLoaded } = useLoadClientScript(props)
 

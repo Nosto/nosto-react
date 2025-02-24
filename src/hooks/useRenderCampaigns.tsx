@@ -20,7 +20,7 @@ function RecommendationComponentWrapper(props: {
 }
 
 function injectPlacements(data: Record<string, unknown>) {
-  nostojs(api => api.placements.injectCampaigns(data as Parameters<API['placements']['injectCampaigns']>[0]))
+  nostojs(api => api.placements.injectCampaigns(data as Parameters<API["placements"]["injectCampaigns"]>[0]))
 }
 
 function injectCampaigns(data: CampaignData) {
@@ -37,6 +37,10 @@ export function useRenderCampaigns() {
 
   if (responseMode == "HTML") {
     return { renderCampaigns: injectCampaigns }
+  }
+
+  if (!recommendationComponent) {
+    throw new Error("recommendationComponent is required for client-side rendering using hook")
   }
 
   function renderCampaigns(data: CampaignData) {

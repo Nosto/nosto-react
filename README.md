@@ -1,5 +1,10 @@
 # Nosto React
 
+[![](https://img.shields.io/github/package-json/v/nosto/nosto-react)](https://github.com/Nosto/nosto-react/releases)
+[![](https://github.com/Nosto/nosto-react/actions/workflows/ci.yml/badge.svg)](https://github.com/Nosto/nosto-react/actions/workflows/ci.yml)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![npm license](https://img.shields.io/npm/l/@nosto/nosto-react.svg)](https://github.com/Nosto/nosto-react/blob/master/LICENSE)
+
 Nosto React is a React component library to make it even easier to implement Nosto.
 
 The library provides you everything to get started with personalisation on your React site. It's dead simple, and beginner friendly.
@@ -64,14 +69,10 @@ There’s one very specific widget in Nosto React and it is the `NostoProvider` 
 This widget is what we call the Nosto root widget, which is responsible for adding the actual Nosto script and the JS API stub. This widget wraps all other React Nosto widgets. Here’s how:
 
 ```jsx
-import { NostoProvider } from "@nosto/nosto-react";
-
-<NostoProvider
-  account="your-nosto-account-id"
-  recommendationComponent={<NostoSlot />}
->
+import { NostoProvider } from "@nosto/nosto-react"
+;<NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
   <App />
-</NostoProvider>;
+</NostoProvider>
 ```
 
 **Note:** the component also accepts a prop to configure the host `host="connect.nosto.com"`. In advanced use-cases, the need to configure the host may surface.
@@ -97,9 +98,8 @@ The `NostoSession` component makes it very easy to keep the session up to date s
 The `cart` prop requires a value that adheres to the type `Cart`, while the `customer` prop requires a value that adheres to the type `Customer`.
 
 ```jsx
-import { NostoSession } from "@nosto/nosto-react";
-
-<>
+import { NostoSession } from "@nosto/nosto-react"
+;<>
   <Meta />
   <header>
     <MainMenu />
@@ -107,7 +107,7 @@ import { NostoSession } from "@nosto/nosto-react";
   </header>
   <Routes />
   <Footer />
-</>;
+</>
 ```
 
 ### Adding Personalisation
@@ -123,16 +123,15 @@ By default, your account, when created, has <u>four</u> front-page placements na
 The `<NostoHome \>` component needs to be added after the placements. Content and recommendations will be rendered through this component.
 
 ```jsx
-import { NostoHome, NostoPlacement } from "@nosto/nosto-react";
-
-<div className="front-page">
+import { NostoHome, NostoPlacement } from "@nosto/nosto-react"
+;<div className="front-page">
   ... ... ...
   <NostoPlacement id="frontpage-nosto-1" />
   <NostoPlacement id="frontpage-nosto-2" />
   <NostoPlacement id="frontpage-nosto-3" />
   <NostoPlacement id="frontpage-nosto-4" />
   <NostoHome />
-</div>;
+</div>
 ```
 
 ##### Personalising your product pages
@@ -144,15 +143,14 @@ By default, your account, when created, has <u>three</u> product-page placements
 The `<NostoProduct \>` component needs to be added after the placements. Content and recommendations will be rendered through this component. Pass in the product ID via the `product` prop to pass this information back to Nosto.
 
 ```jsx
-import { NostoPlacement, NostoProduct } from "@nosto/nosto-react";
-
-<div className="product-page">
+import { NostoPlacement, NostoProduct } from "@nosto/nosto-react"
+;<div className="product-page">
   ... ... ...
   <NostoPlacement id="productpage-nosto-1" />
   <NostoPlacement id="productpage-nosto-2" />
   <NostoPlacement id="productpage-nosto-3" />
   <NostoProduct product={product.id} />
-</div>;
+</div>
 ```
 
 ##### Personalising your search result pages
@@ -162,14 +160,13 @@ You can personalise your search pages by using the `NostoSearch` component. The 
 By default, your account, when created, has <u>two</u> search-page placements named `searchpage-nosto-1` and `searchpage-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
 ```jsx
-import { NostoPlacement, NostoSearch } from "@nosto/nosto-react";
-
-<div className="search-page">
+import { NostoPlacement, NostoSearch } from "@nosto/nosto-react"
+;<div className="search-page">
   ... ... ...
   <NostoPlacement id="searchpage-nosto-1" />
   <NostoPlacement id="searchpage-nosto-2" />
   <NostoSearch query={search} />
-</div>;
+</div>
 ```
 
 **Note:** Do not encode the search term in any way. It should be provided an unencoded string. A query for "black shoes" must be provided as-is and not as "black+shoes". Doing so will lead to invalid results.
@@ -181,14 +178,13 @@ You can personalise your category and collection pages by using the `NostoCatego
 By default, your account, when created, has <u>two</u> category placements named `categorypage-nosto-1` and `categorypage-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
 ```jsx
-import { NostoCategory, NostoPlacement } from "@nosto/nosto-react";
-
-<div className="category-page">
+import { NostoCategory, NostoPlacement } from "@nosto/nosto-react"
+;<div className="category-page">
   ... ... ...
   <NostoPlacement id="categorypage-nosto-1" />
   <NostoPlacement id="categorypage-nosto-2" />
   <NostoCategory category={category.name} />
-</div>;
+</div>
 ```
 
 **Note:** Be sure to pass in the correct category representation. If the category being viewed is Mens >> Jackets, you must provide the name as `/Mens/Jackets` . You must ensure that the category path provided here matches that of the categories tagged in your products.
@@ -200,14 +196,13 @@ You can personalise your cart and checkout pages by using the `NostoCheckout` co
 By default, your account, when created, has <u>two</u> cart-page placements named `categorypage-nosto-1` and `categorypage-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
 ```jsx
-import { NostoCheckout, NostoPlacement } from "@nosto/nosto-react";
-
-<div className="checkout-page">
+import { NostoCheckout, NostoPlacement } from "@nosto/nosto-react"
+;<div className="checkout-page">
   ... ... ...
   <NostoPlacement id="checkout-nosto-1" />
   <NostoPlacement id="checkout-nosto-2" />
   <NostoCheckout />
-</div>;
+</div>
 ```
 
 ##### Personalising your 404 error pages
@@ -217,15 +212,14 @@ You can personalise not found pages by using the `Nosto404` component. The compo
 By default, your account, when created, has three 404-page placements named `notfound-nosto-1`, `notfound-nosto-2` and `notfound-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
 ```jsx
-import { Nosto404, NostoPlacement } from "@nosto/nosto-react";
-
-<div className="notfound-page">
+import { Nosto404, NostoPlacement } from "@nosto/nosto-react"
+;<div className="notfound-page">
   ... ... ...
   <NostoPlacement id="notfound-nosto-1" />
   <NostoPlacement id="notfound-nosto-2" />
   <NostoPlacement id="notfound-nosto-3" />
   <Nosto404 />
-</div>;
+</div>
 ```
 
 ##### Personalising your miscellaneous pages
@@ -235,14 +229,13 @@ You can personalise your miscellaneous pages by using the `NostoOther` component
 By default, your account, when created, has two other-page placements named `other-nosto-1` and `other-nosto-2`. You may omit these and use any identifier you need. The identifiers used here are simply provided to illustrate the example.
 
 ```jsx
-import { NostoOther, NostoPlacement } from "@nosto/nosto-react";
-
-<div className="other-page">
+import { NostoOther, NostoPlacement } from "@nosto/nosto-react"
+;<div className="other-page">
   ... ... ...
   <NostoPlacement id="other-nosto-1" />
   <NostoPlacement id="other-nosto-2" />
   <NostoOther />
-</div>;
+</div>
 ```
 
 ##### Personalising your order confirmation page
@@ -252,16 +245,12 @@ You can personalise your order-confirmation/thank-you page by using the `NostoOr
 By default, your account, when created, has one other-page placement named `thankyou-nosto-1`. You may omit this and use any identifier you need. The identifier used here is simply provided to illustrate the example.
 
 ```jsx
-import {
-  NostoOrder,
-  NostoPlacement,
-} from "@nosto/nosto-react";
-
-<div className="thankyou-page">
+import { NostoOrder, NostoPlacement } from "@nosto/nosto-react"
+;<div className="thankyou-page">
   ... ... ...
   <NostoPlacement id="thankyou-nosto-1" />
-  <NostoOrder order={ order } />
-</div>;
+  <NostoOrder order={order} />
+</div>
 ```
 
 ### Hook alternatives
@@ -278,6 +267,7 @@ For all the page type specific components hooks are also provided with the same 
 - useNostoHome
 
 ### Detailed technical documentation
+
 Find our latest technical specs and documentation hosted [here](https://nosto.github.io/nosto-react).
 
 ### Feedback
@@ -292,4 +282,4 @@ Please take a moment to review the guidelines for contributing.
 
 ### License
 
-MIT
+BSD 3-Clause License

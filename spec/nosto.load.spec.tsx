@@ -49,6 +49,26 @@ describe("Nosto client script", () => {
     expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
   })
 
+  it("throws when renderMode prop is supplied with hook", () => {
+    expect(() =>
+      render(
+        <NostoProvider account="shopify-11368366139" renderMode="JSON_ORIGINAL">
+          <NostoHome />
+        </NostoProvider>
+      )
+    ).toThrowError("recommendationComponent is required for client-side rendering using hook")
+  })
+
+  it("validate script loader with renderMode prop", () => {
+    render(
+      <NostoProvider account="shopify-11368366139" renderMode="JSON_ORIGINAL">
+        <span>Recommendations</span>
+      </NostoProvider>
+    )
+
+    expect(document.querySelector("[nosto-client-script]")).toBeInTheDocument()
+  })
+
   it("Shopify markets script", () => {
     render(
       <NostoProvider account="shopify-11368366139" shopifyMarkets={{ language: "en", marketId: "123" }}>

@@ -32,6 +32,17 @@ describe("useRenderCampaigns", () => {
     expect(document.getElementById("frontpage-nosto-2")!.innerHTML).not.toBe("")
   })
 
+  it("throws when recommendation component is not supplied", async () => {
+    const wrapper = createWrapper({
+      account: "dummy",
+      clientScriptLoaded: true,
+      responseMode: "JSON_ORIGINAL"
+    })
+    expect(() => renderHook(() => useRenderCampaigns(), { wrapper })).toThrowError(
+      "recommendationComponent is required for client-side rendering using hook"
+    )
+  })
+
   it("throws when Nosto is not initialized", () => {
     const { result } = renderHook(() => useRenderCampaigns())
 

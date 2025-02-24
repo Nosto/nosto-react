@@ -20,7 +20,6 @@ export function useNostoHome(props?: NostoHomeProps) {
       .viewFrontPage()
       .setPlacements(props?.placements || api.placements.getPlacements())
       .load()
-
     renderCampaigns(data)
   })
 }

@@ -20,7 +20,7 @@ function RecommendationComponentWrapper(props: {
 }
 
 function injectPlacements(data: Record<string, unknown>) {
-  nostojs(api => api.placements.injectCampaigns(data as Parameters<API["placements"]["injectCampaigns"]>[0]))
+  nostojs(api => api.placements.injectCampaigns(data as Parameters<API['placements']['injectCampaigns']>[0]))
 }
 
 function injectCampaigns(data: CampaignData) {

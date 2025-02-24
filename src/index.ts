@@ -15,32 +15,12 @@ export { NostoProduct } from "./components/NostoProduct"
 export { NostoProvider } from "./components/NostoProvider"
 export { NostoSearch } from "./components/NostoSearch"
 export { NostoSession } from "./components/NostoSession"
-export { useNosto404, fetchNosto404, type Nosto404Props, type FetchNosto404Props } from "./hooks/useNosto404"
-export { useNostoHome, fetchNostoHome, type NostoHomeProps, type FetchNostoHomeProps } from "./hooks/useNostoHome"
-export { useNostoOrder, fetchNostoOrder, type NostoOrderProps, type FetchNostoOrderProps } from "./hooks/useNostoOrder"
-export { useNostoOther, fetchNostoOther, type NostoOtherProps, type FetchNostoOtherProps } from "./hooks/useNostoOther"
+export { useNosto404, type Nosto404Props } from "./hooks/useNosto404"
+export { useNostoCategory, type NostoCategoryProps } from "./hooks/useNostoCategory"
+export { useNostoCheckout, type NostoCheckoutProps } from "./hooks/useNostoCheckout"
+export { useNostoHome, type NostoHomeProps } from "./hooks/useNostoHome"
+export { useNostoOrder, type NostoOrderProps } from "./hooks/useNostoOrder"
+export { useNostoOther, type NostoOtherProps } from "./hooks/useNostoOther"
+export { useNostoProduct, type NostoProductProps } from "./hooks/useNostoProduct"
+export { useNostoSearch, type NostoSearchProps } from "./hooks/useNostoSearch"
 export { useNostoSession, type NostoSessionProps } from "./hooks/useNostoSession"
-export {
-  useNostoCategory,
-  fetchNostoCategory,
-  type NostoCategoryProps,
-  type FetchNostoCategoryProps
-} from "./hooks/useNostoCategory"
-export {
-  useNostoCheckout,
-  fetchNostoCheckout,
-  type NostoCheckoutProps,
-  type FetchNostoCheckoutProps
-} from "./hooks/useNostoCheckout"
-export {
-  useNostoProduct,
-  fetchNostoProduct,
-  type NostoProductProps,
-  type FetchNostoProductProps
-} from "./hooks/useNostoProduct"
-export {
-  useNostoSearch,
-  fetchNostoSearch,
-  type NostoSearchProps,
-  type FetchNostoSearchProps
-} from "./hooks/useNostoSearch"

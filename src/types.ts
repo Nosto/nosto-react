@@ -1,4 +1,4 @@
-import type { ActionResponse, PushedProduct } from "@nosto/nosto-js/client"
+import type { PushedProduct } from "@nosto/nosto-js/client"
 
 /**
  * @group Types
@@ -12,5 +12,3 @@ export interface Recommendation {
   source_product_ids: string[]
   params: unknown
 }
-
-export type CampaignData = Pick<ActionResponse, "campaigns" | "recommendations">

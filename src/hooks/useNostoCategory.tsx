@@ -1,4 +1,3 @@
-import { CampaignData } from "../types"
 import { useNostoApi } from "./useNostoApi"
 import { useRenderCampaigns } from "./useRenderCampaigns"
 
@@ -11,27 +10,13 @@ export type NostoCategoryProps = {
 }
 
 /**
- * @group Api
- */
-export type FetchNostoCategoryProps = NostoCategoryProps & { cb: (data: CampaignData) => void }
-
-/**
  * You can personalise your category and collection pages by using the useNostoCategory hook.
  *
  * @group Hooks
  */
-export function useNostoCategory(props: NostoCategoryProps) {
+export function useNostoCategory({ category, placements }: NostoCategoryProps) {
   const { renderCampaigns } = useRenderCampaigns()
 
-  fetchNostoCategory({ ...props, cb: renderCampaigns })
-}
-
-/**
- * fetch Nosto category recommendations using the nosto-js API
- *
- * @group Api
- */
-export function fetchNostoCategory({ category, placements, cb }: FetchNostoCategoryProps) {
   useNostoApi(
     async api => {
       const data = await api
@@ -39,8 +24,7 @@ export function fetchNostoCategory({ category, placements, cb }: FetchNostoCateg
         .viewCategory(category)
         .setPlacements(placements || api.placements.getPlacements())
         .load()
-
-      cb(data)
+      renderCampaigns(data)
     },
     [category]
   )

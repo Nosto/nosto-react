@@ -70,7 +70,7 @@ This widget is what we call the Nosto root widget, which is responsible for addi
 
 ```jsx
 import { NostoProvider } from "@nosto/nosto-react"
-;<NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
+<NostoProvider account="your-nosto-account-id" recommendationComponent={<NostoSlot />}>
   <App />
 </NostoProvider>
 ```
@@ -99,7 +99,7 @@ The `cart` prop requires a value that adheres to the type `Cart`, while the `cus
 
 ```jsx
 import { NostoSession } from "@nosto/nosto-react"
-;<>
+<>
   <Meta />
   <header>
     <MainMenu />
@@ -124,7 +124,7 @@ The `<NostoHome \>` component needs to be added after the placements. Content an
 
 ```jsx
 import { NostoHome, NostoPlacement } from "@nosto/nosto-react"
-;<div className="front-page">
+<div className="front-page">
   ... ... ...
   <NostoPlacement id="frontpage-nosto-1" />
   <NostoPlacement id="frontpage-nosto-2" />
@@ -144,7 +144,7 @@ The `<NostoProduct \>` component needs to be added after the placements. Content
 
 ```jsx
 import { NostoPlacement, NostoProduct } from "@nosto/nosto-react"
-;<div className="product-page">
+<div className="product-page">
   ... ... ...
   <NostoPlacement id="productpage-nosto-1" />
   <NostoPlacement id="productpage-nosto-2" />
@@ -161,7 +161,7 @@ By default, your account, when created, has <u>two</u> search-page placements na
 
 ```jsx
 import { NostoPlacement, NostoSearch } from "@nosto/nosto-react"
-;<div className="search-page">
+<div className="search-page">
   ... ... ...
   <NostoPlacement id="searchpage-nosto-1" />
   <NostoPlacement id="searchpage-nosto-2" />
@@ -179,7 +179,7 @@ By default, your account, when created, has <u>two</u> category placements named
 
 ```jsx
 import { NostoCategory, NostoPlacement } from "@nosto/nosto-react"
-;<div className="category-page">
+<div className="category-page">
   ... ... ...
   <NostoPlacement id="categorypage-nosto-1" />
   <NostoPlacement id="categorypage-nosto-2" />
@@ -197,7 +197,7 @@ By default, your account, when created, has <u>two</u> cart-page placements name
 
 ```jsx
 import { NostoCheckout, NostoPlacement } from "@nosto/nosto-react"
-;<div className="checkout-page">
+<div className="checkout-page">
   ... ... ...
   <NostoPlacement id="checkout-nosto-1" />
   <NostoPlacement id="checkout-nosto-2" />
@@ -213,7 +213,7 @@ By default, your account, when created, has three 404-page placements named `not
 
 ```jsx
 import { Nosto404, NostoPlacement } from "@nosto/nosto-react"
-;<div className="notfound-page">
+<div className="notfound-page">
   ... ... ...
   <NostoPlacement id="notfound-nosto-1" />
   <NostoPlacement id="notfound-nosto-2" />
@@ -230,7 +230,7 @@ By default, your account, when created, has two other-page placements named `oth
 
 ```jsx
 import { NostoOther, NostoPlacement } from "@nosto/nosto-react"
-;<div className="other-page">
+<div className="other-page">
   ... ... ...
   <NostoPlacement id="other-nosto-1" />
   <NostoPlacement id="other-nosto-2" />
@@ -246,7 +246,7 @@ By default, your account, when created, has one other-page placement named `than
 
 ```jsx
 import { NostoOrder, NostoPlacement } from "@nosto/nosto-react"
-;<div className="thankyou-page">
+<div className="thankyou-page">
   ... ... ...
   <NostoPlacement id="thankyou-nosto-1" />
   <NostoOrder order={order} />

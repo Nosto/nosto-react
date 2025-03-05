@@ -9,7 +9,7 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 function loadClientScript(merchant: string) {
   const script = document.createElement("script")
   script.setAttribute("nosto-client-script", "")
-  script.src = `http://connect.nosto.com/include/${merchant}`
+  script.src = `https://connect.nosto.com/include/${merchant}`
   script.type = "text/javascript"
   script.async = true
   const promise = new Promise<void>(resolve => {
@@ -73,7 +73,7 @@ describe("useLoadClientScript", () => {
 
     hook.rerender()
     expect(hook.result.current.clientScriptLoaded).toBe(true)
-    expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
+    expect(getScriptSources()).toEqual([`https://connect.nosto.com/include/${testAccount}`])
   })
 
   it("set loaded state to true when client is loaded externally before", async () => {
@@ -82,7 +82,7 @@ describe("useLoadClientScript", () => {
 
     const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(result.current.clientScriptLoaded).toBe(true)
-    expect(getScriptSources()).toEqual([`http://connect.nosto.com/include/${testAccount}`])
+    expect(getScriptSources()).toEqual([`https://connect.nosto.com/include/${testAccount}`])
   })
 
   it("remove existing Shopify markets related scripts before loading new ones", () => {

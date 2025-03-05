@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest"
 import scriptLoader from "../src/hooks/scriptLoader"
 
 describe("scriptLoader", () => {
-  const scriptSrc = "http://connect.nosto.com/include/shopify-11368366139"
+  const scriptSrc = "https://connect.nosto.com/include/shopify-11368366139"
 
   it("loads script", async () => {
     await scriptLoader(scriptSrc)

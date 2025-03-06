@@ -64,7 +64,7 @@ describe("useLoadClientScript", () => {
     })
   })
 
-  it("set loaded state to true when client is loaded externally after", async () => {
+  it("set loaded state to true when client is  loaded externally after", async () => {
     const hook = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))
     expect(hook.result.current.clientScriptLoaded).toBe(false)
 

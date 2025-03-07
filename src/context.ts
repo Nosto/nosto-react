@@ -2,8 +2,6 @@ import { createContext, ReactElement } from "react"
 import { Recommendation } from "./types"
 import { RenderMode } from "@nosto/nosto-js/client"
 
-type AnyFunction = (...args: unknown[]) => unknown
-
 export type RecommendationComponent = ReactElement<{
   nostoRecommendation: Recommendation
 }>
@@ -15,7 +13,7 @@ export interface NostoContextType {
   account: string
   clientScriptLoaded: boolean
   currentVariation?: string
-  renderFunction?: AnyFunction
+  renderFunction?: (...args: unknown[]) => unknown
   responseMode: RenderMode
   recommendationComponent?: RecommendationComponent
 }

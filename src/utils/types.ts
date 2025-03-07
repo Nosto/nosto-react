@@ -1,4 +1,4 @@
-type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
+export type SnakeToCamelCase<S extends string> = S extends `${infer T}_${infer U}`
   ? `${T}${Capitalize<SnakeToCamelCase<U>>}`
   : S
 
@@ -13,7 +13,7 @@ export type ToCamelCase<T> = T extends (infer U)[]
     }
   : T
 
-type CamelToSnakeCase<S extends string> = S extends `${infer T}${infer U}`
+export type CamelToSnakeCase<S extends string> = S extends `${infer T}${infer U}`
   ? U extends Uncapitalize<U>
     ? `${Lowercase<T>}${CamelToSnakeCase<U>}`
     : `${Lowercase<T>}_${CamelToSnakeCase<Uncapitalize<U>>}`

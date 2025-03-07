@@ -1,5 +1,5 @@
 /* eslint-disable barrel-files/avoid-barrel-files */
-export type { Product, PushedCustomer as Customer, Cart, WebsiteOrder as Order } from "@nosto/nosto-js/client"
+export type { Product, PushedCustomer as Customer, Cart, WebsiteOrder as Order, RenderMode } from "@nosto/nosto-js/client"
 export type { Recommendation } from "./types"
 export { type ScriptLoadOptions } from "./hooks/scriptLoader"
 export { NostoContext, type NostoContextType } from "./context"

@@ -3,11 +3,12 @@ import scriptLoader from "../src/hooks/scriptLoader"
 
 describe("scriptLoader", () => {
   const scriptSrc = "https://connect.nosto.com/include/shopify-11368366139"
+  const selector = `script[src="${scriptSrc}"]`
 
   it("loads script", async () => {
     await scriptLoader(scriptSrc)
 
-    const script = document.querySelector("script")
+    const script = document.querySelector<HTMLScriptElement>(selector)
     expect(script).not.toBeNull()
     expect(script?.src).toBe(scriptSrc)
   })
@@ -15,7 +16,7 @@ describe("scriptLoader", () => {
   it("supports custom attributes", async () => {
     await scriptLoader(scriptSrc, { attributes: { "data-test": "test" } })
 
-    const script = document.querySelector("script")
+    const script = document.querySelector<HTMLScriptElement>(selector)
     expect(script).not.toBeNull()
     expect(script?.getAttribute("data-test")).toBe("test")
   })
@@ -23,7 +24,7 @@ describe("scriptLoader", () => {
   it("supports custom position", async () => {
     await scriptLoader(scriptSrc, { position: "head" })
 
-    const script = document.head.querySelector("script")
+    const script = document.head.querySelector<HTMLScriptElement>(selector)
     expect(script).not.toBeNull()
     expect(script?.src).toBe(scriptSrc)
   })

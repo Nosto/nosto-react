@@ -19,7 +19,7 @@ global.localStorage = window.localStorage
 beforeEach(() => {
   window.nostoab = {
     settings: {
-      site: "localhost"
+      site: "http://localhost"
     }
   }
 })

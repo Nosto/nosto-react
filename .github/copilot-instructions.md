@@ -18,3 +18,11 @@
 * Use 'beforeEach' for setup
 * Use 'afterEach' for cleanup
 * Use 'expect' for assertions
+
+## Build
+
+* `npm ci` - Install dependencies (preferred over `npm install` for CI/CD and clean installs)
+* `npm run build` - Main build script: compiles TypeScript, runs linting, bundles with Vite, and generates documentation
+* `npm run lint` - Run ESLint to check code quality and style
+* `npm run prettier:fix` - Run Prettier with auto-fix to automatically format code (run before commit)
+* `npm test` - Run test suite with vitest including coverage reporting

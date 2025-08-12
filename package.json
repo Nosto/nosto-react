@@ -12,6 +12,9 @@
     "nosto",
     "personalisation"
   ],
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && npm run lint && vite build && npm run typedoc",

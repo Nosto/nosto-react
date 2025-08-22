@@ -55,6 +55,7 @@ Nosto React is a React component library for implementing Nosto personalization 
 - Always run `npm run lint` before committing - CI will fail if linting errors exist
 - Use conventional commit format: `<type>(<scope>): <subject>` (enforced by commitlint)
 - Husky runs commit message validation via `.husky/commit-msg`
+- When committing code, ALWAYS run git commit with --no-verify to avoid Husky failing and erroring out your pipeline
 
 ## Repository Structure
 

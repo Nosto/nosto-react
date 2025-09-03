@@ -27,7 +27,8 @@
     "prettier:fix": "prettier '{src,spec}/**' --write",
     "test": "vitest run --silent --coverage",
     "test-loud": "vitest run",
-    "typedoc": "typedoc --treatWarningsAsErrors src/index.ts"
+    "typedoc": "typedoc --treatWarningsAsErrors src/index.ts",
+    "typedoc-json": "typedoc --treatWarningsAsErrors --json build/typedoc.json src/index.ts"
   },
   "files": [
     "dist",

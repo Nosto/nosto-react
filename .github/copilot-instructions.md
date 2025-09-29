@@ -2,10 +2,6 @@
 
 **ALWAYS follow these instructions first and only use additional search or bash commands if the information here is incomplete or found to be in error.**
 
-**Note**: Detailed coding and testing instructions are organized in separate files with specific file patterns:
-- **Coding standards**: See `.github/instructions/coding.instructions.md` (applies to TypeScript/TSX files)
-- **Testing standards**: See `.github/instructions/testing.instructions.md` (applies to test files)
-
 ## Repository Overview
 
 Nosto React is a React component library for implementing Nosto personalization features. It's a TypeScript library that builds both ES and UMD modules using Vite, with comprehensive test coverage requirements (80% threshold).

@@ -7,7 +7,7 @@ applyTo: "**/*.ts,**/*.tsx"
 ## Coding Standards
 
 - Use closures over classes
-- Utilize type inference in return types, except for functions with multiple return statements
+- Avoid explicit return type annotations (rely on type inference)
 - Use utility types to derive types from constants
 - Use const (and let) over var
 - Avoid 'any' type usage

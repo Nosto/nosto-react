@@ -1,3 +1,10 @@
+# [2.9.0](https://github.com/Nosto/nosto-react/compare/v2.8.0...v2.9.0) (2025-09-29)
+
+
+### Features
+
+* reorganize copilot instructions with structured approach ([08c1dcd](https://github.com/Nosto/nosto-react/commit/08c1dcda7bf15627e7644655c07d7507be291d6a))
+
 # [2.8.0](https://github.com/Nosto/nosto-react/compare/v2.7.1...v2.8.0) (2025-08-12)
 
 

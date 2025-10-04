@@ -9,9 +9,9 @@ Nosto React is a React component library for implementing Nosto personalization 
 ## Essential Setup Requirements
 
 ### Node.js Version
-- **Node.js 22 or higher required** (as specified in `package.json` engines field)
-- CI environment uses Node.js 22 (see `.github/workflows/ci.yml`)
-- Current system may have Node v20 which works but CI requires v22
+- **Node.js 24 or higher required** (as specified in `package.json` engines field)
+- CI environment uses Node.js 24 (see `.github/workflows/ci.yml`)
+- Current system may have Node v20 which works but CI requires v24
 
 ### Installation
 - **Always use**: `npm ci` for dependency installation

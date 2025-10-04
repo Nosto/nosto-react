@@ -39,9 +39,9 @@
     "react-dom": "^18.3.1 || ^19.0.0"
   },
   "devDependencies": {
-    "@nosto/nosto-js": "^2.0.0",
     "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^20.0.0",
+    "@nosto/nosto-js": "^2.0.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.4.3",
@@ -55,6 +55,7 @@
     "eslint-plugin-promise": "^7.1.0",
     "eslint-plugin-react": "^7.33.2",
     "husky": "^9.1.7",
+    "jsdom": "^27.0.0",
     "prettier": "^3.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

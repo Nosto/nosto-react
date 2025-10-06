@@ -8,17 +8,6 @@ Nosto React is a React component library for implementing Nosto personalization 
 
 ## Essential Setup Requirements
 
-### Node.js Version
-- **Node.js 22 or higher required** (as specified in `package.json` engines field)
-- CI environment uses Node.js 22 (see `.github/workflows/ci.yml`)
-- Current system may have Node v20 which works but CI requires v22
-
-### Installation
-- **Always use**: `npm ci` for dependency installation
-- Takes ~90 seconds, **NEVER CANCEL** - set timeout to 3+ minutes
-- Alternative: `npm install` (if npm ci fails)
-- Bootstrap includes initial build via husky prepare script
-
 ### Core Validation Commands
 - **Type checking**: `npm run typecheck` - runs TypeScript compiler (~2 seconds)
 - **Linting**: `npm run lint` - runs ESLint on TypeScript files (~1 second)  

@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/Nosto/nosto-react/compare/v2.9.0...v2.10.0) (2025-10-06)
+
+
+### Features
+
+* bump Node.js version from 22 to 24 in all GitHub Actions and package.json ([fec0852](https://github.com/Nosto/nosto-react/commit/fec085243a57fcb50293b860aaa3a64c231b2d36))
+
 # [2.9.0](https://github.com/Nosto/nosto-react/compare/v2.8.0...v2.9.0) (2025-09-29)
 
 

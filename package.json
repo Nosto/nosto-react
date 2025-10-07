@@ -1,7 +1,7 @@
 {
   "name": "@nosto/nosto-react",
   "description": "Component library to simply implementing Nosto on React.",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "author": "Mridang Agarwalla, Dominik Gilg",
   "license": "ISC",
   "repository": {

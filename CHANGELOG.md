@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/Nosto/nosto-react/compare/v2.10.0...v2.11.0) (2025-10-07)
+
+
+### Features
+
+* add copilot-setup-steps workflow ([77cf37b](https://github.com/Nosto/nosto-react/commit/77cf37b62270edf3b00ca802ccb42b70bd85b502))
+
 # [2.10.0](https://github.com/Nosto/nosto-react/compare/v2.9.0...v2.10.0) (2025-10-06)
 
 

@@ -14,7 +14,6 @@ function RecommendationComponentWrapper(props: {
   nostoRecommendation: Recommendation
 }) {
   return cloneElement(props.recommendationComponent, {
-    // eslint-disable-next-line react/prop-types
     nostoRecommendation: props.nostoRecommendation
   })
 }
@@ -31,6 +30,66 @@ function injectCampaigns(data: CampaignData) {
   injectPlacements(data.recommendations)
 }
 
+/**
+ * Hook for rendering Nosto campaigns and recommendations. Handles both HTML and client-side rendering modes.
+ * This hook is typically used internally by other Nosto hooks but can be used directly for custom implementations.
+ * 
+ * @example Basic usage with HTML mode
+ * ```tsx
+ * import { useRenderCampaigns } from '@nosto/nosto-react'
+ * 
+ * function CustomRecommendations() {
+ *   const { renderCampaigns } = useRenderCampaigns()
+ * 
+ *   useEffect(() => {
+ *     // When using HTML response mode, campaigns are injected as HTML
+ *     const campaignData = {
+ *       campaigns: {
+ *         content: {
+ *           'my-placement-id': '<div>Nosto content</div>'
+ *         }
+ *       },
+ *       recommendations: {}
+ *     }
+ *     renderCampaigns(campaignData)
+ *   }, [renderCampaigns])
+ * 
+ *   return <div id="my-placement-id" />
+ * }
+ * ```
+ * 
+ * @example Client-side rendering with React components
+ * ```tsx
+ * import { useRenderCampaigns } from '@nosto/nosto-react'
+ * 
+ * function ClientSideRecommendations() {
+ *   const { renderCampaigns } = useRenderCampaigns()
+ * 
+ *   useEffect(() => {
+ *     // When using client-side rendering, recommendations are rendered as React components
+ *     const campaignData = {
+ *       campaigns: {
+ *         recommendations: {
+ *           'my-placement-id': {
+ *             result_id: 'abc123',
+ *             products: [
+ *               { product_id: '1', name: 'Product 1', url: '/product/1' },
+ *               { product_id: '2', name: 'Product 2', url: '/product/2' }
+ *             ]
+ *           }
+ *         }
+ *       },
+ *       recommendations: {}
+ *     }
+ *     renderCampaigns(campaignData)
+ *   }, [renderCampaigns])
+ * 
+ *   return <div id="my-placement-id" />
+ * }
+ * ```
+ * 
+ * @group Essential Functions
+ */
 export function useRenderCampaigns() {
   const { responseMode, recommendationComponent } = useNostoContext()
   const placementRefs = useRef<Record<string, Root>>({})

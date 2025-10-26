@@ -42,7 +42,7 @@ import { NostoContext, NostoContextType } from "../context"
  * }
  * ```
  *
- * @group Essential Functions
+ * @group Hooks
  */
 export function useNostoContext(): NostoContextType {
   return useContext(NostoContext)

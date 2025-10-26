@@ -88,7 +88,7 @@ function injectCampaigns(data: CampaignData) {
  * }
  * ```
  * 
- * @group Essential Functions
+ * @group Hooks
  */
 export function useRenderCampaigns() {
   const { responseMode, recommendationComponent } = useNostoContext()

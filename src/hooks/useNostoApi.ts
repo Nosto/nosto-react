@@ -47,7 +47,7 @@ import { API } from "@nosto/nosto-js/client"
  * @param deps Optional dependency list for useEffect
  * @param flags Optional flags, including `deep` for deep comparison of dependencies
  * 
- * @group Essential Functions
+ * @group Hooks
  */
 export function useNostoApi(cb: (api: API) => void, deps?: DependencyList, flags?: { deep?: boolean }): void {
   const { clientScriptLoaded } = useNostoContext()

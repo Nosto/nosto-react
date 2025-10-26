@@ -40,7 +40,7 @@ import { deepCompare } from "../utils/compare"
  * @param callback The effect callback function
  * @param dependencies Array of dependencies to deep compare
  * 
- * @group Utilities
+ * @group Hooks
  */
 export function useDeepCompareEffect(callback: EffectCallback, dependencies: DependencyList) {
   return useEffect(callback, useDeepCompareMemoize(dependencies))

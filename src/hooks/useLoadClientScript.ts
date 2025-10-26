@@ -58,7 +58,7 @@ const defaultAttributes = { "nosto-client-script": "" }
  * }
  * ```
  * 
- * @group Essential Functions
+ * @group Hooks
  */
 export function useLoadClientScript(props: NostoScriptProps) {
   const {

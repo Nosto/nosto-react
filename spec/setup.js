@@ -21,6 +21,7 @@ global.localStorage = window.localStorage
 Object.defineProperty(global.window, "performance", {
   value: {
     ...global.window.performance,
+    measure: vi.fn(),
     mark: vi.fn(),
     now: vi.fn().mockReturnValue(Date.now())
   },

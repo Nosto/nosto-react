@@ -1,5 +1,7 @@
+/// <reference types="vitest/config" />
+// @ts-expect-error could not resolve types for @vitejs/plugin-react
 import react from "@vitejs/plugin-react"
-import path from "node:path"
+import { resolve } from "node:path"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
 import { visualizer } from "rollup-plugin-visualizer"
@@ -15,7 +17,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: path.resolve(__dirname, "src/index.ts"),
+      entry: resolve(__dirname, "src/index.ts"),
       name: "@nosto/nosto-react",
       formats: ["es", "umd"],
       fileName: format => `index.${format}.js`
@@ -34,6 +36,7 @@ export default defineConfig({
   },
   test: {
     coverage: {
+      provider: "v8",
       include: ["src/**/*.{js,ts,tsx}"],
       skipFull: true,
       thresholds: {

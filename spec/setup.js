@@ -16,6 +16,18 @@ global.location = window.location
 global.document = window.document
 global.localStorage = window.localStorage
 
+// Polyfill performance.mark and performance.now until jsdom supports them
+// Need for loading external client script because of performance API usage
+Object.defineProperty(global.window, "performance", {
+  value: {
+    ...global.window.performance,
+    mark: vi.fn(),
+    now: vi.fn().mockReturnValue(Date.now())
+  },
+  writable: true,
+  configurable: true
+})
+
 beforeEach(() => {
   window.nostoab = {
     settings: {

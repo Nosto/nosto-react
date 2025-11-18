@@ -1,3 +1,12 @@
+## [2.11.1](https://github.com/Nosto/nosto-react/compare/v2.11.0...v2.11.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* add measure method to performance polyfill ([cfb70a0](https://github.com/Nosto/nosto-react/commit/cfb70a07db18eb0ee9752982c538d452e58a67b9))
+* issues with tests, migrate vite config to TS and upgrade some plugins ([b6743ce](https://github.com/Nosto/nosto-react/commit/b6743cec307fad946e237b9a665d1cd980f31de3))
+* use type module in package.json to avoid overhead with loading config files ([05063ab](https://github.com/Nosto/nosto-react/commit/05063abce9065ab9e13627a251d7d9b977256c9a))
+
 # [2.11.0](https://github.com/Nosto/nosto-react/compare/v2.10.0...v2.11.0) (2025-10-07)
 
 

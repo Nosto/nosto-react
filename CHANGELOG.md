@@ -1,3 +1,17 @@
+# [2.12.0](https://github.com/Nosto/nosto-react/compare/v2.11.1...v2.12.0) (2025-12-09)
+
+
+### Bug Fixes
+
+* semantic_version 25.0.2 ([bc833f2](https://github.com/Nosto/nosto-react/commit/bc833f2e9a89e72990d71049bbc1b695e4550105))
+* use contents read with PAT token ([0f80954](https://github.com/Nosto/nosto-react/commit/0f8095483728fe088f4ae4b682661962d51733db))
+
+
+### Features
+
+* migrate to trusted publishing ([097fd6a](https://github.com/Nosto/nosto-react/commit/097fd6ad86226639975bcdb724b8ffaf4b012b59))
+* migrate to trusted publishing ([369a7af](https://github.com/Nosto/nosto-react/commit/369a7af0841bd884569b4acd0d33eb96afc17e94))
+
 ## [2.11.1](https://github.com/Nosto/nosto-react/compare/v2.11.0...v2.11.1) (2025-11-18)
 
 

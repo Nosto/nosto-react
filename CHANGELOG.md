@@ -1,3 +1,10 @@
+## [2.12.1](https://github.com/Nosto/nosto-react/compare/v2.12.0...v2.12.1) (2026-01-20)
+
+
+### Bug Fixes
+
+* fix fetch usage ([4c11abd](https://github.com/Nosto/nosto-react/commit/4c11abd8ed8e2f041feb44f591ec55e423239fa3))
+
 # [2.12.0](https://github.com/Nosto/nosto-react/compare/v2.11.1...v2.12.0) (2025-12-09)
 
 

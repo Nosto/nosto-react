@@ -76,20 +76,25 @@ test("navigation events", async () => {
   // home -> category
   fireEvent.click(screen.getByText("Hoodies"))
   verifyEvents([frontEvent(), categoryEvent("hoodies")])
+  await waitForRecommendations(2)
 
   // category -> product
   fireEvent.click(screen.getByText("Product 123"))
   verifyEvents([productEvent("123")])
+  await waitForRecommendations(3)
 
   // product -> product
   fireEvent.click(screen.getByText("Product 234"))
   verifyEvents([productEvent("234")])
+  await waitForRecommendations(3)
 
   // product -> category
   fireEvent.click(screen.getByText("Hoodies"))
   verifyEvents([categoryEvent("hoodies")])
+  await waitForRecommendations(2)
 
   // category -> home
   fireEvent.click(screen.getByText("Home"))
   verifyEvents([frontEvent()])
+  await waitForRecommendations(3)
 })

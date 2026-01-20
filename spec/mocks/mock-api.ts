@@ -3,12 +3,16 @@ import { jsonMockData } from "./mock-data"
 import { Product } from "../../src"
 import { API, Session, Action, PageType, TaggingData, BusEvent } from "@nosto/nosto-js/client"
 
+let latestActionData: Partial<TaggingData>
+let eventListeners: Record<string, ((...args: unknown[]) => void)[]> = {}
+
+function resetEventListeners() {
+  eventListeners = {}
+}
+
 function normalizeProduct(data: Product | string) {
   return typeof data === "string" ? { product_id: data } : data
 }
-
-let latestActionData: Partial<TaggingData>
-const eventListeners: Record<string, ((...args: unknown[]) => void)[]> = {}
 
 function newSession(defaultPlacements: string[]) {
   const data: Partial<TaggingData> & { responseMode?: string} = {}
@@ -75,6 +79,9 @@ function newSession(defaultPlacements: string[]) {
 }
 
 export default function (placements: string[]) {
+  // Reset event listeners for this mock instance to avoid test interference
+  resetEventListeners()
+  
   const session = newSession(placements)
 
   // TODO: Fix mock

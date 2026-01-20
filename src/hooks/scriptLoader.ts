@@ -5,7 +5,15 @@ export default function scriptLoader(scriptSrc: string, options?: ScriptLoadOpti
     script.src = scriptSrc
     script.async = true
     script.onload = () => resolve()
-    script.onerror = (error) => reject(new Error(`Could not load script: "${scriptSrc}"`, { cause: error }))
+    script.onerror = (error) => {
+      const errorMessage = `Could not load script: "${scriptSrc}"`
+      const err = new Error(errorMessage)
+      // Attach original error for debugging (more compatible than 'cause')
+      if (error) {
+        (err as Error & { originalError?: unknown }).originalError = error
+      }
+      reject(err)
+    }
     Object.entries(options?.attributes ?? {}).forEach(([k, v]) => script.setAttribute(k, v))
     if (options?.position === "head") {
       document.head.appendChild(script)

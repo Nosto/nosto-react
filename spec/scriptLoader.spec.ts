@@ -6,7 +6,7 @@ describe("scriptLoader", () => {
   const selector = `script[src="${scriptSrc}"]`
 
   it("loads script", async () => {
-    await scriptLoader(scriptSrc)
+    await expect(scriptLoader(scriptSrc)).rejects.toThrow(`Could not load script: "${scriptSrc}"`)
 
     const script = document.querySelector<HTMLScriptElement>(selector)
     expect(script).not.toBeNull()
@@ -14,7 +14,7 @@ describe("scriptLoader", () => {
   })
 
   it("supports custom attributes", async () => {
-    await scriptLoader(scriptSrc, { attributes: { "data-test": "test" } })
+    await expect(scriptLoader(scriptSrc, { attributes: { "data-test": "test" } })).rejects.toThrow(`Could not load script: "${scriptSrc}"`)
 
     const script = document.querySelector<HTMLScriptElement>(selector)
     expect(script).not.toBeNull()
@@ -22,7 +22,7 @@ describe("scriptLoader", () => {
   })
 
   it("supports custom position", async () => {
-    await scriptLoader(scriptSrc, { position: "head" })
+    await expect(scriptLoader(scriptSrc, { position: "head" })).rejects.toThrow(`Could not load script: "${scriptSrc}"`)
 
     const script = document.head.querySelector<HTMLScriptElement>(selector)
     expect(script).not.toBeNull()

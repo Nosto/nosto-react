@@ -5,6 +5,8 @@ import { Link, BrowserRouter, Route, Routes, useParams } from "react-router-dom"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { listenTo, waitForRecommendations } from "./utils"
 import { categoryEvent, frontEvent, productEvent } from "./events"
+import mockApi from "./mocks/mock-api"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 function HomePage() {
   useNostoHome()
@@ -49,7 +51,7 @@ function ProductPage() {
 
 function Main() {
   return (
-    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />}>
+    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />} loadScript={false}>
       <BrowserRouter>
         <Routes>
           <Route path="/collections/:category" element={<CategoryPage />} />
@@ -62,6 +64,11 @@ function Main() {
 }
 
 test("navigation events", async () => {
+  // Mock the Nosto API to enable recommendations rendering
+  const placements = ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"]
+  const mocked = mockApi(placements)
+  mockNostojs(mocked)
+  
   // start collecting prequest events before rendering to make sure to catch all events
   const requests = listenTo("prerequest")
   render(<Main />)

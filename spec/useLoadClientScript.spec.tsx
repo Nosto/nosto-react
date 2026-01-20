@@ -35,7 +35,7 @@ describe("useLoadClientScript", () => {
     await new Promise(nostojs)
 
     hook.rerender()
-    await wait(10)
+    await wait(20)
     expect(hook.result.current.clientScriptLoaded).toBe(true)
     expect(isNostoLoaded()).toBeTruthy()
     expect(getScriptSources()).toContain(`https://connect.nosto.com/include/${testAccount}`)

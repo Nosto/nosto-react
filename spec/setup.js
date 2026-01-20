@@ -10,7 +10,7 @@ const { window } = new JSDOM("<html></html>", {
 global.window = window
 global.window.requestAnimationFrame = vi.fn()
 global.window.CSS = { escape: v => v }
-global.window.fetch = vi.fn().mockRejectedValue()
+global.window.fetch = global.fetch
 
 global.location = window.location
 global.document = window.document

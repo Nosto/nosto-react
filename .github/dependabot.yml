@@ -11,6 +11,9 @@ updates:
       patch-updates:
         update-types:
           - "patch"
+      commitlint:
+        patterns:
+          - "@commitlint/*"
       vitest:
         patterns:
           - "vitest"

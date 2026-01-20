@@ -9,7 +9,7 @@ import mockApi from "./mocks/mock-api"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 
 function HomePage() {
-  useNostoHome()
+  useNostoHome({ placements: ["frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4"] })
   return (
     <>
       <NostoPlacement id="frontpage-nosto-1" />
@@ -22,7 +22,7 @@ function HomePage() {
 
 function CategoryPage() {
   const { category } = useParams()
-  useNostoCategory({ category: category! })
+  useNostoCategory({ category: category!, placements: ["categorypage-nosto-1", "categorypage-nosto-2"] })
   return (
     <>
       <NostoPlacement id="categorypage-nosto-1" />
@@ -36,7 +36,7 @@ function CategoryPage() {
 
 function ProductPage() {
   const { product } = useParams()
-  useNostoProduct({ product: product! })
+  useNostoProduct({ product: product!, placements: ["productpage-nosto-1", "productpage-nosto-2", "productpage-nosto-3"] })
   return (
     <>
       <NostoPlacement id="productpage-nosto-1" />

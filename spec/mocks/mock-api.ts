@@ -1,14 +1,14 @@
 import { vi } from "vitest"
 import { jsonMockData } from "./mock-data"
 import { Product } from "../../src"
-import { API, Session, Action, PageType, TaggingData } from "@nosto/nosto-js/client"
+import { API, Session, Action, PageType, TaggingData, BusEvent } from "@nosto/nosto-js/client"
 
 function normalizeProduct(data: Product | string) {
   return typeof data === "string" ? { product_id: data } : data
 }
 
 let latestActionData: Partial<TaggingData>
-const eventListeners: Record<string, ((data: unknown) => void)[]> = {}
+const eventListeners: Record<string, ((...args: unknown[]) => void)[]> = {}
 
 function newSession(defaultPlacements: string[]) {
   const data: Partial<TaggingData> & { responseMode?: string} = {}
@@ -80,12 +80,12 @@ export default function (placements: string[]) {
   // TODO: Fix mock
   return {
     setAutoLoad: vi.fn(),
-    listen: vi.fn((event: string, callback: (data: unknown) => void) => {
+    listen: vi.fn((event: BusEvent, callback: (...args: unknown[]) => void) => {
       if (!eventListeners[event]) {
         eventListeners[event] = []
       }
       eventListeners[event].push(callback)
-    }),
+    }) as API["listen"],
     placements: {
       injectCampaigns: vi.fn(),
       getPlacements: () => placements,

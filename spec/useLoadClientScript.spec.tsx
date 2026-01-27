@@ -32,6 +32,12 @@ describe("useLoadClientScript", () => {
 
   it("loads client script", async () => {
     const hook = renderHook(() => useLoadClientScript({ account: testAccount }))
+    
+    // Mock nostojs immediately after hook starts loading
+    mockNostojs({
+      setAutoLoad: vi.fn()
+    })
+    
     await new Promise(nostojs)
 
     hook.rerender()
@@ -56,6 +62,12 @@ describe("useLoadClientScript", () => {
   it("support custom script loaders", async () => {
     const customScriptLoader = vi.fn(scriptLoader)
     const hook = renderHook(() => useLoadClientScript({ account: testAccount, scriptLoader: customScriptLoader }))
+    
+    // Mock nostojs immediately after hook starts loading
+    mockNostojs({
+      setAutoLoad: vi.fn()
+    })
+    
     await new Promise(nostojs)
 
     hook.rerender()
@@ -69,6 +81,12 @@ describe("useLoadClientScript", () => {
     expect(hook.result.current.clientScriptLoaded).toBe(false)
 
     await loadClientScript(testAccount)
+    
+    // Mock nostojs after script is appended
+    mockNostojs({
+      setAutoLoad: vi.fn()
+    })
+    
     expect(isNostoLoaded()).toBeTruthy()
 
     hook.rerender()
@@ -78,6 +96,12 @@ describe("useLoadClientScript", () => {
 
   it("set loaded state to true when client is loaded externally before", async () => {
     await loadClientScript(testAccount)
+    
+    // Mock nostojs after script is loaded
+    mockNostojs({
+      setAutoLoad: vi.fn()
+    })
+    
     expect(isNostoLoaded()).toBeTruthy()
 
     const { result } = renderHook(() => useLoadClientScript({ loadScript: false, account: testAccount }))

@@ -5,6 +5,8 @@ import { Link, BrowserRouter, Route, Routes, useParams } from "react-router-dom"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { listenTo, waitForRecommendations } from "./utils"
 import { categoryEvent, frontEvent, productEvent } from "./events"
+import mockApi from "./mocks/mock-api"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 
 function HomePage() {
   useNostoHome()
@@ -49,7 +51,7 @@ function ProductPage() {
 
 function Main() {
   return (
-    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />}>
+    <NostoProvider account="shopify-11368366139" recommendationComponent={<RecommendationComponent />} loadScript={false}>
       <BrowserRouter>
         <Routes>
           <Route path="/collections/:category" element={<CategoryPage />} />
@@ -62,6 +64,15 @@ function Main() {
 }
 
 test("navigation events", async () => {
+  // Mock all possible placements that will be used during navigation
+  const allPlacements = [
+    "frontpage-nosto-1", "frontpage-nosto-3", "frontpage-nosto-4",
+    "categorypage-nosto-1", "categorypage-nosto-2",
+    "productpage-nosto-1", "productpage-nosto-2", "productpage-nosto-3"
+  ]
+  const mocked = mockApi(allPlacements)
+  mockNostojs(mocked)
+
   // start collecting prequest events before rendering to make sure to catch all events
   const requests = listenTo("prerequest")
   render(<Main />)

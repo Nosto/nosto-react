@@ -1,6 +1,7 @@
 import { JSDOM } from "jsdom"
 import { beforeEach, afterEach, vi } from "vitest"
 import { clearNostoGlobals } from "@nosto/nosto-js/testing"
+import "whatwg-fetch"
 
 const { window } = new JSDOM("<html></html>", {
   url: "http://localhost",
@@ -10,6 +11,7 @@ const { window } = new JSDOM("<html></html>", {
 global.window = window
 global.window.requestAnimationFrame = vi.fn()
 global.window.CSS = { escape: v => v }
+// Use whatwg-fetch polyfill for browser-compatible fetch implementation
 global.window.fetch = global.fetch
 
 global.location = window.location

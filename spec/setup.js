@@ -10,7 +10,10 @@ const { window } = new JSDOM("<html></html>", {
 global.window = window
 global.window.requestAnimationFrame = vi.fn()
 global.window.CSS = { escape: v => v }
-global.window.fetch = global.fetch
+global.window.fetch = (url, { signal, ...options } = {}) => {
+  // exclude AbortSignal due to limited support in node-fetch
+  return fetch(url, options)
+}
 
 global.location = window.location
 global.document = window.document

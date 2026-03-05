@@ -16,6 +16,11 @@ export default [
       ecmaVersion: "latest",
       sourceType: "module"
     },
+    settings: {
+      react: {
+        version: "19"
+      }
+    },
     rules: {
       "react/react-in-jsx-scope": "off",
       "promise/prefer-await-to-then": "error"

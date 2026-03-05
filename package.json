@@ -55,8 +55,8 @@
     "@vitest/coverage-v8": "^4.0.10",
     "eslint": "^10.0.2",
     "eslint-plugin-barrel-files": "^3.0.1",
-    "eslint-plugin-promise": "^7.1.0",
-    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.5",
     "husky": "^9.1.7",
     "jsdom": "^28.0.0",
     "patch-package": "^8.0.1",
@@ -82,6 +82,14 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
       "require": "./dist/index.umd.js"
+    }
+  },
+  "overrides": {
+    "eslint-plugin-promise": {
+      "eslint": "$eslint"
+    },
+    "eslint-plugin-react": {
+      "eslint": "$eslint"
     }
   },
   "bugs": {

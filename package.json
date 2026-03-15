@@ -67,7 +67,7 @@
     "typedoc": "^0.28.9",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.39.0",
-    "vite": "^7.2.2",
+    "vite": "^8.0.0",
     "vite-plugin-dts": "^4.2.2",
     "vitest": "^4.0.10"
   },

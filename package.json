@@ -49,7 +49,7 @@
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.0",
     "@types/user-event": "^4.1.1",
-    "@vitejs/plugin-react": "^5.1.1",
+    "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.0.10",
     "eslint": "^9.13.0",
     "eslint-plugin-barrel-files": "^3.0.1",

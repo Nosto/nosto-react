@@ -8,9 +8,10 @@ updates:
       prefix: "deps"
     open-pull-requests-limit: 10
     groups:
-      patch-updates:
+      patch-and-minor-updates:
         update-types:
           - "patch"
+          - "minor"
       commitlint:
         patterns:
           - "@commitlint/*"

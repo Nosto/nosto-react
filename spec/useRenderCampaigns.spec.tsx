@@ -20,11 +20,11 @@ describe("useRenderCampaigns", () => {
   it("supports component rendering", async () => {
     const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
 
-    let renderCampaignsFn: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
+    let renderCampaigns: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
 
     function TestComponent() {
-      const { renderCampaigns } = useRenderCampaigns()
-      renderCampaignsFn = renderCampaigns
+      const hook = useRenderCampaigns()
+      renderCampaigns = hook.renderCampaigns
       return null
     }
 
@@ -35,7 +35,7 @@ describe("useRenderCampaigns", () => {
     )
 
     act(() => {
-      renderCampaignsFn!(jsonMockData(placements))
+      renderCampaigns!(jsonMockData(placements))
     })
 
     expect(document.getElementById("frontpage-nosto-1")!.innerHTML).not.toBe("")
@@ -87,11 +87,11 @@ describe("useRenderCampaigns", () => {
     const mocked = mockApi(placements)
     mockNostojs(mocked)
 
-    let renderCampaignsFn: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
+    let renderCampaigns: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
 
     function TestComponent() {
-      const { renderCampaigns } = useRenderCampaigns()
-      renderCampaignsFn = renderCampaigns
+      const hook = useRenderCampaigns()
+      renderCampaigns = hook.renderCampaigns
       return null
     }
 
@@ -102,7 +102,7 @@ describe("useRenderCampaigns", () => {
     )
 
     act(() => {
-      renderCampaignsFn!(mixedMockData(placements))
+      renderCampaigns!(mixedMockData(placements))
     })
 
     expect(mocked.placements.injectCampaigns).toHaveBeenCalledWith(mixedMockData(placements).campaigns.content)
@@ -116,11 +116,11 @@ describe("useRenderCampaigns", () => {
       return <div data-testid="context-value">{value}</div>
     }
 
-    let renderCampaignsFn: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
+    let renderCampaigns: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
 
     function TestComponent() {
-      const { renderCampaigns } = useRenderCampaigns()
-      renderCampaignsFn = renderCampaigns
+      const hook = useRenderCampaigns()
+      renderCampaigns = hook.renderCampaigns
       return null
     }
 
@@ -133,7 +133,7 @@ describe("useRenderCampaigns", () => {
     )
 
     act(() => {
-      renderCampaignsFn!(jsonMockData(["frontpage-nosto-1"]))
+      renderCampaigns!(jsonMockData(["frontpage-nosto-1"]))
     })
 
     expect(screen.getByTestId("context-value").textContent).toBe("injected-value")

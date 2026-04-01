@@ -102,6 +102,9 @@ export function NostoProvider(props: NostoProviderProps) {
     })
   }
 
+  // Use createPortal so recommendation components are rendered into placement DOM nodes
+  // while remaining part of the existing React tree. This preserves access to all ancestor
+  // context providers (e.g. QueryClientProvider, BrowserRouter) in the recommendation components.
   const portals = recommendationComponent
     ? Object.entries(clientSidePlacements).map(([key, { element, recommendation }]) =>
         createPortal(cloneElement(recommendationComponent, { nostoRecommendation: recommendation }), element, key)

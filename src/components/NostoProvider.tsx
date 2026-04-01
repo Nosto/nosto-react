@@ -1,5 +1,6 @@
-import { isValidElement } from "react"
-import { NostoContext, RecommendationComponent } from "../context"
+import { cloneElement, isValidElement, useState } from "react"
+import { createPortal } from "react-dom"
+import { ClientSidePlacement, ClientSidePlacementsContext, NostoContext, RecommendationComponent } from "../context"
 import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
 import { useLoadClientScript } from "../hooks/useLoadClientScript"
@@ -93,23 +94,34 @@ export function NostoProvider(props: NostoProviderProps) {
 
   const { clientScriptLoaded } = useLoadClientScript(props)
 
+  const [clientSidePlacements, setClientSidePlacements] = useState<Record<string, ClientSidePlacement>>({})
+
   if (clientScriptLoaded) {
     nostojs(api => {
       api.defaultSession().setVariation(currentVariation!).setResponseMode(responseMode)
     })
   }
 
+  const portals = recommendationComponent
+    ? Object.entries(clientSidePlacements).map(([key, { element, recommendation }]) =>
+        createPortal(cloneElement(recommendationComponent, { nostoRecommendation: recommendation }), element, key)
+      )
+    : null
+
   return (
-    <NostoContext.Provider
-      value={{
-        account,
-        clientScriptLoaded,
-        currentVariation,
-        responseMode,
-        recommendationComponent
-      }}
-    >
-      {children}
-    </NostoContext.Provider>
+    <ClientSidePlacementsContext.Provider value={setClientSidePlacements}>
+      <NostoContext.Provider
+        value={{
+          account,
+          clientScriptLoaded,
+          currentVariation,
+          responseMode,
+          recommendationComponent
+        }}
+      >
+        {children}
+        {portals}
+      </NostoContext.Provider>
+    </ClientSidePlacementsContext.Provider>
   )
 }

@@ -1,12 +1,14 @@
 import { act } from "react-dom/test-utils"
+import { createContext, useContext } from "react"
 import { useRenderCampaigns } from "../src/hooks/useRenderCampaigns"
-import { renderHook } from "@testing-library/react"
+import { render, renderHook, screen } from "@testing-library/react"
 import { describe, beforeEach, it, expect } from "vitest"
 import RecommendationComponent from "./renderer"
 import { createWrapper } from "./utils"
 import { htmlMockDataForPage, jsonMockData, mixedMockData } from "./mocks/mock-data"
 import mockApi from "./mocks/mock-api"
 import { mockNostojs } from "@nosto/nosto-js/testing"
+import { NostoProvider } from "../src"
 
 describe("useRenderCampaigns", () => {
   beforeEach(() => {
@@ -16,16 +18,24 @@ describe("useRenderCampaigns", () => {
   })
 
   it("supports component rendering", async () => {
-    const wrapper = createWrapper({
-      account: "dummy",
-      clientScriptLoaded: true,
-      responseMode: "JSON_ORIGINAL",
-      recommendationComponent: <RecommendationComponent />
-    })
-    const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
+    const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
+
+    let renderCampaignsFn: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
+
+    function TestComponent() {
+      const { renderCampaigns } = useRenderCampaigns()
+      renderCampaignsFn = renderCampaigns
+      return null
+    }
+
+    render(
+      <NostoProvider account="dummy" recommendationComponent={<RecommendationComponent />} loadScript={false}>
+        <TestComponent />
+      </NostoProvider>
+    )
 
     act(() => {
-      result.current.renderCampaigns(jsonMockData(["frontpage-nosto-1", "frontpage-nosto-2"]))
+      renderCampaignsFn!(jsonMockData(placements))
     })
 
     expect(document.getElementById("frontpage-nosto-1")!.innerHTML).not.toBe("")
@@ -72,23 +82,60 @@ describe("useRenderCampaigns", () => {
   })
 
   it("supports mixed content and recommendations", async () => {
-    const wrapper = createWrapper({
-      account: "dummy",
-      clientScriptLoaded: true,
-      responseMode: "JSON_ORIGINAL",
-      recommendationComponent: <RecommendationComponent />
-    })
-    const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
-
     const placements = ["frontpage-nosto-1", "frontpage-nosto-2"]
 
     const mocked = mockApi(placements)
     mockNostojs(mocked)
 
+    let renderCampaignsFn: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
+
+    function TestComponent() {
+      const { renderCampaigns } = useRenderCampaigns()
+      renderCampaignsFn = renderCampaigns
+      return null
+    }
+
+    render(
+      <NostoProvider account="dummy" recommendationComponent={<RecommendationComponent />} loadScript={false}>
+        <TestComponent />
+      </NostoProvider>
+    )
+
     act(() => {
-      result.current.renderCampaigns(mixedMockData(placements))
+      renderCampaignsFn!(mixedMockData(placements))
     })
 
     expect(mocked.placements.injectCampaigns).toHaveBeenCalledWith(mixedMockData(placements).campaigns.content)
+  })
+
+  it("preserves React context in portal-rendered recommendation components", async () => {
+    const TestContext = createContext("default-value")
+
+    function ContextAwareRecommendation() {
+      const value = useContext(TestContext)
+      return <div data-testid="context-value">{value}</div>
+    }
+
+    let renderCampaignsFn: ReturnType<typeof useRenderCampaigns>["renderCampaigns"] | undefined
+
+    function TestComponent() {
+      const { renderCampaigns } = useRenderCampaigns()
+      renderCampaignsFn = renderCampaigns
+      return null
+    }
+
+    render(
+      <TestContext.Provider value="injected-value">
+        <NostoProvider account="dummy" recommendationComponent={<ContextAwareRecommendation />} loadScript={false}>
+          <TestComponent />
+        </NostoProvider>
+      </TestContext.Provider>
+    )
+
+    act(() => {
+      renderCampaignsFn!(jsonMockData(["frontpage-nosto-1"]))
+    })
+
+    expect(screen.getByTestId("context-value").textContent).toBe("injected-value")
   })
 })

@@ -1,22 +1,11 @@
-import { cloneElement, useRef } from "react"
-import { createRoot, Root } from "react-dom/client"
+import { useContext } from "react"
 import { Recommendation } from "../types"
 import { useNostoContext } from "./useNostoContext"
-import { RecommendationComponent } from "../context"
+import { ClientSidePlacementsContext } from "../context"
 import { ActionResponse, API } from "@nosto/nosto-js/client"
 import { nostojs } from "@nosto/nosto-js"
 
 type CampaignData = Pick<ActionResponse, "campaigns" | "recommendations">
-
-// RecommendationComponent for client-side rendering:
-function RecommendationComponentWrapper(props: {
-  recommendationComponent: RecommendationComponent
-  nostoRecommendation: Recommendation
-}) {
-  return cloneElement(props.recommendationComponent, {
-    nostoRecommendation: props.nostoRecommendation
-  })
-}
 
 function injectPlacements(data: Record<string, unknown>) {
   nostojs(api => api.placements.injectCampaigns(data as Parameters<API["placements"]["injectCampaigns"]>[0]))
@@ -92,7 +81,7 @@ function injectCampaigns(data: CampaignData) {
  */
 export function useRenderCampaigns() {
   const { responseMode, recommendationComponent } = useNostoContext()
-  const placementRefs = useRef<Record<string, Root>>({})
+  const setClientSidePlacements = useContext(ClientSidePlacementsContext)
 
   if (responseMode == "HTML") {
     return { renderCampaigns: injectCampaigns }
@@ -106,26 +95,17 @@ export function useRenderCampaigns() {
     // inject Onsite content campaigns directly
     injectPlacements(data.campaigns?.content ?? {})
 
-    // render recommendation component into placements:
+    // render recommendation component into placements via portals in NostoProvider:
     const recommendations = data.campaigns?.recommendations ?? {}
+    const newPlacements: Record<string, { element: Element; recommendation: Recommendation }> = {}
     for (const key in recommendations) {
       const recommendation = recommendations[key] as Recommendation
-      const placementSelector = "#" + key
-      const placementElement = document.querySelector(placementSelector)
-
+      const placementElement = document.querySelector("#" + key)
       if (placementElement) {
-        if (!placementRefs.current[key]) {
-          placementRefs.current[key] = createRoot(placementElement)
-        }
-        const root = placementRefs.current[key]!
-        root.render(
-          <RecommendationComponentWrapper
-            recommendationComponent={recommendationComponent!}
-            nostoRecommendation={recommendation}
-          ></RecommendationComponentWrapper>
-        )
+        newPlacements[key] = { element: placementElement, recommendation }
       }
     }
+    setClientSidePlacements?.(newPlacements)
   }
 
   return { renderCampaigns }

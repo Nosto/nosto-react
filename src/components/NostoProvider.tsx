@@ -1,10 +1,22 @@
-import { isValidElement, useState, ReactPortal } from "react"
+import { isValidElement, useState, useCallback, useRef, ReactPortal } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
 import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
 import { useLoadClientScript } from "../hooks/useLoadClientScript"
 import { nostojs } from "@nosto/nosto-js"
 import { RenderMode } from "@nosto/nosto-js/client"
+
+// Separate component to hold portal state so that portal updates
+// do NOT trigger a NostoProvider re-render (and its nostojs side-effect).
+function PortalContainer({
+  setPortalsRef
+}: {
+  setPortalsRef: React.MutableRefObject<((portals: ReactPortal[]) => void) | null>
+}) {
+  const [portals, setPortals] = useState<ReactPortal[]>([])
+  setPortalsRef.current = setPortals
+  return <>{portals}</>
+}
 
 /**
  * @group Components
@@ -78,7 +90,13 @@ export interface NostoProviderProps {
  */
 export function NostoProvider(props: NostoProviderProps) {
   const { account, multiCurrency = false, children, recommendationComponent, renderMode } = props
-  const [portals, setPortals] = useState<ReactPortal[]>([])
+  const setPortalsRef = useRef<(portals: ReactPortal[]) => void>(null)
+
+  // Stable callback that delegates to the PortalContainer's own setState.
+  // Calling it only re-renders PortalContainer, not NostoProvider.
+  const setPortals = useCallback((portals: ReactPortal[]) => {
+    setPortalsRef.current?.(portals)
+  }, [])
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
@@ -112,7 +130,7 @@ export function NostoProvider(props: NostoProviderProps) {
       }}
     >
       {children}
-      {portals}
+      <PortalContainer setPortalsRef={setPortalsRef} />
     </NostoContext.Provider>
   )
 }

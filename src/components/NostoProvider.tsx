@@ -1,4 +1,4 @@
-import { isValidElement } from "react"
+import { isValidElement, useState, ReactPortal } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
 import type { ReactNode } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
@@ -78,6 +78,7 @@ export interface NostoProviderProps {
  */
 export function NostoProvider(props: NostoProviderProps) {
   const { account, multiCurrency = false, children, recommendationComponent, renderMode } = props
+  const [portals, setPortals] = useState<ReactPortal[]>([])
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
@@ -106,10 +107,12 @@ export function NostoProvider(props: NostoProviderProps) {
         clientScriptLoaded,
         currentVariation,
         responseMode,
-        recommendationComponent
+        recommendationComponent,
+        setPortals
       }}
     >
       {children}
+      {portals}
     </NostoContext.Provider>
   )
 }

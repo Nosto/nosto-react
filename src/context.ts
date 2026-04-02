@@ -1,4 +1,4 @@
-import { createContext, ReactElement } from "react"
+import { createContext, ReactElement, ReactPortal } from "react"
 import { Recommendation } from "./types"
 import { RenderMode } from "@nosto/nosto-js/client"
 
@@ -16,6 +16,7 @@ export interface NostoContextType {
   renderFunction?: (...args: unknown[]) => unknown
   responseMode: RenderMode
   recommendationComponent?: RecommendationComponent
+  setPortals?: (portals: ReactPortal[]) => void
 }
 
 /**

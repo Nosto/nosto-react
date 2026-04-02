@@ -1,12 +1,13 @@
 import { act } from "react-dom/test-utils"
 import { useRenderCampaigns } from "../src/hooks/useRenderCampaigns"
-import { renderHook } from "@testing-library/react"
+import { render, renderHook } from "@testing-library/react"
 import { describe, beforeEach, it, expect } from "vitest"
 import RecommendationComponent from "./renderer"
 import { createWrapper } from "./utils"
 import { htmlMockDataForPage, jsonMockData, mixedMockData } from "./mocks/mock-data"
 import mockApi from "./mocks/mock-api"
 import { mockNostojs } from "@nosto/nosto-js/testing"
+import { NostoProvider } from "../src/components/NostoProvider"
 
 describe("useRenderCampaigns", () => {
   beforeEach(() => {
@@ -16,16 +17,22 @@ describe("useRenderCampaigns", () => {
   })
 
   it("supports component rendering", async () => {
-    const wrapper = createWrapper({
-      account: "dummy",
-      clientScriptLoaded: true,
-      responseMode: "JSON_ORIGINAL",
-      recommendationComponent: <RecommendationComponent />
-    })
-    const { result } = renderHook(() => useRenderCampaigns(), { wrapper })
+    let capturedRenderCampaigns!: ReturnType<typeof useRenderCampaigns>["renderCampaigns"]
+
+    function TestComponent() {
+      const { renderCampaigns } = useRenderCampaigns()
+      capturedRenderCampaigns = renderCampaigns
+      return null
+    }
+
+    render(
+      <NostoProvider account="dummy" recommendationComponent={<RecommendationComponent />} loadScript={false}>
+        <TestComponent />
+      </NostoProvider>
+    )
 
     act(() => {
-      result.current.renderCampaigns(jsonMockData(["frontpage-nosto-1", "frontpage-nosto-2"]))
+      capturedRenderCampaigns(jsonMockData(["frontpage-nosto-1", "frontpage-nosto-2"]))
     })
 
     expect(document.getElementById("frontpage-nosto-1")!.innerHTML).not.toBe("")

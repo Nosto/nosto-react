@@ -47,7 +47,7 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Publish project
-        uses: cycjimmy/semantic-release-action@2f15a6fcdae96740b10980f657138fa07540700e # v6.0.0+
+        uses: cycjimmy/semantic-release-action@b12c8f6015dc215fe37bc154d4ad456dd3833c90 # v6.0.0
         id: semantic
         with:
           semantic_version: 25.0.2

@@ -1,5 +1,5 @@
-import { cloneElement, useRef } from "react"
-import { createRoot, Root } from "react-dom/client"
+import { cloneElement, useEffect, ReactPortal } from "react"
+import { createPortal } from "react-dom"
 import { Recommendation } from "../types"
 import { useNostoContext } from "./useNostoContext"
 import { RecommendationComponent } from "../context"
@@ -91,8 +91,11 @@ function injectCampaigns(data: CampaignData) {
  * @group Hooks
  */
 export function useRenderCampaigns() {
-  const { responseMode, recommendationComponent } = useNostoContext()
-  const placementRefs = useRef<Record<string, Root>>({})
+  const { responseMode, recommendationComponent, setPortals } = useNostoContext()
+
+  useEffect(() => {
+    return () => setPortals?.([])
+  }, [setPortals])
 
   if (responseMode == "HTML") {
     return { renderCampaigns: injectCampaigns }
@@ -106,26 +109,28 @@ export function useRenderCampaigns() {
     // inject Onsite content campaigns directly
     injectPlacements(data.campaigns?.content ?? {})
 
-    // render recommendation component into placements:
+    // render recommendation component into placements via portals:
     const recommendations = data.campaigns?.recommendations ?? {}
+    const newPortals: ReactPortal[] = []
     for (const key in recommendations) {
       const recommendation = recommendations[key] as Recommendation
       const placementSelector = "#" + key
       const placementElement = document.querySelector(placementSelector)
 
       if (placementElement) {
-        if (!placementRefs.current[key]) {
-          placementRefs.current[key] = createRoot(placementElement)
-        }
-        const root = placementRefs.current[key]!
-        root.render(
-          <RecommendationComponentWrapper
-            recommendationComponent={recommendationComponent!}
-            nostoRecommendation={recommendation}
-          ></RecommendationComponentWrapper>
+        newPortals.push(
+          createPortal(
+            <RecommendationComponentWrapper
+              recommendationComponent={recommendationComponent!}
+              nostoRecommendation={recommendation}
+            />,
+            placementElement,
+            key
+          )
         )
       }
     }
+    setPortals?.(newPortals)
   }
 
   return { renderCampaigns }

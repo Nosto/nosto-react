@@ -1,10 +1,32 @@
-import { isValidElement } from "react"
+import { isValidElement, useState, useCallback, useRef, ReactPortal } from "react"
 import { NostoContext, RecommendationComponent } from "../context"
-import type { ReactNode } from "react"
+import type { ReactNode, MutableRefObject } from "react"
 import { ScriptLoadOptions } from "../hooks/scriptLoader"
 import { useLoadClientScript } from "../hooks/useLoadClientScript"
 import { nostojs } from "@nosto/nosto-js"
 import { RenderMode } from "@nosto/nosto-js/client"
+
+type PortalContainerProps = {
+  setPortalsRef: MutableRefObject<((portals: ReactPortal[]) => void) | null>
+}
+
+// Separate component to hold portal state so that portal updates
+// do NOT trigger a NostoProvider re-render (and its nostojs side-effect).
+function PortalContainer({ setPortalsRef }: PortalContainerProps) {
+  const [portals, setPortals] = useState<ReactPortal[]>([])
+  setPortalsRef.current = setPortals
+  return <>{portals}</>
+}
+
+// Returns a stable setPortals callback and the ref needed by PortalContainer.
+// Calling setPortals only re-renders PortalContainer, not NostoProvider.
+function usePortals() {
+  const setPortalsRef = useRef<(portals: ReactPortal[]) => void>(null)
+  const setPortals = useCallback((portals: ReactPortal[]) => {
+    setPortalsRef.current?.(portals)
+  }, [])
+  return { setPortalsRef, setPortals }
+}
 
 /**
  * @group Components
@@ -78,6 +100,7 @@ export interface NostoProviderProps {
  */
 export function NostoProvider(props: NostoProviderProps) {
   const { account, multiCurrency = false, children, recommendationComponent, renderMode } = props
+  const { setPortalsRef, setPortals } = usePortals()
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""
@@ -106,10 +129,12 @@ export function NostoProvider(props: NostoProviderProps) {
         clientScriptLoaded,
         currentVariation,
         responseMode,
-        recommendationComponent
+        recommendationComponent,
+        setPortals
       }}
     >
       {children}
+      <PortalContainer setPortalsRef={setPortalsRef} />
     </NostoContext.Provider>
   )
 }

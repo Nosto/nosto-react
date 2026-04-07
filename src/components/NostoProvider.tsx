@@ -18,6 +18,16 @@ function PortalContainer({ setPortalsRef }: PortalContainerProps) {
   return <>{portals}</>
 }
 
+// Returns a stable setPortals callback and the ref needed by PortalContainer.
+// Calling setPortals only re-renders PortalContainer, not NostoProvider.
+function usePortals() {
+  const setPortalsRef = useRef<(portals: ReactPortal[]) => void>(null)
+  const setPortals = useCallback((portals: ReactPortal[]) => {
+    setPortalsRef.current?.(portals)
+  }, [])
+  return { setPortalsRef, setPortals }
+}
+
 /**
  * @group Components
  */
@@ -90,13 +100,7 @@ export interface NostoProviderProps {
  */
 export function NostoProvider(props: NostoProviderProps) {
   const { account, multiCurrency = false, children, recommendationComponent, renderMode } = props
-  const setPortalsRef = useRef<(portals: ReactPortal[]) => void>(null)
-
-  // Stable callback that delegates to the PortalContainer's own setState.
-  // Calling it only re-renders PortalContainer, not NostoProvider.
-  const setPortals = useCallback((portals: ReactPortal[]) => {
-    setPortalsRef.current?.(portals)
-  }, [])
+  const { setPortalsRef, setPortals } = usePortals()
 
   // Pass currentVariation as empty string if multiCurrency is disabled
   const currentVariation = multiCurrency ? props.currentVariation : ""

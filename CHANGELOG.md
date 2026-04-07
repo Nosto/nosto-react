@@ -1,3 +1,15 @@
+## [2.12.3](https://github.com/Nosto/nosto-react/compare/v2.12.2...v2.12.3) (2026-04-07)
+
+
+### Bug Fixes
+
+* add node types to tsconfig to resolve TypeScript 6 build errors ([6c3f3e0](https://github.com/Nosto/nosto-react/commit/6c3f3e0d62710e4fbaded04c0a2fc723e6d33be7))
+* move portal state to PortalContainer to prevent NostoProvider re-render ([d6bf119](https://github.com/Nosto/nosto-react/commit/d6bf1191a8e798ae675e653bd8a744897b16363d))
+* regenerate package-lock.json to fix npm ci ([9ffcb50](https://github.com/Nosto/nosto-react/commit/9ffcb50fa6da85ba6a794f159461d6549ea22d8e))
+* **release:** pin cycjimmy/semantic-release-action to v6.0.0 tag SHA ([447c812](https://github.com/Nosto/nosto-react/commit/447c8122c2e52d275d1263e275e68fe18ae32e34))
+* update build spec to check for react-dom instead of react-dom/client ([4fc85b9](https://github.com/Nosto/nosto-react/commit/4fc85b9f1ace86060ebf3d3e35d058766ebb8a3f))
+* use createPortal instead of createRoot for recommendation rendering ([fa5e625](https://github.com/Nosto/nosto-react/commit/fa5e62598736572053a34a884dbf21aad2a8a773)), closes [#707](https://github.com/Nosto/nosto-react/issues/707)
+
 ## [2.12.2](https://github.com/Nosto/nosto-react/compare/v2.12.1...v2.12.2) (2026-02-03)
 
 
